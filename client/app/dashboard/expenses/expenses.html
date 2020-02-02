@@ -1,0 +1,224 @@
+<!-- Main content -->
+<div class="main">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+        <li class="breadcrumb-item active">Expenses Details
+        </li>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-sm-6 col-lg-3" ng-repeat="expense in $ctrl.categoryList">
+                    <div class="card  mar-t-10 cardpointer" ng-click="$ctrl.expenseForm(expense)">
+                        <div class="card-block text-xs-center" style="padding-top: 60px">
+                            <img ng-if='expense=="Food"' src="assets/images/avatars/food.svg" height="60px" width="60px">
+                            <img ng-if="expense=='Clothes'" src="assets/images/avatars/clothes.svg" height="60px" width="60px">
+                            <img ng-if="expense=='Fuel'" src="assets/images/avatars/fuel.svg" height="60px" width="60px">
+                            <img ng-if="expense=='House'" src="assets/images/avatars/home.svg" height="60px" width="60px">
+                            <img ng-if="expense=='Groceries'" src="assets/images/avatars/Groceris.svg" height="60px" width="60px">
+                            <img ng-if="expense=='Mobile/Internet'" src="assets/images/avatars/phone.svg" height="60px" width="60px">
+                            <img ng-if="expense=='Transportation'" src="assets/images/avatars/vehicle.svg" height="60px" width="60px">
+                            <img ng-if="expense=='Maintenance'" src="assets/images/avatars/maintenance.svg" height="60px" width="60px">
+                            <img ng-if="expense=='Others'" src="assets/images/avatars/expense.svg" height="60px" width="60px">
+                            <div style="padding-top: 30px" class="text-muted small text-uppercase font-weight-bold">
+                                <h6>{{expense}}</h6></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--  <a id="j"></a> -->
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card card-medium mar-t-10">
+                        <div class="card-block">
+                            <div class="card-block-header">
+                                <h5 ng-if="$ctrl.selectedCategory == null || undefined" class="card-title mb-10">Expense Form</h5>
+                                <h5 ng-if="$ctrl.selectedCategory!= null || undefined" class="card-title mb-10">{{$ctrl.selectedCategory}}</h5>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="input-group mb-1">
+                                        <span class="input-group-addon"><img src="assets/images/avatars/expense1.svg" class="img-fluid"></span>
+                                        <select ng-if="$ctrl.selectedCategory != 'Others'" ng-change="$ctrl.selectedCategoryInfo($ctrl.selectedCategory)" type="text" class="form-control" ng-model="$ctrl.selectedCategory" ng-options="result for result in $ctrl.categoryList" required>
+                                            <option value="">--Select Category--</option>
+                                        </select>
+                                        <select ng-if="$ctrl.selectedCategory == 'Others'" ng-change="$ctrl.selectedCategoryInfo($ctrl.selectedCategory)" type="text" class="form-control" ng-model="$ctrl.selectedCategory" ng-options="result for result in $ctrl.categoryList" required>
+                                            <option value="">Others</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="input-group mb-1">
+                                        <span class="input-group-addon"><img src="assets/images/avatars/expense.svg" class="img-fluid"></span>
+                                        <input type="text" name="expensesName" placeholder="Expense Name" class="form-control" ng-model="$ctrl.expensesName" required mongoose-error>
+                                    </div>
+                                    <span style="color:red" ng-show="form.expensesName.$touched && form.expensesName.$invalid"></span>
+                                    <span class="error" ng-show="form.expensesName.$error.required">Expenses is required</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="input-group mb-1">
+                                        <span class="input-group-addon"><img src="assets/images/avatars/date.svg" class="img-fluid"></span>
+                                        <datepicker date-format="dd MMM yyyy">
+                                            <input type="text" placeholder="Expenses Date" class="form-control" ng-model="$ctrl.Date" required mongoose-error>
+                                        </datepicker>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="input-group mb-1">
+                                        <span class="input-group-addon"><img src="assets/images/avatars/amount.svg" class="img-fluid"></span>
+                                        <input type="number" class="form-control" placeholder="Amount" ng-model="$ctrl.amount" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="input-group mb-1">
+                                        <span class="input-group-addon"><img src="assets/images/avatars/info.svg" class="img-fluid"></span>
+                                        <select type="text" class="form-control" ng-model="$ctrl.expensesStatus" ng-options="result for result in $ctrl.expensePaidStatus" required>
+                                            <option value="">--Select Status--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="input-group mb-1">
+                                        <span class="input-group-addon"><img src="assets/images/avatars/comments.svg" class="img-fluid"></span>
+                                        <textarea class="form-control" placeholder="Enter Your Comments" ng-model="$ctrl.comment" required mongoose-error></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <a href="#" ng-click="$ctrl.expenseSave()">ADD</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" ng-if="$ctrl.selectedCategory == null || undefined">
+                    <div class="card card-medium mar-t-10">
+                        <div class="card-block">
+                            <h5 class="card-title mb-10">LIST OF PREVIOUS EXPENSES</h5>
+                            <!-- <div infinite-scroll='$ctrl.scroll()' > -->
+                            <table class="table table-hover mb-0 hidden-sm-down">
+                                <thead>
+                                    <tr>
+                                        <th class="text-xs-left">Name Of The Expense</th>
+                                        <th class="text-xs-center"> Amount</th>
+                                        <th class="text-xs-left">Status</th>
+                                        <th class="text-xs-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="expensesShowTable in $ctrl.newExensesShow">
+                                        <td class="text-xs-left">{{expensesShowTable.expenseName}}</td>
+                                        <td class="text-xs-center">{{expensesShowTable.expenseAmount}}</td>
+                                        <td class="text-xs-left">{{expensesShowTable.status}}</td>
+                                        <td class="text-xs-center"><a href="#" data-toggle="modal" data-target="#myPendingExpenses" ng-click="$ctrl.pendingExpenses()" ng-show="'{{expensesShowTable.status}}' == 'Pending'">PayNow</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6" ng-if="$ctrl.selectedCategory != null || undefined">
+                    <div class="card card-medium mar-t-10">
+                        <div class="card-block">
+                            <h5 class="card-title mb-10">LIST OF  {{$ctrl.selectedCategory| uppercase}}  EXPENSES</h5>
+                            <!-- <div infinite-scroll = "$ctrl.respScroll()"   > -->
+                            <table class="table table-hover mb-0 hidden-sm-down">
+                                <thead>
+                                    <tr>
+                                        <th class="text-xs-center">Name Of The Expense</th>
+                                        <th class="text-xs-center">Amount</th>
+                                        <th class="text-xs-center">Status</th>
+                                        <th class="text-xs-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="expensesShowTable in $ctrl.respExpensesArray">
+                                        <td class="text-xs-left"> {{expensesShowTable.expenseName}}</td>
+                                        <td class="text-xs-center">{{expensesShowTable.expenseAmount}}</td>
+                                        <td class="text-xs-left">{{expensesShowTable.status}}</td>
+                                        <td class="text-xs-center"><a href="#" data-toggle="modal" data-target="#myPendingExpenses" ng-click="$ctrl.pendingExpenses()" ng-show="'{{expensesShowTable.status}}' == 'Pending'">PayNow</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- <dir-pagination-controls max-size="5" bounary-links="true" direction-links="true">
+                        </dir-pagination-controls> -->
+                            <!--   <div class="alert alert-success" ng-show="$ctrl.showAlert" role="alert">
+                            <strong>Congrats</strong> Successfully saved your expense
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+                            <!--      total expenses card -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal" id="myPendingExpenses" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h6 class="modal-title" id="modaltitle">List Of Pending Expenses</h6>
+                        <div class="modal-body" id="modalbody">
+                            <table class="table table-hover mb-0 hidden-sm-down">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <input id="check" type="checkbox" ng-model="$ctrl.selectedAll" ng-click="$ctrl.clickAll()">
+                                            <label for="checkbox"><span></span>Select/Deselcet All</label>
+                                        </th>
+                                        <th>Name Of The Expense</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="expenses in $ctrl.expensesPendingArray|itemsPerPage:5">
+                                        <td>
+                                            <input id="check" type="checkbox" name="" ng-model="$ctrl.totalExpAmoArray($index)" ng-init="false" ng-checked="$ctrl.exist(expenses)" ng-click="$ctrl.paymentSelected(expenses)">
+                                            <label for="checkbox"><span></span></label>
+                                        </td>
+                                        <td>{{expenses.expenseName}}</td>
+                                        <td>{{expenses.expenseAmount}}</td>
+                                    </tr>
+                            </table>
+                            <a href="#" ng-if="$ctrl.totalExpAmoArray.length != 0" data-dismiss="modal" data-toggle="modal" data-target="#myPaidExpenses" ng-click="$ctrl.payExpenses()" style="float: right;">PayNow</a>
+                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+                            </dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal" id="myPaidExpenses" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h6 class="modal-title" id="modaltitle">List Of Pending Expenses</h6>
+                        <div class="modal-body" id="modalbody">
+                            <div class="col-md-9">ExpenseName</div>
+                            <div class="col-md-3">Amount</div>
+                            <br>
+                            <br>
+                            <div ng-repeat="x in $ctrl.totalExpAmoArray">
+                                <div class="col-md-9">{{x.expenseName}}</div>
+                                <div class="col-md-3">{{x.expenseAmount}}</div>
+                            </div>
+                            <hr>
+                            <div class="col-md-9">TotalAmount</div>
+                            <div class="col-md-3">{{$ctrl.totalExpAmount}}</div>
+                            <br>
+                            <br>
+                            <a href="#" class="offset-xs-6">PayNow</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-include="'components/common/bottom.html'"> </div>

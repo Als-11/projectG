@@ -1,0 +1,161 @@
+<section class="top-section">
+    <div class="container d-table">
+        <div class="d-100vh-va-middle">
+            <div style="float: right;">
+                <!-- <a class="btn btn-primary" href="/">Home</a></div> -->
+                <div class="row mar-b-10">
+                    <div class="col-md-6 offset-md-3">
+                        <img src="../../../assets/images/logo.png" alt="Guwha" />
+                    </div>
+                </div>
+                <div class="row">
+                    <form class="form" name="form" novalidate>
+                        <div class="col-md-8 offset-md-2">
+                            <div class="card-group m-0">
+                                <div class="card p-2">
+                                    <h1>Admin Registration</h1>
+                                    <p class="text-muted">Create Your Account</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8 offset-md-2">
+                            <div class="card-group">
+                                <!--################# Admin login Card starts #################-->
+                                <div class="card p-2 text-xs-center">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/user.svg" class="img-fluid"></span>
+                                                <input type="text" placeholder="First Name" name="firstname" class="form-control" ng-model="$ctrl.firstName" required mongoose-error>
+                                            </div>
+                                            <span style="color: red" ng-show="form.firstname.$touched && form.firstname.$invalid">
+                                        <span style="color:red" class="error" ng-show="form.firstname.$error.required">First Name is Required!</span>
+                                            </span>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/user.svg" class="img-fluid"></span>
+                                                <input type="text" placeholder="Last Name" name="lastname" class="form-control" ng-model="$ctrl.lastName" required mongoose-error>
+                                            </div>
+                                            <span style="color: red" ng-show="form.lastname.$touched && form.lastname.$invalid">
+                                            <span style="color:red" class="error" ng-show="form.lastname.$error.required">Last Name is Required!</span></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/email.svg" class="img-fluid"></span>
+                                                <input type="text" placeholder="Email Address" id="" class="form-control" ng-model="$ctrl.email" name="email" ng-blur="$ctrl.validEmail()" ng-pattern="/^[_a-zA-Z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" required>
+                                            </div>
+                                            <span style="color:red" ng-show="form.email.$touched && form.email.$invalid">
+                                        <span style="color:red" class="error" ng-show="form.email.$error.required">Email id is Required!</span>
+                                            <span style="color:red" class="error" ng-show="form.email.$error.pattern"> Not Valid!</span>
+                                            </span>
+                                            <span style="color:red">{{$ctrl.emailExist}}</span>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/mobile.svg" class="img-fluid"></span>
+                                                <input type="text" placeholder="Mobile Number" name="phoneNumber" class="form-control" ng-model="$ctrl.phoneNumber" ng-pattern="/^\(?(\d{3})\)?[ .-]?(\d{3})[ .-]?(\d{4})$/" required mongoose-error>
+                                            </div>
+                                            <span style="color:red" ng-show="form.phoneNumber.$touched && form.phoneNumber.$invalid">
+                                    
+                                        <span style="color:red" class="error" ng-show="form.phoneNumber.$error.required">
+                                                        Phone Number is Required!</span>
+                                            <span style="color:red" class="error" ng-show="form.phoneNumber.$error.pattern"> 
+                                                        Enter Valid PhoneNumber!</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6" align="left">
+                                            <div class="input-group mb-1" ng-init="$ctrl.gender='MALE'">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/persons.svg" class="img-fluid"></span>
+                                                <input id="gender" type="radio" name="gender" value="MALE" ng-model="$ctrl.gender">
+                                                <label for="radio1"><span><span></span></span>Male</label>
+                                                <input id="gender" type="radio" name="gender" value="FEMALE" ng-model="$ctrl.gender">
+                                                <label for="radio1"><span><span></span></span>Female</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/home.svg" class="img-fluid"></span>
+                                                <input type="text" placeholder="Enter Community Name " name="communityName" class="form-control" ng-model="$ctrl.communityName" required mongoose-error>
+                                            </div>
+                                            <span style="color: red" ng-show="form.communityName.$touched && form.communityName.$invalid">
+                                        <span style="color:red" class="error" ng-show="form.communityName.$error.required">Community Name is Required!</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/address city.svg" class="img-fluid"></span>
+                                                <input type="text" placeholder="Enter Your Address" name="address1" class="form-control" ng-model="$ctrl.address1" required mongoose-error>
+                                            </div>
+                                            <span style="color: red" ng-show="form.address1.$touched && form.address1.$invalid">
+                                        <span style="color:red" class="error" ng-show="form.address1.$error.required">Address is Required!</span>
+                                            </span>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/address city.svg" class="img-fluid"></span>
+                                                <input type="text" placeholder="Enter Your Locality" name="locality" class="form-control" ng-model="$ctrl.locality" required mongoose-error>
+                                            </div>
+                                            <span style="color: red" ng-show="form.locality.$touched && form.locality.$invalid">
+                                        <span style="color:red" class="error" ng-show="form.locality.$error.required">locality is Required!</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/address city.svg" class="img-fluid"></span>
+                                                <input type="text" placeholder="Enter Your City" ng-blur="$ctrl.getLatLong()" name="city" class="form-control" ng-model="$ctrl.city" required mongoose-error>
+                                            </div>
+                                            <span style="color: red" ng-show="form.city.$touched && form.city.$invalid">
+                                        <span style="color:red" class="error" ng-show="form.city.$error.required">City is Required!</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                            <div class="col-xs-6 text-xs-left">
+                                             <div class="col-xs-9">
+
+                                 <input type="checkbox" ng-model="$ctrl.user.checked" ng-init="$ctrl.user.checked=false">
+                                <!-- <input  id="check"  type="checkbox" name="checkbox"  ng-model="$ctrl.resultaraary($index)"  ng-checked="$ctrl.exist(x)" 
+                                ng-click="$ctrl.expenseSelected(x)"> -->
+                                <label for="checkbox"><span></span> </label> 
+                                   I agree to the&nbsp;<a href="#">terms</a>
+                                </div>
+                                </div>
+                                </div>
+                                    <div class="row">
+                                        <div class="col-xs-2">
+                                            <div class="input-group mb-1">
+                                                <button type="button" class="btn btn-primary" ng-click="$ctrl.registerCommunity(form)"
+                                                        ng-disabled="$ctrl.firstName == null || $ctrl.firstName == '' ||
+                                                        $ctrl.lastName == null || $ctrl.lastName=='' || $ctrl.email== null || $ctrl.email=='' || $ctrl.phoneNumber == null || $ctrl.phoneNumber=='' ||  
+                                                        $ctrl.communityName == null || $ctrl.communityName=='' || $ctrl.address1 == null || $ctrl.address1=='' || $ctrl.locality == null || $ctrl.locality=='' || 
+                                                        $ctrl.city == null ||$ctrl.city== '' || $ctrl.gender == null ||$ctrl.gender=='' ||
+                                                        $ctrl.checked == false 
+                                                        ">Register</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="input-group mb-1 text-xs-left">
+                                                <span style="color: red"><p>{{$ctrl.errorMessage}}</p></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

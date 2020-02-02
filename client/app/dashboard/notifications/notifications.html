@@ -1,0 +1,66 @@
+<div class="main">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="breadcrumb-item active">Notifications</li>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+        <div ng-if='$ctrl.user == "RESIDENT"'>
+            <a href="#" style="float: right;" ng-click="$ctrl.markAllRead()">Mark All Read</a>
+            <h6 class="card-title mb-05">Unread Messages ({{$ctrl.count}})</h6>
+            <div class="card card-block" ng-repeat="notification in $ctrl.notificationsArray">
+                <div class="col-md-10"><b>{{notification._id.title}}</b></div>
+                <div class="col-md-2 text-muted">{{notification._id.commNotif[0].createdAt|date:'h:mma'}}</div>
+                <div class="col-md-12 text-muted">{{notification._id.description}}</div>
+                <div class="col-sm-7 text-muted" ng-show="'{{notification._id.isPoll}}' == 'true'">
+                    <a href="#" ng-click="$ctrl.action(1,notification)">Accepted</a>&nbsp;&nbsp;
+                    <a href="#" ng-click="$ctrl.action(2,notification)">Declined</a>&nbsp;&nbsp;
+                    <a href="#" ng-click="$ctrl.action(3,notification)">May Be</a>
+                </div>
+                <div class="col-sm-5 text-muted text-xs-right" ng-show="'{{notification._id.isPoll}}' == 'true'">
+                    Approved :{{notification._id.commNotif[0].approvedUsers.length}} Decline :{{notification._id.commNotif[0].declinedUsers.length}} May Be :{{notification._id.commNotif[0].maybeusers.length}}
+                </div>
+
+            </div>
+            <hr>
+            <!-- unread Card code -->
+
+            <h6 class="card-title mb-05">Read Messages ({{$ctrl.readNotcount}})</h6>
+            
+            <div class="card card-block" ng-repeat="readnotification in $ctrl.readnotificationsArray">
+
+                <div class="col-md-9"> <b>{{readnotification._id.title}}</b></div>
+                <div class="col-md-3 text-muted">{{readnotification._id.commNotif[0].createdAt|date:'dd/MM/yyyy @ h:mma'}}</div>
+                <div class="col-md-12 text-muted">{{readnotification._id.description}}</div>
+                <div class="col-sm-7 text-muted" ng-show="'{{readnotification._id.isResponded}}' != 'false' && '{{readnotification._id.isPoll}}' == 'true' " class="col-md-7">Your response is {{readnotification._id.isResponded}}</div>
+                <div class="col-sm-5 text-muted text-xs-right"  ng-show="'{{readnotification._id.isResponded}}' != 'false' && '{{readnotification._id.isPoll}}' == 'true' " >
+                    Approved :{{readnotification._id.commNotif[0].approvedUsers.length}} Decline :{{readnotification._id.commNotif[0].declinedUsers.length}} May Be :{{readnotification._id.commNotif[0].maybeusers.length}}
+                </div>
+                <div ng-show="'{{readnotification._id.isResponded}}' == 'false'">
+                    <div class="col-sm-7 text-muted">
+                        <a href="#" ng-click="$ctrl.action(1,readnotification)">Accepted</a>&nbsp;&nbsp;
+                        <a href="#" ng-click="$ctrl.action(2,readnotification)">Declined</a>&nbsp;&nbsp;
+                        <a href="#" ng-click="$ctrl.action(3,readnotification)">May Be</a>
+                    </div>
+                    <div   ng-show="'{{readnotification._id.isResponded}}' == 'false'" class="col-sm-5 text-muted text-xs-right">
+                        Approved :{{readnotification._id.commNotif[0].approvedUsers.length}} Decline :{{readnotification._id.commNotif[0].declinedUsers.length}} May Be :{{readnotification._id.commNotif[0].maybeusers.length}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-if='$ctrl.user ==  "COMMUNITY_ADMIN"'>
+            <div class="card card-block" ng-repeat="notification in $ctrl.notificationsArray">
+                <div class="col-md-8">{{notification.title}}</div>
+                <div class="col-md-4 text-muted">{{notification.createdAt|date:'dd/MM/yyyy @ h:mma'}}</div>
+                <div class="col-md-12 text-muted">{{notification.description}}</div>
+                <div class="col-sm-5 text-muted text-xs-right" ng-if='notification.isPoll==true'>
+                    Approved :{{notification.approvedUsers.length}} Decline :{{notification.declinedUsers.length}} May Be :{{notification.maybeusers.length}}
+                </div>
+
+            </div>
+        </div>
+
+        </div>
+    </div>
+</div>

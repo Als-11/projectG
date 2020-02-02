@@ -1,0 +1,324 @@
+<div class="main">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="breadcrumb-item active">dashboard</li>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-sm-6 col-lg-3 ">
+                	<div class="card-small cardpointer">
+                    <div ng-click="$ctrl.go('/dashboard/activeusers')" class="card" >
+                        <div class="card-block text-xs-center">
+                            <div class="h1 p-y-1 text-high number-font" style="cursor: pointer;" ng-disabled="true">{{$ctrl.activeUsercount|guwhafilter}}</div>
+                            <div class="small font-weight-bold" style="cursor: pointer;" ng-disabled="true">Active Users</div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                 <div class="card-small cardpointer">
+                    <div ng-click="$ctrl.go('/dashboard/inactiveusers')" class="card">
+                        <div class="card-block text-xs-center">
+                            <div class="h1 p-y-1 text-high number-font" style="cursor: pointer;" ng-disabled="true">{{$ctrl.inactiveUserCount|guwhafilter}}</div>
+                            <div class="small font-weight-bold" style="cursor: pointer;" ng-disabled="true">InActive Users</div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                 <div class="card-small cardpointer">
+                    <div ng-click="$ctrl.go('/dashboard/complaint')" class="card">
+                        <div class="card-block text-xs-center">
+                            <div class="h1 p-y-1 text-high number-font" style="cursor: pointer;" ng-disabled="true">{{$ctrl.complaintCount|guwhafilter}}</div>
+                            <div class="small font-weight-bold" style="cursor: pointer;" ng-disabled="true">Complaints</div>
+                        </div>
+                    </div>
+                   </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                 <div class="card-small cardpointer">
+                    <div ng-click="$ctrl.go('/dashboard/services')" class="card">
+
+                        <div class="card-block text-xs-center">
+                            <div class="h1 p-y-1 text-high number-font" style="cursor: pointer;" ng-disabled="true">{{$ctrl.serProRequestCount|guwhafilter}}</div>
+                            <div class="small font-weight-bold" style="cursor: pointer;" ng-disabled="true">Service Provider Requests</div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <!-- Payments Page Starts here -->
+            <!-- <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-block">
+                            <div class="col-sm-10">
+
+                                 <h5 class="card-title mb-0">Payments</h5> 
+                                <h5>Payments</h5>
+                                 <div class="small text-muted">{{$ctrl.monthName}}-{{$ctrl.year}} - {{$ctrl.nextMonth}}-{{$ctrl.Nextyear}}</div>
+                            </div>
+                            <hr class="mb-2">
+
+                             <hr class="mb-2">                                    
+                     <div class="col-sm-10">
+                     <ul ng-repeat="result in $ctrl.paymentNameArray">
+                       <li>{{result.paymentType}}-{{result.paymentAmount}}</li>
+                       </ul>
+                        <div class="col-xs-12 text-xs-center">
+                                    <div class="input-group mb-1">
+                                        <button data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" ng-click ="$ctrl.paymentsPay()" class="btn btn-primary" type="button" required>
+                                            Pay Now
+                                        </button>
+                                         <i class="fa fa-chevron-circle-left" aria-hidden="true"   style="float:left;   left:250px;bottom:2px;color: green";></i>  
+                                        <i class="fa fa-chevron-circle-right" aria-hidden="true"  style="float:right; left:250px;bottom:2px;color: green";></i>
+
+                                    </div>
+                             </div> 
+                    </div>  
+                </div>  
+            </div>     
+        </div> -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card card-medium">
+                        <div class="card-block">
+                           <div class="card-header pad-t-0">
+                                <div class="col-sm-12 pad-t-0">
+                                    <h5 class="card-title mb-10">MONTHLY EXPENSES</h5>
+                                </div>
+                                 <div class="col-sm-7 text-xs-left">
+                                    <div class="small text-muted">{{$ctrl.monthName}}-{{$ctrl.date}} - {{$ctrl.monthName}}-{{$ctrl.endDate}}</div>
+                                </div>
+                            </div>
+                             <div class="text-xs-center" ng-if='$ctrl.CategoryNamesArray.length == 0' style="padding: 70px; color: #22D1E4">
+                                        <b>  No Expenses </b>
+                            </div>
+                            <div class="col-sm-8">
+                                <div ng-if='$ctrl.CategoryNamesArray.length != 0' class="chart-wrapper mar-t-30">
+                                    <canvas id="monthlyExpensesChart" class="chart chart-pie" chart-data="$ctrl.totalCostArray" chart-labels="$ctrl.CategoryNamesArray" chart-options="$ctrl.options" chart-legend="true" height="240" chart-colors="$ctrl.colors">
+                                    </canvas>
+                                </div>
+                            </div>
+                            <div class="col-sm-4" style="height:180px;display: flex;flex-direction: column;justify-content: center;">
+<!--                                <span id="legend" class="legendStyle"></span>-->
+                           
+                                <div class="pie-legend-item" >
+                                 <ul>
+                                  <li class="legend-item-box" ng-repeat="item in $ctrl.legend" ng-style="::{'color': item.color}"><span class="legend-item-label text-muted small">{{::item.title}}</span></li>
+                                  </ul>
+                                </div>
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card card-medium">
+                        <div class="card-block">
+                           <div class="card-header pad-t-0">
+                                <div class="col-sm-6 pad-t-0">
+                                <h5 class="card-title mb-10">OVERALL EXPENSES</h5>
+                                </div>
+                                 <div class="col-sm-6 text-muted font-weight-bold pad-0" style="float: right;font-size:12px;">
+                                    <div ng-class="{linkcolor: $index == $ctrl.selected}" style="float: right;margin-left: 7px" ng-repeat="part in $ctrl.section" ng-click="$ctrl.expensesGraph(part,$index)">
+                                        {{part}}</div>
+                                </div>
+                            </div> 
+                            <div class="chart-wrapper pad-l-10 mar-t-30">
+                                <canvas id="bar" class="chart chart-bar" ng-if="$ctrl.monthlyGroupGrph" chart-data="$ctrl.totalAmountArray" chart-labels="$ctrl.monthNameForGroup" chart-options="$ctrl.barOptions" height="140" chart-colors="$ctrl.lineColor">
+                                </canvas>
+                               <!--  <canvas class="chart chart-bar" ng-if="$ctrl.yearlygroupgraph" chart-data="$ctrl.amountYearly" chart-labels="$ctrl.yearArray" height="150" chart-colors="$ctrl.colors" chart-options="$ctrl.barOptions"></canvas> -->
+                                <canvas class="chart chart-bar" ng-if="$ctrl.sixmonthsgroupgraph" chart-data="$ctrl.sixMonthAmount" chart-labels="$ctrl.sixmonthName" height="140" chart-colors="$ctrl.colors" chart-options="$ctrl.barOptions"></canvas>
+                            </div>
+                             <h6 class="text-xs-center">Overall Expense - {{$ctrl.selectedCat}} wise
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                Chart.plugins.register({
+                    afterDatasetsDraw: function(chartInstance, easing) {
+                        if(chartInstance.config.type == 'pie') {
+                        // To only draw at the end of animation, check for easing === 1
+                        var ctx = chartInstance.chart.ctx;
+                        chartInstance.data.datasets.forEach(function(dataset, i) {
+                            var meta = chartInstance.getDatasetMeta(i);
+                            
+                            if (!meta.hidden) {
+                                meta.data.forEach(function(element, index) {
+                                    // Draw the text in black, with the specified font
+                                    ctx.fillStyle = '#FFFFFF';
+                                    var fontSize = 20;
+                                    var fontStyle = 'normal';
+                                    var fontFamily = 'Open Sans';
+                                    ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+                                    // Just naively convert to string for now
+                                    var dataString = dataset.data[index].toString();
+                                    // Make sure alignment settings are correct
+                                    ctx.textAlign = 'center';
+                                    ctx.textBaseline = 'middle';
+                                    var padding = 5;
+                                    var position = element.tooltipPosition();
+                                    ctx.fillText(dataString, position.x, position.y - (fontSize / 2) - padding);
+                                });
+                            }
+                        }); 
+//                        var legend = chartInstance.generateLegend();
+//                        document.getElementById("legend").innerHTML = legend; 
+                    }
+                  }
+                });
+                </script>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <div class="card card-big mar-t-10">
+                        <div class="card-block">
+                            <div class="card-header pad-t-0">
+                                <div class="col-sm-5 pad-t-0">
+                                    <h5 class="card-title mb-10">VISITOR DETAILS</h5>
+                                </div>
+                                 <div class="col-sm-7 pad-l-r-0 text-xs-left">
+                                    <small class="text-muted">(Last 5 Appartments have highest Visitors)</small>
+                                 </div>
+                            </div>
+                            <div class="text-xs-center" ng-if='$ctrl.highestVisitorsArray.length == 0' style="padding: 70px; color: #22D1E4">
+                                        <b>  No Visitors </b>
+                        </div>
+                            <table ng-if="$ctrl.highestVisitorsArray.length !=0" class="table table-hover mb-0 hidden-sm-down">
+                                <thead>
+                                    <tr>
+                                        <th class="text-xs-left">Name of the Visitor</th>
+                                        <th class="text-xs-left">Appartment/Flat No.</th>
+                                        <th class="text-xs-center"># Visitors</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="highestVisitor in $ctrl.highestVisitorsArray">
+                                        <td class="text-xs-left"><img ng-src="assets/images/avatar.png" width="30px;" class="img-avatar"> <span class="pad-l-10">{{highestVisitor._id.firstName}} </span></td>
+                                        <td class="text-xs-left">{{highestVisitor._id.blockName}}-{{highestVisitor._id.flatNo}}</td>
+                                        <td class="text-xs-center">{{highestVisitor.count}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--/col-->
+                <div class="col-sm-6 col-md-6">
+                    <div class="card card-big mar-t-10">
+                        <div class="card-block">
+                            <div class="card-header pad-t-0">
+                                <div class="col-sm-8 pad-t-0">
+                                    <h5 class="card-title mb-10">COMMUNITY MEMBERS</h5>
+                                </div>
+                            </div>
+                            <table class="table table-hover mb-0 hidden-sm-down">
+                                <thead>
+                                    <tr>
+                                        <th class="text-xs-left">Name of the Member</th>
+                                        <th class="text-xs-left">Role</th>
+                                        <th class="text-xs-center">Assign Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="communitymember in $ctrl.communityMembersresult">
+                                        <td class="text-xs-left">  <img ng-src="assets/images/avatar.png" width="30px;" class="img-avatar" style="color:#22D1E4;"><span class="pad-l-10">{{communitymember.name}} </span></td>
+                                        <td class="text-xs-left">{{communitymember.roleType}}</td>
+                                        <td class="text-xs-center"> {{communitymember.fromDate|date:"dd MMM yy"}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-big ">
+                        <div class="card-block">
+                            <div class="col-sm-5">
+                                <h5 class="card-title mb-10">IN & OUT VISITORS DETAILED REPORT</h5>
+                            </div>
+                            <div class="text-muted small text-uppercase font-weight-bold" style="float: right;">
+                                <div ng-class="{linkcolor: $index == $ctrl.select}" style="float: left;padding: 8px" ng-repeat="day in $ctrl.days" ng-click="$ctrl.visitorGraph(day,$index)">
+                                    {{day}}</div>
+                            </div>
+                        </div>
+                    <div  class="card-block">
+                        <table class="table table-hover mb-0 hidden-sm-down" ng-if="$ctrl.dailyVisitors && $ctrl.visitorslist.length>0">
+                            
+                                <thead >
+                                    <th class="text-xs-left">Name of the Visitor</th>
+                                    <!-- <th>Block Number</th> -->
+                                    <th class="text-xs-left">Apartment / Flat No</th>
+                                    <th class="text-xs-center"># Visitors </th>
+                                    <th class="text-xs-center">In Time</th>
+                                    <th class="text-xs-center">Out Time</th>
+                                    <th class="text-xs-left">Purpose</th>
+                                    <th class="text-xs-center"> Status </th>
+                                
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="user in $ctrl.visitorslist|itemsPerPage:5">
+                                     
+                                    <td class="text-xs-left">
+                                       <img ng-src="assets/images/avatar.png" width="30px;" class="img-avatar" style="color:#22D1E4;"><span class="pad-l-10">{{ user.name }}</span>
+                                    </td>
+                                    
+                                    <td class="text-xs-left">
+                                         {{user.blockName}} - {{user.flatNo}}
+                                    </td>
+                                    <td class="text-xs-center">
+                                        {{user.alongWith}}
+                                    </td>
+                                    <td class="text-xs-center">
+                                        {{user.inTime|date:'dd/MM/yyyy @ h:mma'}}
+                                    </td>
+                                    <td class="text-xs-center">
+                                        {{ user.outTime|date:'dd/MM/yyyy @ h:mma' }}
+                                    </td>
+                                    <td class="text-xs-left">
+                                        {{ user.purpose }}
+                                    </td>
+                                    <td class="text-xs-center">
+
+                                    <div ng-if='user.status=="active"'>
+                                    	<div ng-disabled="true" style="color:white; background-color: #22D1E4; border-radius: 20px; width: 80px">{{user.status}}</div>
+                                    </div>
+
+                                    <div ng-if='user.status=="away"'>
+                                    	<div ng-disabled="true" style="color:white; background-color: #FF7694; border-radius: 20px; width: 80px">{{user.status}}</div>
+                                    </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            
+                        </table>
+                        <!-- <button title="Old Comments" ng-show="$ctrl.visitorslist.length>5" style=" position: relative; bottom:30px; font-size:15px; height:38px; width:30px;background-color: white; color:dodgerblue; border-width: 1px; border-right: 0px;" ng-click="$ctrl.previousVisitors()">
+                                << </button> -->
+                                    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+                                    </dir-pagination-controls>
+                                    <!-- <button title="New Comments" ng-show="$ctrl.visitorslist.length>5" style="margin-right:auto;position: relative;bottom:30px;font-size:15px;height:38px;width:30px;background-color: white;color:dodgerblue;border-width: 1px;border-left: 0px;" ng-click="$ctrl.skipped()"> >>
+                                    </button> -->
+                    </div>
+                    <div ng-if="$ctrl.dailyVisitors && $ctrl.visitorslist.length ==0" class="text-xs-center" style="padding: 70px; color: #22D1E4; ">
+                            No Visitors Today
+                    </div>
+                    <!-- monthlygraph starts here -->
+                    <div ng-if="$ctrl.monthlyVisitors && $ctrl.totalVisitorsArray.length == 0" class="text-xs-center" style="padding: 70px; color: #22D1E4; ">
+                            No Visitors for This Month
+                    </div>
+                    <div  class="chart-wrapper">
+                        <div   class="card-block">
+                            <canvas id="bar" class="chart chart-bar" ng-if="$ctrl.monthlyVisitors && $ctrl.totalVisitorsArray.length != 0" chart-data="$ctrl.totalVisitorsArray" chart-labels="$ctrl.namesMonthArray" chart-options="$ctrl.barOptions" height="150" chart-colors="$ctrl.lineColor">
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

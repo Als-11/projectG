@@ -1,0 +1,21 @@
+'use strict';
+
+import mongoose from 'mongoose';
+
+var ApprovalSchema = new mongoose.Schema({
+	communityId: Number,
+	emailId: { type : String , unique : true, required : true },
+	name : String,
+	blockName : String,
+	floorNumber: Number,
+    flatNumber: String,
+	approvalRequestedTime : Date,
+	approvalStatus :{
+            type: String,
+            enum: ['APPROVED', 'REJECTED','PENDING']
+        },
+	approvalComments : String,
+	approvedBy : String
+});
+
+export default mongoose.model('Approval', ApprovalSchema);

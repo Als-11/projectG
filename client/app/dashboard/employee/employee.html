@@ -1,0 +1,325 @@
+
+<!-- Main content -->
+<div class="main">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+        <li class="breadcrumb-item active">Employee Details</li>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card cardpointer" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" ng-click="$ctrl.removevalidationmessages()">
+                        <div style="padding-top: 60px" class="card-block text-xs-center">
+                            <img src="assets/images/avatars/add_icon.svg" height="60px" width="60px">
+                            <div style="padding-top: 30px" class="text-muted small text-uppercase font-weight-bold">
+                                <h6>Add Employee</h6></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3" ng-repeat=" employee in $ctrl.employeeCategoryCount" data-toggle="collapse" data-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample">
+                    <div class="card cardpointer" ng-click="$ctrl.populateEmployeeTable(employee.role)">
+                        <div style="padding-top: 60px" class="card-block text-xs-center">
+                            <img ng-if="employee.role=='PLUMBER'" src="assets/images/avatars/plumber.svg" height="60px" width="60px">
+                            <img ng-if="employee.role=='CARPENTRY'" src="assets/images/avatars/carpentry.svg" height="60px" width="60px">
+                            <img ng-if="employee.role=='SECURITY'" src="assets/images/avatars/security.svg" height="60px" width="60px">
+                            <img ng-if="employee.role=='ELECTRICIAN'" src="\assets\images\avatars\electrician_icon.svg" height="60px" width="60px">
+                            <img ng-if="employee.role=='GARDENING'" src="\assets\images\avatars\gardening_icon.svg" height="60px" width="60px">
+                            <img ng-if="employee.role=='OTHERS'" src="assets/images/avatars/employee_icon.svg" height="60px" width="60px">
+                            <div style="padding-top: 30px" class="text-muted small text-uppercase font-weight-bold">
+                                <h6>{{employee.role}} ( {{employee.count }} )</h6></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="collapse" id="collapseExample">
+                        <form class="form" name="form" novalidate>
+                            <div class="card card-medium">
+                                <div class="card-block">
+                                    <div class="card-header">
+                                        <div class="col-sm-11">
+                                            <h5 class="card-title mb-10"> Add Employees</h5>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/user.svg" class="img-fluid"></span>
+                                                <input type="text" class="form-control" name="firstname" placeholder="First Name" ng-model="$ctrl.employee.Firstname" required mongoose-error>
+                                                <span style="color:red" class="error" ng-show="form.firstname.$touched && form.firstname.$invalid">
+                                                    <span class="error" ng-show="form.firstname.$error.required">First Name is required</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/user.svg" class="img-fluid"></span>
+                                                <input type="text" class="form-control" name="lastName" placeholder="Last Name" ng-model="$ctrl.employee.Lastname" required mongoose-error>
+                                                <span style="color:red" class="error" ng-show="form.lastName.$touched && form.lastName.$invalid">
+                                                    <span class="error" ng-show="form.lastName.$error.required">Last Name is required</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/email.svg" class="img-fluid"></span>
+                                                <input type="email" class="form-control" placeholder="Email Address" ng-blur="$ctrl.getEmail()" ng-model="$ctrl.employee.EmailId" name="email" ng-pattern="/^[_a-zA-Z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" required mongoose-error>
+                                                <span style="color:red" ng-show="form.email.$touched && form.email.$invalid">
+                                                    <span style="color:red" class="error" ng-show="form.email.$error.required">
+                                                        Email id is required!</span>
+                                                <span style="color:red" class="error" ng-show="form.email.$error.pattern">
+                                                         Not valid!</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/mobile.svg" class="img-fluid"></span>
+                                                <input type="text" class="form-control" placeholder="Phone Number" name="phoneNumber" ng-model="$ctrl.employee.PhoneNumber" ng-pattern="/^\(?(\d{3})\)?[ .-]?(\d{3})[ .-]?(\d{4})$/" required mongoose-error>
+                                                <span style="color:red" ng-show="form.phoneNumber.$touched && form.phoneNumber.$invalid">
+                                                    <span style="color:red" class="error" ng-show="form.phoneNumber.$error.required">
+                                                        Phone Number is required!</span>
+                                                <span style="color:red" class="error" ng-show="form.phoneNumber.$error.pattern"> 
+                                                        Enter valid phoneNumber!</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/persons.svg" class="img-fluid"></span>
+                                                <select type="text" placeholder="Select Occupation" id="" class="form-control" ng-options="result for result in $ctrl.employeeCategory" ng-model="$ctrl.employee.occupation" name="role">
+                                                    <option value="">--Select Category--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/date.svg" class="img-fluid"></span>
+                                                <datepicker date-format="dd MMM yyyy">
+                                                    <input type="text" class="form-control" placeholder="Joining Date" ng-model="$ctrl.employee.fromDate" required mongoose-error>
+                                                </datepicker>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="input-group mb-1" ng-init="$ctrl.gender='MALE'">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/persons.svg" class="img-fluid"></span>
+                                                <input id="gender" type="radio" name="gender" value="MALE" ng-model="$ctrl.gender">
+                                                <label for="radio1"><span><span></span></span>Male</label>
+                                                <input id="gender" type="radio" name="gender" value="FEMALE" ng-model="$ctrl.gender">
+                                                <label for="radio1"><span><span></span></span>Female</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/amount.svg" class="img-fluid"></span>
+                                                <input type="number" class="form-control" name="salary" placeholder="Enter Salary" ng-model="$ctrl.employee.salary" required mongoose-error>
+                                                <span style="color:red" class="error" ng-show="form.salary.$touched && form.salary.$invalid">
+                                                    <span class="error" ng-show="form.salary.$error.required">Salary is required</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/date.svg" class="img-fluid"></span>
+                                                <datepicker date-format="dd MMM yyyy">
+                                                    <input type="text" class="form-control" placeholder="Enter Salary Date" ng-model="$ctrl.employee.salaryDate" required mongoose-error>
+                                                </datepicker>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 text-xs-center">
+                                            <div class="input-group mb-1">
+                                                <button data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" class="btn btn-primary" type="button" ng-click="$ctrl.onRegister(form)" ng-disabled="$ctrl.employee.Firstname==null || $ctrl.employee.Lastname==null || $ctrl.employee.PhoneNumber==null || $ctrl.employee.EmailId==null || $ctrl.gender==null || 
+                                                $ctrl.employee.occupation==null || $ctrl.employee.fromDate== null ||
+                                                $ctrl.employee.salary== null || $ctrl.employee.salaryDate == null " required>Submit
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="collapse" id="collapseExample1">
+        <div ng-show="$ctrl.employeeDetailsShow" class="row mar-t-30">
+            <div class="col-sm-11 mar-b-20">
+                <h5 class="card-title mb-10">{{$ctrl.selectedCategory}} DETAILS</h5>
+            </div>
+            <div ng-repeat=" employeecard in $ctrl.employeeDetails">
+                <div class="col-md-4 col-sm-4">
+                    <div class="social-box box">
+                        <img src="{{employeecard.userinfo[0].imageUrl}}" width="200px" height="200px">
+                        <br>
+                        <br>
+                        <table style="margin-left:10px ">
+                            <tr>
+                                <td>Name</td>
+                                <td> : {{employeecard.firstName}} {{employeecard.lastName}}</td>
+                            </tr>
+                            <tr>
+                                <td>Phone </td>
+                                <td> : {{employeecard.phoneNumber}}</td>
+                            </tr>
+                            <tr>
+                                <td>Active from </td>
+                                <td>: {{employeecard.fromDate | date : "dd-MMM-yyyy"}}</td>
+                            </tr>
+                        </table>
+                        <br>
+                        <br>
+                        <div style="padding-bottom: 10px">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="color:#2196F3" href="#" data-toggle="modal" data-target="#myModal" ng-click="$ctrl.employeeEdit(employeecard)">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a style="color:#2196F3" href="#" data-toggle="modal" data-target="#myModalView" ng-click="$ctrl.employeeEdit(employeecard)">View</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a style="color:#2196F3" href="#" data-toggle="modal" data-target="#myModalAssign" ng-click="$ctrl.employeeAssign(employeecard)">Assign</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <!-- TO EDIT EMPLOYEE DETAILS -->
+        <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <img src="{{$ctrl.employeecard.userinfo[0].imageUrl}}" height="200px">
+                        <h3 class="modal-title" id="modaltitle">Employee Update Form</h3>
+                    </div>
+                    <div class="modal-body" id="modalbody">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/user.svg" class="img-fluid"></span>
+                                    <p class="form-control" ng-readonly="true">{{$ctrl.employeecard.firstName }}</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/mobile.svg" class="img-fluid"></span>
+                                    <input class="form-control" placeholder="Phone Number" ng-model=' $ctrl.editPhoneNumber  ' ng-value='$ctrl.employeecard.phoneNumber'>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/date.svg" class="img-fluid"></span>
+                                    <datepicker date-format="dd MMM yyyy">
+                                        <input type="text" class="form-control" placeholder="To Date" ng-value=' $ctrl.employeecard.toDate | date:"dd MM yyyy" ' ng-model='$ctrl.editToDate' required mongoose-error>
+                                    </datepicker>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="input-group mb-1"> <span class="input-group-addon"><img src="assets/images/avatars/amount.svg" class="img-fluid"></span>
+                                    <input type="number" placeholder="Salary" class="form-control" ng-value='$ctrl.employeecard.salary' placeholder="salary" ng-model=' $ctrl.editSalary ' required mongoose-error>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/date.svg" class="img-fluid"></span>
+                                    <datepicker date-format="dd MMM yyyy">
+                                        <input type="text" class="form-control" placeholder="Salary Date" ng-value='$ctrl.employeecard.salaryDate | date:"dd MM yyyy"' ng-model="$ctrl.editSalaryDate" required mongoose-error>
+                                    </datepicker>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <buttton class="btn btn-primary" ng-click='$ctrl.setEmployeeToDate()'> Update </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- TO VIEW EMPLOYEE DETAILS -->
+        <div class="modal" id="myModalView" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <img src="{{$ctrl.employeecard.userinfo[0].imageUrl}}" height="200px"></span>
+                        <h3 class="modal-title" id="modaltitle">Employee Details</h3>
+                    </div>
+                    <div class="modal-body" id="modalbody">
+                        <table>
+                            <tr>
+                                <td>Name</td>
+                                <td> : <strong>{{$ctrl.employeecard.firstName}}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>ph No </td>
+                                <td> : <strong>{{$ctrl.employeecard.phoneNumber}}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Status </td>
+                                <td>: <strong>{{$ctrl.employeecard.status}}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>From Date</td>
+                                <td> : <strong>{{$ctrl.employeecard.fromDate |date:'dd-MM-yyyy'}}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>To Date </td>
+                                <td> : <strong>{{$ctrl.employeecard.toDate |date:'dd-MM-yyyy'}}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Salary </td>
+                                <td> : <strong>{{$ctrl.employeecard.salary}}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Sal Date </td>
+                                <td> : <strong> {{$ctrl.employeecard.salaryDate |date:'dd-MM-yyyy'}}</strong></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- TO ASSIGN FOR EMPLOYEE -->
+    <div class="modal" id="myModalAssign" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img src="{{$ctrl.employeecard.userinfo[0].imageUrl}}" height="200px"></span>
+                    <h3 class="modal-title" id="modaltitle"> Assign Complaint</h3>
+                </div>
+                <div class="modal-body" id="modalbody">
+                    <table class="table" width="100%">
+                        <thead>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Assign</th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="employeeComplaintsList in $ctrl.employeeTypeComplaintsList">
+                                <td>{{employeeComplaintsList.title}}</td>
+                                <td>{{employeeComplaintsList.complaintdescription}}</td>
+                                <td><a href="#" ng-click="$ctrl.employeeCompliantAssign(employeeComplaintsList,$ctrl.employeecard)">Assign</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div ng-include="'components/common/bottom.html'"> </div>

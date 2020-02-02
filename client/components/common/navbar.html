@@ -1,0 +1,94 @@
+<header class="navbar">
+    <div class="container-fluid">
+        <button class="navbar-toggler hidden-lg-up" type="button">&#9776;</button>
+        <a class="navbar-brand" href="/"></a>
+
+        <ul class="nav navbar-nav pull-left hidden-md-down px-2" ng-if="sidenavbar.role=='RESIDENT'">
+            <li class="nav-item px-1">
+                <a class="nav-link" href="/dashboard">Overview</a>
+            </li>
+            <li class="nav-item px-1">
+                <a class="nav-link" href="/dashboard/expenses">Expenses</a>
+            </li>
+            <li class="nav-item px-1">
+                <a class="nav-link" href="/dashboard/userservices">Services</a>
+            </li>
+            <li class="nav-item px-1">
+                <a class="nav-link" href="/dashboard/complaint">Complaints</a>
+            </li>
+            <li class="nav-item px-1">
+                <a class="nav-link" href="/dashboard/amenitiesbooking">AmenityBooking</a>
+            </li>
+            <li class="nav-item px-1">
+                <a class="nav-link" href="/dashboard/payment">Payments</a>
+            </li>
+        </ul>
+        <!-- Employee NavBar Starts Here -->
+        <ul class="nav navbar-nav" style="padding-left: 800px" ng-if="sidenavbar.role=='EMPLOYEE'">
+            <li class="nav-item px-1">
+                <a class="nav-link" ng-if="sidenavbar.employeeType != 'SECURITY'" href="/employeedashboard">Complaints</a>
+            </li>
+            <li class="nav-item px-1">
+                <a class="nav-link" ng-if="sidenavbar.employeeType == 'SECURITY'" href="/employeedashboard/visitors">Security</a>
+            </li>
+        </ul>
+        <!-- Employee Ends Here -->
+       
+        <!-- SideNavbar Starts Here -->
+        <ul class="nav navbar-nav" style="padding-left: 650px" ng-if="sidenavbar.role=='SERVICE_PROVIDER'">
+            <li class="nav-item px-1">
+                <a class="nav-link" href="/servicesdashboard">Overview</a>
+            </li>
+            <li class="nav-item px-1">
+                <a class="nav-link" href="/servicesdashboard/orders">Orders</a>
+            </li>
+            <li class="nav-item px-1">
+                <a class="nav-link" href="/servicesdashboard/payments">Payments</a>
+            </li>
+        </ul>
+        <!-- SideNavbar ends Here -->
+        
+        <ul id="adminnavtop" class="nav navbar-nav pull-right hidden-md-down px-2">
+            <li class="nav-item px-1">
+                <a class="nav-link" ng-if="sidenavbar.role=='COMMUNITY_ADMIN'" href="/dashboard/settings">Settings</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" ng-click="sidenavbar.notifCount()" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="icon-bell"></i><span class="tag tag-pill tag-danger">{{sidenavbar.count}}</span></a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="/dashboard/notifications" ng-repeat="briefNotif in sidenavbar.getNotificationsArray">
+                        <strong>{{briefNotif.title}}</strong>
+                        <br>
+                        <medium>{{briefNotif.description|limitTo:9}}</medium>
+                        <br>
+                        <small class="text-muted mr-1">
+                <strong ng-show=" '{{briefNotif.isPoll}}' == 'true'"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>&nbsp;Polling Status:Yes</strong>
+                <strong ng-show=" '{{briefNotif.isPoll}}' == 'false'"><i class="fa fa-thumbs-down" aria-hidden="true"></i>&nbsp;
+                Polling Status:No
+                </strong>
+               </small>
+                        <hr>
+                    </a>
+                    <a class="col-sm-12 text-xs-center" href="/dashboard/notifications">See More Notifications</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout"><i class="icon-power"></i></a>
+            </li>
+            <li class="nav-item px-1">
+                <a href="/dashboard/profile">
+                    <img src="{{sidenavbar.imager}}" style="height: 50px;width: 60px; border-radius: 25px">
+                </a>
+            </li>
+        </ul>
+
+    </div>
+
+    <script ng-if="sidenavbar.role == 'COMMUNITY_ADMIN'" type="text/javascript">
+        $(document).ready(function() {
+            $('#adminnavtop a').click(function() {
+                $('a').removeClass("selectednavtab");
+            });
+        });
+    </script>
+    
+</header>

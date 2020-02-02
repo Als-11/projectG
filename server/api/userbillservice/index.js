@@ -1,0 +1,19 @@
+'use strict';
+
+import * as auth from '../../auth/auth.service';
+
+var express = require('express');
+var controller = require('./userbillservice.controller');
+
+var router = express.Router();
+
+router.get('/', controller.index);
+router.get('/:id', controller.show);
+router.post('/getbills', controller.getbills);//get user speific bills
+router.post('/saveBillservice', controller.saveBillservice);
+router.post('/updateUserBillDetails', controller.updateUserBillDetails);
+router.put('/:id', controller.update);
+router.patch('/:id', controller.update);
+router.delete('/:id', controller.destroy);
+
+module.exports = router;

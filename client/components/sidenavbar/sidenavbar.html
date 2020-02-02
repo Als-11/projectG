@@ -1,0 +1,16 @@
+<div ng-class="sidenavbar" ng-init="sidenavbar.methods()"  ng-if="sidenavbar.isLoggedIn()" >
+<!-- Navbar -->
+<link rel="stylesheet" href="assets/css/style.scss">
+<div ng-include="'components/common/navbar.html'"></div>
+
+<!-- Navigation -->
+<div ng-if="sidenavbar.role =='COMMUNITY_ADMIN'" ng-include="'components/common/sidebar-nav.html'"></div>
+</div>
+ <script ng-if="sidenavbar.role == 'RESIDENT' || sidenavbar.role == 'EMPLOYEE' || sidenavbar.role=='SERVICE_PROVIDER' || sidenavbar.role=='GUWHA_EMPLOYEE' || sidenavbar.role=='SUPER_ADMIN'" >
+        document.body.className = document.body.className.replace("sidebar-nav","");
+    </script>
+    <script ng-if="sidenavbar.role == 'COMMUNITY_ADMIN'">
+        if(document.body.className.indexOf(" sidebar-nav") == -1) {
+            document.body.className += " sidebar-nav";
+        }
+    </script> 

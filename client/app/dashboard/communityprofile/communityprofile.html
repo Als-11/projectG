@@ -1,0 +1,103 @@
+<div class="page-content">
+    <div class="col-md-12 mar-t-50">
+        <div class="master-box">
+            <div class="regi-section">
+                <div class="col-md-10 registration">
+                    <div class="panel panel-default round ">
+                        <div class="panel-heading">
+                            <h3> <b>Blocks</b></h3>
+                        </div>
+                        <div class="panel-body pad-30">
+                            <form class="form" name="form" novalidate>
+                                <div class="form-group">
+                                    <input type="text" autocomplete="off" placeholder="Enter your blockname" name="blockName" class="form-control" ng-model="$ctrl.user.blocksName" required mongoose-error/>
+                                </div>
+                                <div>
+                                    <button class="btn btn-default" ng-click="$ctrl.addBlock($ctrl.user.blocksName)" ng-disabled="$ctrl.user.blocksName == null">Add Block</button>
+                                </div>
+                                </br>
+                                </br>
+                                </br>
+                                </br>
+                                <!--Displaying blocks in a table -->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table ng-table="$ctrl.blockTable" class="table table-bordered table-hover table-condensed editable-table demoTable" ng-form="demo.tableForm" disable-filter="demo.isAdding" demo-tracked-table="demo.tableTracker">
+                                            <div>
+                                                <tr ng-repeat="row in $data" ng-form="rowForm" demo-tracked-table-row="row">
+                                                    <div>
+                                                        <td title="'Block_Names'" filter="{blockName: 'text'}" sortable="'blockName'" ng-switch="row.isEditing" ng-class="name.$dirty ? 'bg-warning' : ''" ng-form="blockName" demo-tracked-table-cell>
+                                                            <span ng-switch-default class="editable-text">{{row.blockName}}</span>
+                                                            <div class="controls" ng-class="blockName.$invalid && blockName.$dirty ? 'has-error' : ''" ng-switch-when="true">
+                                                                <input type="text" name="blockName" ng-model="$ctrl.row.blocksName" class="editable-input form-control input-sm" required autocomplete="off" />
+                                                            </div>
+                                                        </td>
+                                                    </div>
+                                                    <div>
+                                                        <td>
+                                                            <button class="btn btn-primary btn-sm" ng-click="$ctrl.save(row, rowForm)" ng-if="row.isEditing" ng-disabled="rowForm.$pristine || rowForm.$invalid"><span class="glyphicon glyphicon-ok"></span></button>
+                                                            <button class="btn btn-default btn-sm" ng-click="$ctrl.cancel(row, rowForm)" ng-if="row.isEditing"><span class="glyphicon glyphicon-remove"></span></button>
+                                                            <!--
+                                            <button class="btn btn-default btn-sm" ng-click="row.isEditing = true" ng-if="!row.isEditing"><span class="glyphicon glyphicon-pencil"></span></button> -->
+                                                            <button class="btn btn-danger btn-sm" ng-click="$ctrl.deleteBlock(row)" ng-if="!row.isEditing"><span class="glyphicon glyphicon-trash"></span></button>
+                                                        </td>
+                                                    </div>
+                                                </tr>
+                                            </div>
+                                        </table>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="regi-section1">
+                <div class="col-md-10 registration">
+                    <div class="panel panel-default round ">
+                        <div class="panel-heading">
+                            <h3>Add Floors</h3>
+                        </div>
+                        <form class="form" name="form" novalidate>
+                            </br>
+                            <!-- This lists the available block names -->
+                            select your BlockNumber &nbsp &nbsp
+                            <select id="blocks" ng-model="$ctrl.user.userSelectedBlock" ng-options="option.blockName for option in $ctrl.blocksList" ng-change="$ctrl.selectBlockName($ctrl.user.userSelectedBlock)">
+                                <option value="">Select ur block</option>
+                            </select>
+                    </div>
+                    <input type="number" placeholder="Enter Floor Number" name="floorNumber" class="form-control" ng-model="$ctrl.user.floorNumber" required mongoose-error/>
+                    <input type="text" placeholder="Enter your flatNumbers as ex: 000,111,223" name="flatnumbers" class="form-control" ng-model="
+                             $ctrl.user.flatNumbers" required mongoose-error/>
+                </div>
+            </div>
+            <table ng-table="$ctrl.floorTable" class="table table-bordered table-hover table-condensed editable-table demoTable" ng-form="demo.tableForm" disable-filter="demo.isAdding" demo-tracked-table="demo.tableTracker">
+                <tr ng-repeat="row in $data" ng-form="rowForm" demo-tracked-table-row="row">
+                    <td title="'floorNumber'" filter="{floorNumber: 'number'}" sortable="'name'" ng-switch="row.isEditing" ng-class="name.$dirty ? 'bg-warning' : ''" ng-form="name" autocomplete="off" demo-tracked-table-cell>
+                        <span ng-switch-default class="editable-text">{{row.floorNumber}}</span>
+                        <div class="controls" ng-class="name.$invalid && name.$dirty ? 'has-error' : ''" ng-switch-when="true">
+                            <input type="number" name="name" ng-model="row.floorNumber" class="editable-input form-control input-sm" required />
+                        </div>
+                    </td>
+                    <td title="'flatNumber'" filter="{flatNumber: 'text'}" sortable="'name'" ng-switch="row.isEditing" ng-class="age.$dirty ? 'bg-warning' : ''" ng-form="flatNumber" demo-tracked-table-cell autocomplete="off">
+                        <span ng-switch-default class="editable-text">{{row.flatNumbers.toString()}}</span>
+                        <div class="controls" ng-class="age.$invalid && age.$dirty ? 'has-error' : ''" ng-switch-when="true">
+                            <input type="text" name="name" ng-model="row.flatNumbers" class="editable-input form-control input-sm" required/>
+                        </div>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" ng-click="demo.save(row, rowForm)" ng-if="row.isEditing" ng-disabled="rowForm.$pristine || rowForm.$invalid"><span class="glyphicon glyphicon-ok"></span></button>
+                        <button class="btn btn-danger btn-sm" ng-click="$ctrl.deleteFloor(row,$ctrl.user.x)" ng-if="!row.isEditing"><span class="glyphicon glyphicon-trash"></span></button>
+                    </td>
+                </tr>
+            </table>
+            <button class="btn btn-default" type="submit" name="submit" ng-click="$ctrl.addFloor($ctrl.user.floorNumber, $ctrl.user.flatNumbers,$ctrl.user.x)" ng-disabled="$ctrl.user.floorNumber==null || $ctrl.user.flatNumbers==null" required>AddFloor
+            </button>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>

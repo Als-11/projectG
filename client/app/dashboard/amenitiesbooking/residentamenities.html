@@ -1,0 +1,129 @@
+
+<div class="main">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"> <a href="/dashboard"> Home</a></li>
+        <li class="breadcrumb-item"> Amenities Booking</li>
+        <li class="breadcrumb-item"><a href="/dashboard/amenitiesbooking/amenitieshistory">Booking History</a></li>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card-deck-wrapper text-xs-center">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card card-medium">
+                        <div class="card-block">
+                            <h5 class="card-title mb-10"> Book Your Amenities</h5>
+                        </div>
+                        <hr class="mb-2">
+                        <div class="row">
+                            <div class="col-xs-7">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/amenity_icon.svg" class="img-fluid"></span>
+                                    <select type="text" class="form-control" placeholder="Select Your Amenity" ng-options="option for option in $ctrl.amenitylist" ng-model="$ctrl.amenityName" ng-change="$ctrl.getAmenityDetails()" required mongoose-error>
+                                        <option value="">--Select Your Amenity--</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-7">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/date.svg" class="img-fluid"></span>
+                                    <datepicker date-format="dd MMM yyyy" date-min-limit="{{$ctrl.limit}}">
+                                        <input type="text" class="form-control" placeholder="Select Your desired Date" ng-model="$ctrl.startDate" required mongoose-error>
+                                    </datepicker>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 text-xs-center">
+                                <div class="input-group mb-1">
+                                    <button class="btn btn-primary" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" type="button" ng-click="$ctrl.getBookings()" ng-disabled="$ctrl.amenityName==null || $ctrl.startDate==null" required>
+                                        Availability
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-show="$ctrl.buttonsShow ">
+                <div class="col-md-6">
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-block text-xs-center">
+                            <div class="card-deck">
+                                <h4> <b> Your TimeSlots </b></h4>
+                            </div>
+                            <div>
+                               <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                                    <div class="btn-group" role="group" aria-label="First group">
+                                      <button type="button" ng-show="$ctrl.hourbuttonsShow" ng-repeat="x in $ctrl.solution track by $index"  class="btn btn-secondary mar-20" ng-click="$ctrl.bookAmenity(x,$index)" style="background-color:{{x.colours}}; color: white" ng-disabled="x.status">{{x.time}}
+                                        </button>
+                                         <button type="button" ng-show="$ctrl.daybuttonsShow" ng-repeat="x in $ctrl.solution track by $index" style="background-color:{{x.colours}}; color: white; width: 200px; margin-left: 170px" ng-click="$ctrl.bookAmenity(x)" ng-disabled="x.status">
+                                    {{$ctrl.startDate}}</button>
+                                    </div>
+                                </div>
+
+                              
+                            <br>
+                            <button type="button" class="btn btn-success" ng-disabled="$ctrl.startTime==null||$ctrl.endTime==null" ng-click="$ctrl.makeBooking()" style="float: right;">Book</button>
+                            <button type="button" class="btn btn-info" ng-disabled="$ctrl.startTime==null||$ctrl.endTime==null" ng-click="$ctrl.cancelTimBook()" style="float: left;">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-big ">
+ 
+                        <div class="card-block">
+                            <div class="col-sm-11">
+                                <h5 class="card-title mb-10">Booking History</h5>
+                            </div>
+                            <table class="table table-hover ">
+                                <thead>
+                                    <tr>
+                                        <th class="text-xs-left">AmenityName</th>
+                                        <th class="text-xs-center">BlockedFrom</th>
+                                        <th class="text-xs-center">BLockedTo</th>
+                                        <th class="text-xs-center">BLockedDate</th>
+                                        <th class="text-xs-left">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+ 
+                                    <tr dir-paginate="user in $ctrl.bookingHistory |itemsPerPage:10"> 
+                                        <td class="text-xs-left">  
+                                            {{user.RespectiveAmenity[0].amenityName}}
+                                        </td>
+                                        <td class="text-xs-center">
+                                            {{user.blockedFrom|date:'dd/MM/yyyy @ h:mma'}}
+                                        </td>
+                                        <td class="text-xs-center">
+                                            {{user.blockedTo|date:'dd/MM/yyyy @ h:mma'}}
+                                        </td>
+                                        <td class="text-xs-center">
+                                            {{user.blockedOn|date:'dd/MM/yyyy @ h:mma'}}
+                                        </td>
+                                        <td class="text-xs-left">
+                                            {{user.approvalStatus}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+                            </dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+    </div>
+</div>
+<div ng-include="'components/common/bottom.html'"> </div>

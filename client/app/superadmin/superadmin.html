@@ -1,0 +1,102 @@
+
+<div class="main">
+    <!--     <div ng-include="'components/common/breadcumb.html'"> </div> -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="breadcrumb-item active">dashboard</li>
+    </ol>
+    <!--     <div ng-include="'components/common/breadcumb.html'"> </div> -->
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+        <div class="row">
+                <div class="col-md-12">
+                    <div class="card-deck-wrapper text-xs-right">
+                        <div class="card-deck">
+                          <button  data-toggle="modal" data-target="#addEmployee">Add Employee</button>
+                       </div>
+                    </div>
+               </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-10">COMMUNITIES</h5>
+                </div>
+                <table class="table table-hover mb-0 hidden-sm-down">
+
+                    <thead>
+                        <tr>
+                            <th class="text-xs-center">#</th>
+                            <th class="text-xs-left">Community Name</th>
+                            <th class="text-xs-left">Address</th>
+                            <th class="text-xs-center">TotalBlocks</th>
+                            <!--    <th>Total Flats</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="communityName in $ctrl.sairam">
+                            <th  class="text-xs-center"scope="row">{{ $index + 1 }}</th>
+                            <td class="text-xs-left">{{communityName.communityName}}<!--  ({{communityName.userscount}}) --></td>
+                            <td class="text-xs-left"> {{communityName.address.address1}},{{communityName.address.locality}}, {{communityName.address.city}}
+                            </td>
+                            <td class="text-xs-center">{{communityName.sai.length}}</td>
+                            <!-- <td>{{communityName.blocks.floors}}</td> -->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+ <div class="modal" id="addEmployee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="modaltitle">Employee Registration Form</h3>
+                    </div>
+                    <div class="modal-body" id="modalbody">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/user.svg" class="img-fluid"></span>
+                                   <input class="form-control" type="text" placeholder="First Name" ng-model="$ctrl.sfirstname">
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/user.svg" class="img-fluid"></span>
+                                   <input class="form-control" type="text"  placeholder="Last Name" ng-model="$ctrl.lastname">
+                                </div>
+                            </div>
+                            </div>
+                             <div class="row">
+                            <div class="col-xs-6">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/mobile.svg" class="img-fluid"></span>
+                                    <input class="form-control" placeholder="Email" ng-model="$ctrl.email">
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                            <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/mobile.svg" class="img-fluid"></span>
+                                    <input class="form-control" type="text"  placeholder="PhoneNUmber" ng-model="$ctrl.phoneNumber">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/date.svg" class="img-fluid"></span>
+                                   <select  class="form-control" ng-options="result for result in $ctrl.employeeCategory" ng-model="$ctrl.employeesCategory">
+                                    <option value="">--Select Employee Category--</option>
+                                 </select>
+                                </div>
+                            </div> 
+                    </div>
+                   
+                        <buttton class="btn btn-primary" ng-click='$ctrl.saveSuperAdminEmployee()'> Save </button>
+                    </div>
+                </div>
+            </div>
+        </div>

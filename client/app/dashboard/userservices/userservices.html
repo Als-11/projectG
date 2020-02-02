@@ -1,0 +1,187 @@
+
+<!-- Main content -->
+<div class="main">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+        <li class="breadcrumb-item active">Services
+        </li>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+           <div class="row">
+                <div class="col-md-12">
+                    <div class="card-deck-wrapper text-xs-right">
+                        <div class="card-deck">
+                          <button  data-toggle="modal" data-target="#addServicesFromPage">Add Services</button>
+                       </div>
+                    </div>
+               </div>
+            </div>
+            <!-- list of servicescard -->
+        <div class="row" >
+                    <div class="col-md-12">
+                        <div class="col-md-4" ng-repeat="listofservices in $ctrl.listOfServicesArray">
+                            <div class="card">
+                               <div class="card-block">
+                                <div class="card-header">Your Services</div>
+                                   <div class="card-block">
+                                    <div class="h4 mb-0"  ng-click="$ctrl.selectedService(listofservices)">{{listofservices._id.serviceCategory}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+               <!--         Calender code starts here -->  
+<div class="row" >
+<div class="col-md-12">
+   <div class="card" >
+        <div class="card-block">
+        <calendar selected="day"></calendar>
+        </div>
+        
+    <!-- main -->
+    </div>
+</div>
+
+
+
+<div class="modal" id="addServicesFromPage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6 class="modal-title" id="modaltitle"> Your  Services </h6>
+
+                        <div class="modal-body" id="modalbody">
+                       <!--             services Card -->
+                  <div class= "row">
+                    <div class="col-sm-6 col-lg-4" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"  ng-repeat="user in $ctrl.availableServices track by $index">
+                <div class="card  mar-t-10" ng-click="$ctrl.serviceproviderDetails(user)">
+                    <div class="card-block text-xs-center" style="padding-top: 60px">
+                        <img ng-if='user=="Water Service"' src="assets/images/avatars/water.svg" height="60px" width="60px">
+                        <img ng-if='user=="Milk Service"' src="assets/images/avatars/milk.svg" height="60px" width="60px">
+                        <img ng-if='user=="Laundry"' src="assets/images/avatars/Laundry.svg" height="60px" width="60px">
+                        <img ng-if='user=="News Paper"' src="assets/images/avatars/news paper.svg" height="60px" width="60px">
+                        <div style="padding-top: 30px" class="text-muted small text-uppercase font-weight-bold">
+                            <h6>{{user}}</h6></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    
+        <!--               services categories starts here -->
+    <div class="collapse" id="collapseExample">
+    <div class="row">
+     <div class="col-sm-11 mar-b-20">
+                    <h5 class="card-title mb-10">{{$ctrl.selSerproId}} Provider</h5>
+                </div>
+      <!--           <div ng-repeat="serviceApprovals in serviceProviderArray"> -->
+                    <div class="col-md-6 col-sm-6" ng-repeat="serviceApprovals in $ctrl.serviceProviderArray">
+                        <div class="social-box box">
+                            <i class="fa fa-facebook" style="font-size: 0px; color:#3FDAEB; height: 150px"></i>
+                            <br>
+                            <table style="margin-left:10px ">
+                                <tr>
+                                    <td>Name</td>
+                                    <td> : {{serviceApprovals._id.firstName}} {{serviceApprovals._id.lastName}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Phone </td>
+                                    <td> : {{serviceApprovals._id.mobileNumber}}</td>
+                                </tr>
+                                <tr>
+                                   <td>Address</td>
+                                   <td>:{{serviceApprovals._id.address}}</td>
+                                </tr>
+                               <!--  <tr>
+                                    <td>Brands </td>
+                                    <td>: {{serviceApprovals._id.ToTalBrands[0].brandName}}</td>
+                                </tr> -->
+                            </table>
+                            <br>
+                            <br>
+                            <div style="padding-bottom: 10px">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="color:#2196F3" href="#"  ng-click="$ctrl.getTypeServices(serviceApprovals)">SELECT</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a style="color:#2196F3" href="#" data-toggle="modal" data-target="#myModalView">View</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+
+<!--                 serviceRegistration Form --> 
+             <div ng-show="$ctrl.serviceRegistrationForm">
+                <div class="row" >
+                    <div class="col-xs-6">
+                        <div class="input-group mb-1">
+                            <span class="input-group-addon"><img src="assets/images/avatars/groceris.svg" class="img-fluid"></span>
+                            <select type="text" placeholder="Select the Company" id="" class="form-control" ng-options="result for result in $ctrl.serviceTypArray" ng-model="$ctrl.typeService" ng-change="$ctrl.typeSerInfo()" name="role" required>
+                                <option value="">Select The Type</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 text-xs-right">
+                        <div class="input-group mb-1">
+                            <span class="input-group-addon"><img src="assets/images/avatars/rupee.svg" class="img-fluid"></span>
+                            <input type="text" class="form-control"  ng-disabled="true" placeholder="UnitPrice" ng-model="$ctrl.UnitPrice">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="input-group mb-1">
+                            <span class="input-group-addon"><i class="icon-user"></i></span>
+                            <input type="text" placeholder="enter The Quantity" id="" class="form-control" ng-blur="$ctrl.getTotalCost()" ng-model="$ctrl.quantity" required>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 text-xs-right">
+                        <div class="input-group mb-1">
+                            <span class="input-group-addon"><img src="assets/images/avatars/amount.svg" class="img-fluid"></span>
+                            <input type="text" class="form-control" ng-disabled="true" placeholder="TotalCost" ng-model="$ctrl.totalCost">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="input-group mb-1">
+                            <span class="input-group-addon"><img src="assets/images/avatars/date.svg" class="img-fluid"></span>
+                            <datepicker date-format="dd MMM yyyy"  >
+                            <input type="text" placeholder="FromDate" id="" class="form-control" ng-model="$ctrl.fromDate" required>
+                            </datepicker>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 text-xs-right">
+                        <div class="input-group mb-1">
+                            <span class="input-group-addon"><img src="assets/images/avatars/date.svg" class="img-fluid"></span>
+                            <datepicker date-format="dd MMM yyyy"  >
+                            <input type="text" class="form-control" placeholder="To Date" ng-model="$ctrl.toDate">
+                            </datepicker>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 text-xs-center">
+                        <div class="input-group mb-1">
+                            <button data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" class="btn btn-primary" type="button" ng-click="$ctrl.userSaveService()" required>
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+                         </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+ 
+
+

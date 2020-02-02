@@ -1,0 +1,70 @@
+<div class="sidebar">
+    <nav class="sidebar-nav">
+        <ul id="adminsidenav" class="nav">
+            <li class="nav-item">
+                <a class="nav-link" ng-if="sidenavbar.role ==='COMMUNITY_ADMIN'|| sidenavbar.role==='RESIDENT'" href="/dashboard"><img src="assets/images/avatars/dashboard_white_icon.svg" height="20px" width="20px">&nbsp;&nbsp;{{ 'DASHBOARD' | translate }} </a>
+            </li>
+            <li class="divider"></li>
+            <li class="nav-item nav-dropdown" ng-class="{open: $state.includes('app.components')}">
+                <a class="nav-link" ng-class="{active: $state.includes('app.components')}" ng-if="sidenavbar.role =='COMMUNITY_ADMIN'" href="/dashboard/employee"><img src="assets/images/avatars/Employee_white_icon.svg" height="20px" width="20px">&nbsp;&nbsp;Employees </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" ng-class="{active: $state.includes('app.components')}" ng-if="sidenavbar.role ==='COMMUNITY_ADMIN'|| sidenavbar.role==='RESIDENT'" href="/dashboard/expenses"><img src="assets/images/avatars/expense1 (1).svg" height="20px" width="20px">&nbsp;&nbsp;Expenses </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" ng-class="{active: $state.includes('app.components')}" ng-if="sidenavbar.role ==='COMMUNITY_ADMIN'" href="/dashboard/services"><img src="assets/images/avatars/milk (1).svg" height="20px" width="20px">&nbsp;&nbsp;Services </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" ng-class="{active: $state.includes('app.components')}" ng-if="sidenavbar.role ==='RESIDENT'" href="/dashboard/userservices"><img src="assets/images/avatars/amenity_white_icon.svg" height="20px" width="20px">&nbsp;&nbsp;Services </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" ng-class="{active: $state.includes('app.components')}" ng-if="sidenavbar.role ==='COMMUNITY_ADMIN'|| sidenavbar.role==='RESIDENT'" href="/dashboard/complaint"><img src="assets/images/avatars/complaints_white_icon.svg" height="20px" width="20px">&nbsp;&nbsp;Complaints </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" ng-class="{active: $state.includes('app.components')}" ng-if="sidenavbar.role ==='COMMUNITY_ADMIN'" href="/dashboard/amenitiesbooking"><img src="assets/images/avatars/amenity_white_icon.svg" height="20px" width="20px">&nbsp;&nbsp;Amenity Booking </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" ng-class="{active: $state.includes('app.components')}" ng-if="sidenavbar.role ==='COMMUNITY_ADMIN'" href="/dashboard/payment"><img src="assets/images/avatars/rupee (1).svg" height="20px" width="20px">&nbsp;&nbsp;Payments</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" ng-class="{active: $state.includes('app.components')}" ng-if="sidenavbar.role ==='COMMUNITY_ADMIN'" href="/dashboard/discussionforums"><img src="assets/images/avatars/discussion_white_icon.svg" height="20px" width="20px">&nbsp;&nbsp;Discussion Forums </a>
+            </li>
+            <!--             EMPLOYEE NAVBAR STARTS HERE -->
+            <!-- <li class="nav-item">
+                <a class="nav-link"   ng-if="sidenavbar.role =='EMPLOYEE'" href="/employeedashboard"><i class="icon-speedometer"></i>{{ 'DASHBOARD' | translate }} </a>
+            </li>
+            <li class="divider"></li>
+            <li class="nav-item">
+                <a class="nav-link" ng-class="{active: $state.includes('app.components')}" ng-if="sidenavbar.role ==='EMPLOYEE'" href="/employeedashboard/securitycomplaints"><img src="assets/images/avatars/amenity_white_icon.svg" height="20px" width="20px">Complaints </a>
+            </li>
+            <li class="nav-item" ><!ng-show="{{'$ctrl.employeeType'}} =='SECURITY'" -->
+            <!-- <a class="nav-link"  ng-class="{active: $state.includes('app.components')}" ng-if="sidenavbar.role ==='EMPLOYEE'" href="/employeedashboard/visitors"><i class="icon-puzzle"></i>Visitors </a>
+            </li> -->
+            <!-- serviceprovider navbar -->
+            <li class="nav-item">
+                <a class="nav-link" ng-if="sidenavbar.role ==='SERVICE_PROVIDER'" href="/servicesdashboard"><i class="icon-speedometer"></i>{{ 'DASHBOARD' | translate }} </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" ng-class="{active: $state.includes('app.components')}" ng-if="sidenavbar.role ==='SERVICE_PROVIDER'" href="/servicesdashboard/payments"><i class="icon-puzzle"></i>Payments</a>
+            </li>
+        </ul>
+    </nav>
+
+    <script ng-if="sidenavbar.role == 'COMMUNITY_ADMIN'" type="text/javascript">
+        $(document).ready(function() {
+            //$('#adminsidenav a').first().addClass("selectednavtab");
+            $('#adminsidenav a').click(function() {
+                $('a').removeClass("selectednavtab");
+                $(this).addClass("selectednavtab");
+            });
+        });
+    </script>
+    <!-- <script ng-if="sidenavbar.role == 'RESIDENT'">
+        document.body.className = document.body.className.replace("sidebar-nav","");
+    </script>
+    <script ng-if="sidenavbar.role == 'COMMUNITY_ADMIN'">
+        if(document.body.className.indexOf(" sidebar-nav") == -1) {
+            document.body.className += " sidebar-nav";
+        }
+    </script> -->
+</div>

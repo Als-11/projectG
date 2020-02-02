@@ -1,0 +1,25 @@
+'use strict';
+
+import mongoose from 'mongoose';
+var Schema = mongoose.Schema;
+import autoIncrement from 'mongoose-auto-increment';
+
+var SlotSchema = new mongoose.Schema({
+  date: Date,
+  sid : [{type : Schema.Types.ObjectId, ref : "Service"}],
+  pid : [{type : Schema.Types.ObjectId, ref : "Party"}],
+  slot10: {type : Boolean, default : true},
+  slot11: {type : Boolean, default : true},
+  slot12: {type : Boolean, default : true},
+  slot1: {type : Boolean, default : true},
+  slot2: {type : Boolean, default : true},
+  slot3: {type : Boolean, default : true},
+  slot4: {type : Boolean, default : true},
+  slot5: {type : Boolean, default : true},
+  slot6: {type : Boolean, default : true},
+  slot7: {type : Boolean, default : true}
+},{
+  timestamps: true
+});
+SlotSchema.index({date: 1, sid: 1});
+export default mongoose.model('Slot', SlotSchema);

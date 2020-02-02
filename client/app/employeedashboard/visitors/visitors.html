@@ -1,0 +1,133 @@
+
+<div class="main">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active">Visitors Management</li>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="card">
+                        <div class="card-block">
+                            <div class="card-header">
+                                ENTRY DETAILS
+                            </div>
+                            <div class="card-block">
+                            <form class="form-horizontal" name="visitorsForm" novalidate>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="input-group mb-1">
+                                            <span class="input-group-addon"><img src="assets/images/avatars/user.svg" class="img-fluid"></span>
+                                            <input type="text" name="name" placeholder="Name Of The Visitor" ng-model="$ctrl.name" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="input-group mb-1">
+                                            <span class="input-group-addon"><img src="assets/images/avatars/persons.svg" class="img-fluid"></span>
+                                            <input type="number" placeholder="No Of Persons" ng-model="$ctrl.alongWith" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="input-group mb-1">
+                                            <span class="input-group-addon"><img src="assets/images/avatars/address city.svg" class="img-fluid"></span>
+                                            <input type="text" placeholder="Flat Number" name="Purpose" ng-model="$ctrl.flatNumber" ng-keyup="$ctrl.flatNumbers()" uib-typeahead="result for result in $ctrl.resultFlatNumberArray" class="form-control" typeahead-min-length="1" typeahead-on-select="$ctrl.floorNumber($ctrl.flatNumber)" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="input-group mb-1">
+                                            <span class="input-group-addon"><img src="assets/images/avatars/visiting purpose.svg" class="img-fluid"></span>
+                                            <input type="text" placeholder="Visiting Purpose" ng-model="$ctrl.purpose"  class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="input-group mb-1">
+                                            <span class="input-group-addon"><img src="assets/images/avatars/vehicle.svg" class="img-fluid"></span>
+                                            <input type="text" name="vehicleno" ng-pattern="/^\s*\w*\s*$/ " placeholder="Visitor Vehicle Number" ng-model="$ctrl.vehicleNo" class="form-control" required>
+                                            <span style="color:red" class="error" ng-show="visitorsForm.vehicleno.$error.pattern || visitorsForm.vehicleno.$error.$invalid ">
+                                                                    Nope! Not A Valid Vehicle Number remove spaces if any</span>
+                                                </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="input-group mb-1">
+                                            <span class="input-group-addon"><img src="assets/images/avatars/mobile.svg" class="img-fluid"></span>
+                                            <input type="number" maxlength="10" placeholder="Phone Number" ng-model="$ctrl.phoneNumber" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <br>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="input-group mb-1 offset-xs-8">
+                                            <a required>RESET</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <a href="#" name="submit" ng-click="$ctrl.addVisitor()" required>IN TIME</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--            table card starts here -->
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <div class="card-header">
+                            <div class="row">
+                            <div class="col-xs-3">
+                                IN-OUT ENTRY DETAILS</div>
+                                <div class="col-xs-3">
+                                 <form class="form-horizontal" name="myform" novalidate>
+                                <div class="input-group mb-1" style="float: right;">
+                                            <span class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></span>
+                                 <input type="text" ng-model="$ctrl.searchtext" class="form-control" ng-keyup="$ctrl.searchVisitorTable()">
+                                 </div>
+                                 </form>
+                                 </div>
+                                 </div>
+                            </div>
+                           
+                            <table class="table table-hover mb-0 hidden-sm-down">
+                                <thead>
+                                    <tr>
+                                        <th class="text-xs-left"> Date </th>
+                                        <th class="text-xs-left"> Visitor Name </th>
+                                        <th class="text-xs-left"> Visitors </th>
+                                        <th class="text-xs-center"> Flat No </th>
+                                        <th class="text-xs-left"> Purpose </th>
+                                        <th class="text-xs-center"> Vehicle No </th>
+                                        <th class="text-xs-center"> In Time </th>
+                                        <th class="text-xs-center"> Out Time </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="visitDetails in $ctrl.visitorslist|itemsPerPage:6" pagination-id="inVisitors">
+                                        <td class="text-xs-left"> {{visitDetails.inTime | date:'dd-M-yyyy'}} </td>
+                                        <td class="text-xs-left"> {{visitDetails.name}} </td>
+                                        <td class="text-xs-left"> {{visitDetails.alongWith}} </td>
+                                        <td class="text-xs-left"> {{visitDetails.blockName}}{{visitDetails.flatNo}} </td>
+                                        <td class="text-xs-left"> {{visitDetails.purpose}} </td>
+                                        <td class="text-xs-center"> {{visitDetails.vehicleNo}} </td>
+                                        <td class="text-xs-center"> {{visitDetails.inTime|date:" hh:mm a"}} </td>
+                                        <td class="text-xs-center" ng-if="visitDetails.outTime" class="text-xs-center"> <a ng-click="$ctrl.updateTime(als)">{{visitDetails.outTime|date:"dd-M-yyyy @ hh:mm a"}}</a>
+                                        </td>
+                                        <td ng-if="!visitDetails.outTime" class="text-xs-center"> <a style="color:#22D1E4" ng-click="$ctrl.visitorsLeft(visitDetails)">OUT</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>&nbsp;&nbsp;&nbsp;
+                            <dir-pagination-controls pagination-id="inVisitors" max-size="5" boundary-links="true" direction-links="false">
+                            </dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+                <div ng-include="'components/common/bottom.html'"> </div>
+
+                   
+                

@@ -1,0 +1,51 @@
+
+<div class="main">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+        <li class="breadcrumb-item active">Inactive Users</li>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-big">
+                        <div class="card-block">
+                            <div class="card-header">
+                                <div class="col-sm-5">
+                                    <h5 class="card-title mb-10">Users Request</h5>
+                                </div>
+                            </div>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="text-xs-left">Name</th>
+                                        <th class="text-xs-left">Block Name</th>
+                                        <th class="text-xs-center">Floor Number</th>
+                                        <th class="text-xs-center">Flat Number</th>
+                                        <th class="text-xs-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="user in $ctrl.approvalsList">
+                                        <td class="text-xs-left">{{user.firstName}}</td>
+                                        <td class="text-xs-left">{{user.blockName}}</td>
+                                        <th class="text-xs-center">{{user.floorNumber}}</th>
+                                        <td class="text-xs-center">{{user.flatNumber}}</td>
+                                        <td class="text-xs-center"><a ng-click="$ctrl.approvedUser(user)">
+                                                <img src="assets/images/avatars/finished.svg" height="20px" width="20px">
+                                            </a>&nbsp;
+                                            <a ng-click="$ctrl.approvedUser(user)">
+                                                <img src="assets/images/avatars/rejected.svg" height="20px" width="20px">
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-include="'components/common/bottom.html'"> </div>

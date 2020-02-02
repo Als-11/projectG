@@ -1,0 +1,52 @@
+<div ng-include="'components/common/navbar.html'"></div>
+<!-- Navigation -->
+<div ng-include="'components/common/sidebar-nav.html'"></div>
+<div class="main">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+        <li class="breadcrumb-item active">Community Members Details</li>
+    </ol>
+    <!--     communitymembers Table -->
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-sm-11">
+                    <div class="card card-block">
+                        <h4 class="card-title"></h4>
+                        <div class="box-body">
+                            <table ng-table="$ctrl.communitymemberstable" class="table table-bordered table-hover table-condensed editable-table demoTable" ng-form="demo.tableForm" disable-filter="demo.isAdding" demo-tracked-table="demo.tableTracker">
+                                <tr ng-repeat="row in $data" ng-form="rowForm" demo-tracked-table-row="row">
+                                    <td title="'Name'" ng-switch="row.isEditing">
+                                        <span ng-switch-default class="editable-text">{{row.name}}</span>
+                                    </td>
+                                    <td title="'PhoneNumber'" ng-switch="row.isEditing">
+                                        <span ng-switch-default class="editable-text">{{row.phoneNumber}}</span>
+                                        <div class="controls" ng-class="name.$invalid && name.$dirty ? 'has-error' : ''" ng-switch-when="true">
+                                            <input type="text" name="name" ng-model="row.phoneNumber" class="editable-input form-control input-sm" required/>
+                                        </div>
+                                    </td>
+                                    <td title="'Designation'" ng-switch="row.isEditing">
+                                        <span ng-switch-default class="editable-text">{{row.roleType}}</span>
+                                    </td>
+                                    <td title="'FromDate'" ng-switch="row.isEditing">
+                                        <span ng-switch-default class="editable-text">{{row.fromDate}}</span>
+                                    </td>
+                                    <td title="'ToDate'" ng-switch="row.isEditing">
+                                        <span ng-switch-default class="editable-text">{{row.toDate}}</span>
+                                        <div class="controls" ng-class="name.$invalid && name.$dirty ? 'has-error' : ''" ng-switch-when="true">
+                                            <input type="date" name="name" ng-model="row.toDate" class="editable-input form-control input-sm" required/>
+                                        </div>
+                                    </td>
+                                    <td title="'Edit'">
+                                        <button class="btn btn-primary btn-sm" ng-click="$ctrl.updateMember(row)" ng-if="row.isEditing" ng-disabled="rowForm.$pristine || rowForm.$invalid"><span style="color: green" class="glyphicon glyphicon-ok"><i class="fa fa-check" aria-hidden="true"></i></span></button>
+                                        <button class="btn btn-primary btn-sm" ng-click="$ctrl.communityMembers()" ng-if="row.isEditing"> <span style="color: brown" class="glyphicon glyphicon-ok">x</span>
+                                        </button>
+                                        <button class="btn btn-default btn-sm" ng-click="row.isEditing = true" ng-if="!row.isEditing"><span style="color:green" class="glyphicon glyphicon-pencil"><i class="fa fa-pencil" aria-hidden="true"></i></span></button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-include="'components/common/bottom.html'"> </div>

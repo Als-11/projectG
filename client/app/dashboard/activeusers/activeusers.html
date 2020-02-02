@@ -1,0 +1,54 @@
+
+<div class="main">
+    <div ng-include="'components/sidebar/sidebar.html'"></div>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+        <li class="breadcrumb-item active">Active users</li>
+    </ol>
+    <!-- Content Header (Page header) -->
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+         <div class="row">
+            <form>
+        <label for="file-upload1" class="btn btn-primary btn-sm" style="float: left; margin-top: 2px">
+                Choose File
+        </label>
+             &nbsp;&nbsp;&nbsp;
+            <input type="file" id="file-upload1"  name="file" single ng-files="$ctrl.getTheFiles($files)" />{{$ctrl.fileName}}
+            <button class="btn btn-primary btn-sm"  ng-click="$ctrl.uploadFiles()">Upload</button>
+        </form>
+        </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-big">
+                        <div class="card-block">
+                            <div class="card-header">
+                                <div class="col-sm-5">
+                                    <h5 class="card-title mb-10">Active Users</h5>
+                                </div>
+                            </div>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="text-xs-left">Name</th>
+                                        <th class="text-xs-left">Role</th>
+                                        <th class="text-xs-left">Flat Number</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="result in $ctrl.activeusersList">
+                                        <td class="text-xs-left">{{result.firstName}}</td>
+                                        <td class="text-xs-left">{{result.role}}</td>
+                                        <td class="text-xs-left">  {{result.houseNumber}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-include="'components/common/bottom.html'"> </div>

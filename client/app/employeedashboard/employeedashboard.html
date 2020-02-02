@@ -1,0 +1,62 @@
+<div class="main">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active">Dashboard</li>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-sm-6 col-lg-3" ng-repeat="x in $ctrl.resultArray">
+                    <div class="card-small">
+                        <div class="card" ng-click="$ctrl.listComplaints(x._id.status)">
+                            <div class="card-block text-xs-center">
+                                <div class="h1 p-y-1 text-high number-font" ng-disabled="true">{{x.count | guwhafilter}}</div>
+                                <div class="small font-weight-bold" ng-disabled="true">{{x._id.status}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-if="$ctrl.getComplaints">
+                <div class="col-md-12">
+                    <div class="card card-big mar-t-10">
+                        <div class="card-block">
+                            <div class="card-header">
+                                <div class="col-sm-8">
+                                    <h5 class="card-title mb-10" ng-if="$ctrl.getComplaint"> YOUR </h5>
+                                    <h5 class="card-title mb-10"  ng-if="$ctrl.respectiveComplaint">YOUR {{$ctrl.complaintType|uppercase}} COMPLAINTS</h5>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <table class="table table-hover mb-0 hidden-sm-down">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-xs-left">Complaint ID </th>
+                                            <th class="text-xs-left">Raised By</th>
+                                            <th class="text-xs-left">Flat No</th>
+                                            <th class="text-xs-left">Complaint Reason</th>
+                                            <th class="text-xs-left">Assigned on</th>
+                                            <th class="text-xs-left">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="complaint in $ctrl.ComplaintsList">
+                                            <td class="text-xs-left">{{complaint.employeeId}}</td>
+                                            <td class="text-xs-left">{{complaint.UserInfo[0].firstName}}</td>
+                                            <td class="text-xs-left">{{complaint.UserInfo[0].houseNumber}}</td>
+                                            <td class="text-xs-left">{{complaint.complaintdescription}}</td>
+                                            <td class="text-xs-left">{{complaint.updatedAt|date:'dd/MM/yyyy'}}</td>
+                                            <td class="text-xs-left" style="color:#2196F3">{{complaint.status}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    
+<div ng-include="'components/common/bottom.html'"> </div>
+    

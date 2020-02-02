@@ -1,0 +1,738 @@
+<div class="wrapper">
+
+
+
+<!-- Main content -->
+<div class="main">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="breadcrumb-item active">Profile</li>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="card">
+                <div class="row pad-20">
+                    <div class="col-md-4">
+
+                        <a ng-click='$ctrl.imag="true"' data-toggle="modal" data-target="#myadminprofile"> <img ng-src="{{$ctrl.imageUrl}}" class="img-fluid cardpointer" style="float: left; cursor: pointer" data-toggle="tooltip" data-placement="right" title="Click To Change Profile Image" alt="Card image cap"></a>
+                    </div>
+                    <script>
+                        $(document).ready(function(){
+                            $('[data-toggle="tooltip"]').tooltip();   
+                        });
+                    </script>
+                    <div class="col-md-8">
+                        <img src="/assets/images/avatars/city-building.png" class="img-fluid" style="float: left;" height="400px" width="700px" alt="Card image cap"></div>
+                </div>
+                <div ng-init="$ctrl.editFormShow=true" ng-show="$ctrl.editFormShow">
+                    <div class="card-block">
+                        <span><h1>{{$ctrl.name}}</h1></span>
+                        <span><h3>{{$ctrl.role}}</h3></span>
+                        <span><h3>+91 {{$ctrl.phoneNumber}}</h3></span>
+                        <div ng-if="$ctrl.User.role=='COMMUNITY_ADMIN'">
+                            <h5>{{$ctrl.commName}},</h5>
+                            <h5>{{$ctrl.address.address1}}, {{$ctrl.address.locality}},</h5>
+                            <h5>{{$ctrl.address.city}}.</h5>
+                        </div>
+                        <div ng-if="$ctrl.User.role=='RESIDENT'">
+                            <h5>{{$ctrl.flatNumber}}, {{$ctrl.commName}},</h5>
+                            <h5>{{$ctrl.address.address1}}, {{$ctrl.address.locality}},</h5>
+                            <h5>{{$ctrl.address.city}}.</h5>
+                        </div>
+                        <div ng-if="$ctrl.User.role=='SERVICE_PROVIDER'">
+                            <h5>{{$ctrl.companyName | uppercase}} (Company Name),</h5>
+                            <h5>{{$ctrl.address}}</h5>
+                        </div>
+                        <div ng-if="$ctrl.User.role=='EMPLOYEE'">
+                            <h5>{{$ctrl.commName}},</h5>
+                            <h5>{{$ctrl.address.address1}}, {{$ctrl.address.locality}},</h5>
+                            <h5>{{$ctrl.address.city}}.</h5>
+                        </div>
+                    </div>
+                    <div class="card-block">
+                        <h5><a style="color: #22D1E4" class="card-link" ng-click="$ctrl.editForm()">EDIT PROFILE</a></h5>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div ng-if="$ctrl.User.role=='COMMUNITY_ADMIN'" >
+                <ul  ng-init="$ctrl.allFormsShow=false" ng-show="$ctrl.allFormsShow" class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <div class="nav-link active" data-toggle="tab" data-target="#adminbasinfo" role="tab">
+                            <h5>Basic Information</h5></div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="nav-link" data-toggle="tab" data-target="#admincommadd" role="tab">
+                            <h5>Communication Address</h5></a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="nav-link" data-toggle="tab" data-target="#adminchngpass" role="tab">
+                            <h5>Change Password</h5></div>
+                    </li>
+                </ul>
+                <div class="tab-content" ng-init="$ctrl.allFormsShow=false" ng-show="$ctrl.allFormsShow">
+                    <div class="tab-pane active" id="adminbasinfo" role="tabpanel">
+                        <form class="form" name="form" novalidate>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="card-block">
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/user.svg" class="img-fluid"></span>
+                                                    <p class="form-control" ng-disabled="true" required>{{$ctrl.name}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/address city.svg" class="img-fluid"></span>
+                                                    <p class="form-control" ng-disabled="true" required>{{$ctrl.communityNames}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/persons.svg" class="img-fluid"></span>
+                                                    <p class="form-control" ng-disabled="true" required>{{$ctrl.role}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/email.svg" class="img-fluid"></span>
+                                                    <p class="form-control" ng-disabled="true" required>{{$ctrl.email}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/mobile.svg" class="img-fluid"></span>
+                                                    <input type="text" name="phoneNumber" class="form-control" ng-pattern="/^\(?(\d{3})\)?[ .-]?(\d{3})[ .-]?(\d{4})$/" ng-model="$ctrl.phoneNumber" required mongoose-error>
+                                                </div>
+                                                <span style="color:red" ng-show="form.phoneNumber.$touched && form.phoneNumber.$invalid">
+                                    
+                                                <span style="color:red" class="error" ng-show="form.phoneNumber.$error.required">
+                                                        Phone Number is Required!</span>
+                                                <span style="color:red" class="error" ng-show="form.phoneNumber.$error.pattern"> 
+                                                        Enter Valid PhoneNumber!</span>
+                                                </span>
+                                            </div>
+
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/info.svg" class="img-fluid"></span>
+                                                    <select type="text" placeholder="Select your Security Level" id="" class="form-control" ng-model="$ctrl.securityLevel" name="role" ng-options="result for result in $ctrl.securityLevels" required>
+                                                        <option value="">Select Your Security Level </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <button style="float: left;" class="btn btn-primary offset-xs-1" type="button" ng-click="$ctrl.showForm()">Cancel</button>
+                                            <button type="button" class="btn btn-primary offset-xs-5" ng-disabled="$ctrl.phoneNumber==null" ng-click="$ctrl.changeProfile()">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="admincommadd" role="tabpanel">
+                        <button class="btn btn-primary" style="float: ;" ng-click="$ctrl.saveLocation()">Save Location</button>
+                        <br>
+                        <div id="map" style="width:60%;height:400px;"></div>
+                        <div id="current">Noting Changed</div>
+                        <script>
+                            function myMap() {
+                                var xhr = new XMLHttpRequest();
+                                xhr.open("GET", "/api/community/getLatLong", true);
+                                xhr.send();
+                                xhr.onreadystatechange = function () {
+                                    if (xhr.readyState == 4 && xhr.status == 200) {
+                                        var response = JSON.parse(xhr.responseText); 
+                                        var latValue = response.latValue;
+                                        var longValue = response.longValue;
+                                        var location = {
+                                                lat: latValue,
+                                                lng: longValue
+                                            }
+                                            // var  map = new google.maps.Map({ draggable : false }); // upon initialization
+                                        var map = new google.maps.Map(document.getElementById('map'), {
+                                            center: new google.maps.LatLng(location),
+                                            zoom: 7,
+                                            //  map.setOptions({passiveLogo: true});
+                                        });
+                                        var myMarker = new google.maps.Marker({
+                                            position: new google.maps.LatLng(location),
+                                            draggable: true
+                                        });
+                                        // var marker = new google.maps.Marker({position: location,map: map}); 
+                                        google.maps.event.addListener(myMarker, 'dragend', function (evt) {
+                                            document.getElementById('current').innerHTML = 'Current Lat: ' + evt.latLng.lat().toFixed(3) +
+                                                ':' + ' Current Lng: ' + evt.latLng.lng().toFixed(3);
+                                        });
+                                        google.maps.event.addListener(myMarker, 'dragstart', function (evt) {
+                                            document.getElementById('current').innerHTML = '<p>Currently dragging marker...</p>';
+                                        });
+                                        map.setCenter(myMarker.position);
+                                        myMarker.setMap(map);
+                                    }
+                                }
+                            };
+                        </script>
+                        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZuZzbuihTLyZVZoWaKs85hQmUz_afVNU&callback=myMap"></script>
+                    </div>
+                    <div class="tab-pane" id="adminchngpass" role="tabpanel">
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/password.svg" class="img-fluid"></span>
+                                    <input type="password" class="form-control" placeholder="Enter Your Password" ng-model="$ctrl.oldpassword" required mongoose-error>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/password.svg" class="img-fluid"></span>
+                                    <input type="Password" class="form-control" placeholder="New Password" ng-model="$ctrl.newpassword" required validate-equals="confirmpassword">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/password.svg" class="img-fluid"></span>
+                                    <input type="Password" class="form-control" placeholder="Confirm Password" name="ConfirmPassword" type="Password" ng-model="$ctrl.confirmpassword" ng-blur="$ctrl.passwordMatch()" required mongoose-error>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4 text-xs-right">
+                                <div class="input-group mb-1">
+                                    <button class="btn btn-primary" type="button" ng-click="$ctrl.changePassword($ctrl.oldpassword,$ctrl.newpassword,$ctrl.confirmpassword)" ng-disabled="$ctrl.oldpassword==null||$ctrl.newpassword==null||$ctrl.confirmpassword==null||$ctrl.passwordcorrect==false">Update</button>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 text-xs-left">
+                                <div class="input-group mb-1">
+                                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample"> Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                </div>
+        </div>
+        <div ng-if="$ctrl.User.role=='RESIDENT'" >
+         <ul ng-init="$ctrl.allFormsShow=false" ng-show="$ctrl.allFormsShow" class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <div class="nav-link active" data-toggle="tab" data-target="#userbasinfo" role="tab">
+                            <h5>Basic Information</h5></div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="nav-link" data-toggle="tab" data-target="#usercommadd" role="tab">
+                            <h5>Communication Address</h5></a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="nav-link" data-toggle="tab" data-target="#userpasschng" role="tab">
+                            <h5>Change Password</h5></div>
+                    </li>
+                </ul>
+                <div class="tab-content" ng-init="$ctrl.allFormsShow=false" ng-show="$ctrl.allFormsShow">
+                    <div class="tab-pane active" id="userbasinfo" role="tabpanel">
+                        <form class="form" name="form" novalidate>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="card-block">
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/user.svg" class="img-fluid"></span>
+                                                    <p class="form-control" ng-disabled="true" required>{{$ctrl.name}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/address city.svg" class="img-fluid"></span>
+                                                    <p class="form-control" ng-disabled="true" required>{{$ctrl.communityNames}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/persons.svg" class="img-fluid"></span>
+                                                    <p class="form-control" ng-disabled="true" required>{{$ctrl.role}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/email.svg" class="img-fluid"></span>
+                                                    <p class="form-control" ng-disabled="true" required>{{$ctrl.email}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/mobile.svg" class="img-fluid"></span>
+                                                    <input type="text" name="phoneNumber" class="form-control" ng-pattern="/^\(?(\d{3})\)?[ .-]?(\d{3})[ .-]?(\d{4})$/" ng-model="$ctrl.phoneNumber" required mongoose-error>
+                                                </div>
+                                                <span style="color:red" ng-show="form.phoneNumber.$touched && form.phoneNumber.$invalid">
+                                    
+                                        <span style="color:red" class="error" ng-show="form.phoneNumber.$error.required">
+                                                        Phone Number is Required!</span>
+                                                <span style="color:red" class="error" ng-show="form.phoneNumber.$error.pattern"> 
+                                                        Enter Valid PhoneNumber!</span>
+                                                </span>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/info.svg" class="img-fluid"></span>
+                                                    <p class="form-control" ng-disabled="true" required>{{$ctrl.security}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <button style="float: left;" class="btn btn-primary offset-xs-1" type="button" ng-click="$ctrl.showForm()">Cancel</button>
+                                            <button type="button" class="btn btn-primary offset-xs-5" ng-disabled="$ctrl.phoneNumber==null" ng-click="$ctrl.changeProfile()">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="usercommadd" role="tabpanel">
+                      <div id="myUserMap" style="width:60%;height:400px"></div> 
+                        <script>
+                            function myUserShowMap() {
+                                var xhr = new XMLHttpRequest();
+                                    xhr.open("GET", "/api/community/getLatLong", true);
+                                    xhr.send();
+                                    xhr.onreadystatechange = function(){
+                                        if (xhr.readyState == 4 && xhr.status == 200){
+                                              var response = JSON.parse(xhr.responseText); 
+                                        var latValue = response.latValue;
+                                        var longValue = response.longValue;
+                                     var location = {lat:latValue, lng:longValue}
+                                    // var  map = new google.maps.Map({ draggable : false }); // upon initialization
+                                          var map = new google.maps.Map(document.getElementById('myUserMap'), {
+                                              center: new google.maps.LatLng(location),
+                                              zoom: 7,
+                                               //  map.setOptions({passiveLogo: true});
+                                                }); 
+                                          var myMarker = new google.maps.Marker({
+                                            position: new google.maps.LatLng(location),
+                                            draggable: false //no access to change the location
+                                        });
+                                              google.maps.event.addListener(myMarker, 'dragend', function (evt) {
+                                    document.getElementById('current').innerHTML = '<p>Marker dropped: Current Lat: ' + evt.latLng.lat().toFixed(3) + ' Current Lng: ' + evt.latLng.lng().toFixed(3) + '</p>';
+                                    });
+                                google.maps.event.addListener(myMarker, 'dragstart', function (evt) {
+                                    document.getElementById('current').innerHTML = '<p>Currently dragging marker...</p>';
+                                });
+                                map.setCenter(myMarker.position);
+                                myMarker.setMap(map);
+                                        }
+                                    }                              
+                            };
+                            </script>
+                              <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZuZzbuihTLyZVZoWaKs85hQmUz_afVNU&callback=myUserShowMap"></script>
+                    </div> 
+                    <div class="tab-pane" id="userpasschng" role="tabpanel">
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/password.svg" class="img-fluid"></span>
+                                    <input type="password" class="form-control" placeholder="Enter Your Password" ng-model="$ctrl.oldpassword" required mongoose-error>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/password.svg" class="img-fluid"></span>
+                                    <input type="Password" class="form-control" placeholder="New Password" ng-model="$ctrl.newpassword" required validate-equals="confirmpassword">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/password.svg" class="img-fluid"></span>
+                                    <input type="Password" class="form-control" placeholder="Confirm Password" name="ConfirmPassword" type="Password" ng-model="$ctrl.confirmpassword" ng-blur="$ctrl.passwordMatch()" required mongoose-error>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4 text-xs-right">
+                                <div class="input-group mb-1">
+                                    <button class="btn btn-primary" type="button" ng-click="$ctrl.changePassword($ctrl.oldpassword,$ctrl.newpassword,$ctrl.confirmpassword)" ng-disabled="$ctrl.oldpassword==null||$ctrl.newpassword==null||$ctrl.confirmpassword==null||$ctrl.passwordcorrect==false">Update</button>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 text-xs-left">
+                                <div class="input-group mb-1">
+                                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample"> Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+               
+                </div>
+        </div>
+        <div ng-if="$ctrl.User.role=='EMPLOYEE'" >
+        <ul ng-init="$ctrl.allFormsShow=false" ng-show="$ctrl.allFormsShow" class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <div class="nav-link active" data-toggle="tab" data-target="#empbasinfo" role="tab">
+                            <h5>Basic Information</h5></div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="nav-link" data-toggle="tab" data-target="#empcommadd" role="tab">
+                            <h5>Communication Address</h5></a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="nav-link" data-toggle="tab" data-target="#empchngpass" role="tab">
+                            <h5>Change Password</h5></div>
+                    </li>
+                </ul>
+                <div class="tab-content" ng-init="$ctrl.allFormsShow=false" ng-show="$ctrl.allFormsShow">
+                    <div class="tab-pane active" id="empbasinfo" role="tabpanel">
+                        <form class="form" name="form" novalidate>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="card-block">
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/user.svg" class="img-fluid"></span>
+                                                    <p class="form-control" ng-disabled="true" required>{{$ctrl.name}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/address city.svg" class="img-fluid"></span>
+                                                    <p class="form-control" ng-disabled="true" required>{{$ctrl.communityNames}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/persons.svg" class="img-fluid"></span>
+                                                    <p class="form-control" ng-disabled="true" required>{{$ctrl.role}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/email.svg" class="img-fluid"></span>
+                                                    <p class="form-control" ng-disabled="true" required>{{$ctrl.email}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/mobile.svg" class="img-fluid"></span>
+                                                    <input type="text" name="phoneNumber" class="form-control" ng-pattern="/^\(?(\d{3})\)?[ .-]?(\d{3})[ .-]?(\d{4})$/" ng-model="$ctrl.phoneNumber" required mongoose-error>
+                                                </div>
+                                                <span style="color:red" ng-show="form.phoneNumber.$touched && form.phoneNumber.$invalid">
+                                    
+                                        <span style="color:red" class="error" ng-show="form.phoneNumber.$error.required">
+                                                        Phone Number is Required!</span>
+                                                <span style="color:red" class="error" ng-show="form.phoneNumber.$error.pattern"> 
+                                                        Enter Valid PhoneNumber!</span>
+                                                </span>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/info.svg" class="img-fluid"></span>
+                                                    <p class="form-control" ng-disabled="true" required>{{$ctrl.security}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <button style="float: left;" class="btn btn-primary offset-xs-1" type="button" ng-click="$ctrl.showForm()">Cancel</button>
+                                            <button type="button" class="btn btn-primary offset-xs-5" ng-disabled="$ctrl.phoneNumber==null" ng-click="$ctrl.changeProfile()">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="empcommadd" role="tabpanel"></div>
+                    <div class="tab-pane" id="empchngpass" role="tabpanel">
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/password.svg" class="img-fluid"></span>
+                                    <input type="password" class="form-control" placeholder="Enter Your Password" ng-model="$ctrl.oldpassword" required mongoose-error>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/password.svg" class="img-fluid"></span>
+                                    <input type="Password" class="form-control" placeholder="New Password" ng-model="$ctrl.newpassword" required validate-equals="confirmpassword">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/password.svg" class="img-fluid"></span>
+                                    <input type="Password" class="form-control" placeholder="Confirm Password" name="ConfirmPassword" type="Password" ng-model="$ctrl.confirmpassword" ng-blur="$ctrl.passwordMatch()" required mongoose-error>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4 text-xs-right">
+                                <div class="input-group mb-1">
+                                    <button class="btn btn-primary" type="button" ng-click="$ctrl.changePassword($ctrl.oldpassword,$ctrl.newpassword,$ctrl.confirmpassword)" ng-disabled="$ctrl.oldpassword==null||$ctrl.newpassword==null||$ctrl.confirmpassword==null||$ctrl.passwordcorrect==false">Update</button>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 text-xs-left">
+                                <div class="input-group mb-1">
+                                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample"> Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div ng-if="$ctrl.User.role=='SERVICE_PROVIDER'" >
+        <ul ng-init="$ctrl.allFormsShow=false" ng-show="$ctrl.allFormsShow" class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <div class="nav-link active" data-toggle="tab" data-target="#serprovbasinfo" role="tab">
+                            <h5>Basic Information</h5></div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="nav-link" data-toggle="tab" data-target="#serprovcommadd" role="tab">
+                            <h5>Communication Address</h5></a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="nav-link" data-toggle="tab" data-target="#serprovpasschng" role="tab">
+                            <h5>Change Password</h5></div>
+                    </li>
+                </ul>
+                <div class="tab-content" ng-init="$ctrl.allFormsShow=false" ng-show="$ctrl.allFormsShow">
+                    <div class="tab-pane active" id="serprovbasinfo" role="tabpanel">
+                        <form class="form" name="form" novalidate>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="card-block">
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/user.svg" class="img-fluid"></span>
+                                                    <p class="form-control" ng-disabled="true" required>{{$ctrl.name}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/address city.svg" class="img-fluid"></span>
+                                                    <p class="form-control" ng-disabled="true" required>{{$ctrl.companyName}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/persons.svg" class="img-fluid"></span>
+                                                    <p class="form-control" ng-disabled="true" required>{{$ctrl.role}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/email.svg" class="img-fluid"></span>
+                                                    <p class="form-control" ng-disabled="true" required>{{$ctrl.email}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/mobile.svg" class="img-fluid"></span>
+                                                    <input type="text" name="phoneNumber" class="form-control" ng-pattern="/^\(?(\d{3})\)?[ .-]?(\d{3})[ .-]?(\d{4})$/" ng-model="$ctrl.phoneNumber" required mongoose-error>
+                                                </div>
+                                                <span style="color:red" ng-show="form.phoneNumber.$touched && form.phoneNumber.$invalid">
+                                    
+                                        <span style="color:red" class="error" ng-show="form.phoneNumber.$error.required">
+                                                        Phone Number is Required!</span>
+                                                <span style="color:red" class="error" ng-show="form.phoneNumber.$error.pattern"> 
+                                                        Enter Valid PhoneNumber!</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <button type="button" class="btn btn-primary offset-xs-2" ng-click="">Cancel</button>
+                                        <button type="button" class="btn btn-primary offset-xs-5" ng-disabled="$ctrl.phoneNumber==null" ng-click="$ctrl.servprovchangeProfile()">Save</button>
+                                    </div>
+                                    <br>
+                                    <br>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="serprovcommadd" role="tabpanel"></div>
+                    <div class="tab-pane" id="serprovpasschng" role="tabpanel">
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/password.svg" class="img-fluid"></span>
+                                    <input type="password" class="form-control" placeholder="Enter Your Password" ng-model="$ctrl.oldpassword" required mongoose-error>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/password.svg" class="img-fluid"></span>
+                                    <input type="Password" class="form-control" placeholder="New Password" ng-model="$ctrl.newpassword" required validate-equals="confirmpassword">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/password.svg" class="img-fluid"></span>
+                                    <input type="Password" class="form-control" placeholder="Confirm Password" name="ConfirmPassword" type="Password" ng-model="$ctrl.confirmpassword" ng-blur="$ctrl.passwordMatch()" required mongoose-error>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4 text-xs-right">
+                                <div class="input-group mb-1">
+                                    <button class="btn btn-primary" type="button" ng-click="$ctrl.changePassword($ctrl.oldpassword,$ctrl.newpassword,$ctrl.confirmpassword)" ng-disabled="$ctrl.oldpassword==null||$ctrl.newpassword==null||$ctrl.confirmpassword==null||$ctrl.passwordcorrect==false">Update</button>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 text-xs-left">
+                                <div class="input-group mb-1">
+                                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample"> Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div ng-include="'components/common/bottom.html'"> </div>
+
+        <!-- modal for changing profile pic -->
+
+       <div class="modal" id="myadminprofile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header"> <div class="modal-header">
+                 <h5>Change Profile Picture</h5>
+                </div>
+                    <div class="modal-body" ng-show="$ctrl.immage==false">
+                        <img src="{{$ctrl.imageUrl}}" height="200px" style="padding-left: 23px">
+                    </div>
+                    <div class="modal-body" ng-show="$ctrl.immage==true">
+                        <img src="{{$ctrl.imageUrl}}" id="profilePic" height="200px" style="padding-left: 23px">
+                    </div>
+                    <div class="modal-footer">
+                    <form>
+                    <label for="file-upload1" class="btn btn-primary btn-sm" style="float: left; margin-top: 2px">
+                            Choose Image
+                    </label>
+
+                        <input type="file" id="file-upload1"  name="file" single ng-files="$ctrl.getTheFiles($files)"  ng-click="$ctrl.selectedImage()" />
+                        <button class="btn btn-primary btn-sm" data-dismiss="modal" ng-click="$ctrl.uploadFiles()">Upload</button>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="myprofile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header"> <div class="modal-header">
+                 <h5>Change Profile Picture</h5>
+                </div>
+                    <div class="modal-body" ng-show="$ctrl.immage==false">
+                        <img src="{{$ctrl.imageUrl}}" height="200px" style="padding-left: 23px">
+                    </div>
+                    <div class="modal-body" ng-show="$ctrl.immage==true">
+                        <img src="{{$ctrl.imageUrl}}" id="profilePic" height="200px" style="padding-left: 23px">
+                    </div>
+                    <div class="modal-footer">
+                    <form>
+                    <label for="file-upload" class="btn btn-primary btn-sm" style="float: left; margin-top: 2px">
+                            Choose Image
+                    </label>
+
+                        <input type="file" id="file-upload"  name="file" single ng-files="$ctrl.getTheFiles($files)"  ng-click="$ctrl.selectedImage()" />
+                        <!-- <img src="#" id="blah" height="200px"> -->
+                        <button class="btn btn-primary btn-sm" data-dismiss="modal" ng-click="$ctrl.uploadFiles()">Upload</button>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal" id="employeeprofile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header"> <div class="modal-header">
+                 <h5>Change Profile Picture</h5>
+                </div>
+                    <div class="modal-body" ng-show="$ctrl.immage==false">
+                        <img src="{{$ctrl.imageUrl}}" height="200px" style="padding-left: 23px">
+                    </div>
+                    <div class="modal-body" ng-show="$ctrl.immage==true">
+                        <img src="{{$ctrl.imageUrl}}" id="profilePic" height="200px" style="padding-left: 23px">
+                    </div>
+                    <div class="modal-footer">
+                    <form>
+                    <label for="file-upload1" class="btn btn-primary btn-sm" style="float: left; margin-top: 2px">
+                            Choose Image
+                    </label>
+
+                        <input type="file" id="file-upload1"  name="file" single ng-files="$ctrl.getTheFiles($files)"  ng-click="$ctrl.selectedImage()" />
+                        <button class="btn btn-primary btn-sm" data-dismiss="modal" ng-click="$ctrl.uploadFiles()">Upload</button>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         <div class="modal" id="servproviderprofile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-header">
+                            <h5>Change Profile Picture</h5>
+                        </div>
+                        <div class="modal-body" ng-show="$ctrl.immage==false">
+                            <img src="{{$ctrl.imageUrl}}" height="200px" style="padding-left: 23px">
+                        </div>
+                        <div class="modal-body" ng-show="$ctrl.immage==true">
+                            <img src="{{$ctrl.imageUrl}}" id="profilePic" height="200px" style="padding-left: 23px">
+                        </div>
+                        <div class="modal-footer">
+                            <form>
+                                <label for="file-upload1" class="btn btn-primary btn-sm" style="float: left; margin-top: 2px">
+                                    Choose Image
+                                </label>
+                                <input type="file" id="file-upload1" name="file" single ng-files="$ctrl.getTheFiles($files)" ng-click="$ctrl.selectedImage()" />
+                                <button class="btn btn-primary btn-sm" data-dismiss="modal" ng-click="$ctrl.uploadFiles()">Upload</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    <!-- <div ng-include="'components/topsection/dashboard-header.html'"></div> -->
+    <!-- <div ng-show="{{'$ctrl.User.role'}}!='SECURITY'" ng-include="'components/sidebar/sidebar.html'"> </div> -->
+    <!-- <div ng-if="$ctrl.User.role=='RESIDENT'" ng-include="'app/profile/userprofile.html'"></div>
+    <div ng-if="$ctrl.User.role=='COMMUNITY_ADMIN'" ng-include="'app/profile/adminprofile.html'"></div>
+    <div ng-if="$ctrl.User.role=='EMPLOYEE'" ng-include="'app/profile/securityprofile.html'" ></div>
+    <div ng-if="$ctrl.User.role=='SERVICE_PROVIDER'" ng-include="'app/profile/serviceproviderprofile.html'"></div> -->
+</div>
+
+<!-- /.content-wrapper --> 

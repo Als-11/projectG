@@ -1,0 +1,260 @@
+
+<div class="col-sm-6 align-left">
+    <h5 class="card-title mb-10"><i class="pad-r-20 fa fa-angle-left" ng-click="previous()"></i>
+    {{month.format("MMMM, YYYY")}}
+    <i class="pad-l-20 fa fa-angle-right" ng-click="next()"></i></h5>
+</div>
+<div class="btn-group btn-toggle" style="padding-left: 300px">
+<!-- <button   class="btn btn-primary active" data-toggle="modal" data-target="#servicesTurnOff">On</button> -->
+<button class="btn btn-default" data-toggle="modal" data-target="#servicesTurnOff">Off</button>
+<button   class="btn btn-primary active" >On</button>
+
+</div>
+<div class="names">
+    <span class="day text-muted">Sunday</span>
+    <span class="day text-muted">Monday</span>
+    <span class="day text-muted">Tuesday</span>
+    <span class="day text-muted">Wednesday</span>
+    <span class="day text-muted">Thursday</span>
+    <span class="day text-muted">Friday</span>
+    <span class="day text-muted">Saturday</span>
+</div>
+<div class="week" ng-repeat="week in weeks">
+    <span class="day"  ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected) }" ng-click="select(day)" ng-repeat="day in week.days">{{day.number}}<br />
+    <a href="#" data-toggle="modal" data-target="#dayServices" ng-click="dayServices(day)">
+    <p class="listStyle" ng-attr-id="{{day.isday}}"></p>
+    </a>
+    </span>
+</div>
+<div ng-include="'components/common/bottom.html'"> </div>
+
+
+
+<div class="modal" id="dayServices" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modaltitle">{{currentDate|date:'dd-MMMM-yyyy'}} ({{weekName}})
+                            </h4>
+                             <hr>
+                        <div class="modal-body" id="modalbody">
+                        <div  ng-repeat="x in dayservicesArray">    
+                         <div class="row">
+                            <div class="col-xs-4">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/brand-star.svg" class="img-fluid"></span>
+                                     <input type="text"  class="form-control" ng-readonly = "true"  ng-model="x.serviceTypeName" required mongoose-error>
+                                    </div>
+                            </div>
+                             <div class="col-xs-4">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/Quantity.svg" class="img-fluid"></span>
+                                     <input type="text"  class="form-control" ng-model="x.units"  required
+                                     mongoose-error>
+                                    </div>
+                            </div>
+                             <div class="col-xs-1">
+                               <i class="fa fa-check" aria-hidden="true" ng-click="update(x)"></i>
+                              </div>
+                                <div class="col-xs-1">
+                                <i class="fa fa-trash" aria-hidden="true" ng-click=delete(x)></i>
+                                </div>
+
+                        </div>
+                </div>
+                  <div  style="float: right">
+               <!--  <a href="#" ng-click="cancel">CANCEL</a>&nbsp;&nbsp; -->
+                <a href= "#"  data-toggle="modal" data-target="#addServices" ng-click="services()" data-dismiss="modal">ADD SERVICE</a>&nbsp;&nbsp;
+                 <a href= "#"  data-dismiss="modal">CLOSE</a>&nbsp;&nbsp;
+                </div>   
+                
+                
+            </div>
+        </div>
+    </div>
+</div></div>
+
+
+    </div>
+    </div>
+</div>
+
+
+<div class="modal" id="addServices" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" 
+   aria-hidden="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6 class="modal-title" id="modaltitle"> Your  Services</h6>
+                        <div class="modal-body" id="modalbody">
+            <div class="col-sm-6 col-lg-6" ng-repeat="user in servicesNames track by $index">
+                    <div class="card  mar-t-10" ng-click="serviceproviderDetails(user)">
+                    <div class="card-block text-xs-center" style="padding-top: 60px">
+                        <img ng-if='user=="Water Service"' src="assets/images/avatars/water.svg" height="60px" width="60px">
+                        <img ng-if='user=="Milk Service"' src="assets/images/avatars/milk.svg" height="60px" width="60px">
+                        <img ng-if='user=="Laundry"' src="assets/images/avatars/Laundry.svg" height="60px" width="60px">
+                        <img ng-if='user=="News Paper"' src="assets/images/avatars/news paper.svg" height="60px" width="60px">
+                        <div style="padding-top: 30px" class="text-muted small text-uppercase font-weight-bold">
+                            <h6>{{user}}</h6></div>
+                    </div>
+                </div>
+                    </div>
+                    <div  ng-show="serviceApprovalsCard"" class="row mar-t-30">
+                <div class="col-sm-11 mar-b-20">
+                    <h5 class="card-title mb-10">{{selSerproId}} Provider</h5>
+                </div>
+                <div ng-repeat="serviceApprovals in serviceProviderArray">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="social-box box">
+                            <i class="fa fa-facebook" style="font-size: 0px; color:#3FDAEB; height: 150px"></i>
+                            <br>
+                            <table style="margin-left:10px ">
+                                <tr>
+                                    <td>Name</td>
+                                    <td> : {{serviceApprovals._id.firstName}} {{serviceApprovals._id.lastName}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Phone </td>
+                                    <td> : {{serviceApprovals._id.mobileNumber}}</td>
+                                </tr>
+                                <tr>
+                                   <td>Address</td>
+                                   <td>:{{serviceApprovals._id.address}}
+                                </tr>
+                               <!--  <tr>
+                                    <td>Active </td>
+                                    <td>: {{employeecard.fromDate | date : "dd-MMM-yyyy"}}</td>
+                                </tr> -->
+                            </table>
+                            <br>
+                            <br>
+                            <div style="padding-bottom: 10px">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="color:#2196F3" href="#" data-toggle="modal" data-target="#myModal" ng-click="getTypeServices(serviceApprovals)">SELECT</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a style="color:#2196F3" href="#" data-toggle="modal" data-target="#myModalView">View</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                     <!-- <div class="col-sm-6" ng-show="serviceApprovalsCard" ng-repeat="serviceApprovals in serviceProviderArray">
+                    <div class="callout callout-success b-t-1 b-r-1 b-b-1 p-y-q" ng-click="getTypeServices(serviceApprovals)">
+                        <small class="text-danger">{{serviceApprovals._id.serviceProviders}}</small>
+                        <br>
+                        <strong class="h4"></strong>
+                    </div>
+                </div> -->
+                  <div ng-show="serviceRegistrationForm">
+                    <h5 class="card-title mb-10">ServiceRegistration Form</h5>
+                <div class="row" >
+                    <div class="col-xs-6">
+                        <div class="input-group mb-1">
+                            <span class="input-group-addon"><img src="assets/images/avatars/groceris.svg" class="img-fluid"></span>
+                            <select type="text" id="" class="form-control" ng-options="result for result in serviceTypArray" ng-model="typeService" ng-change="typeSerInfo(typeService)" name="role" required>
+                                <option value="">Select The Type</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 text-xs-right">
+                        <div class="input-group mb-1">
+                            <span class="input-group-addon"><img src="assets/images/avatars/rupee.svg" class="img-fluid"></span>
+                            <input type="text" class="form-control"  ng-disabled="true" placeholder="UnitPrice" ng-model="unitPrice">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="input-group mb-1">
+                            <span class="input-group-addon"><i class="icon-user"></i></span>
+                            <input type="text" placeholder="enter The Quantity" id="" class="form-control"  ng-model="quantity" ng-blur="getTotalCost(unitPrice,quantity)" required>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 text-xs-right">
+                        <div class="input-group mb-1">
+                            <span class="input-group-addon"><img src="assets/images/avatars/amount.svg" class="img-fluid"></span>
+                            <input type="text" class="form-control" ng-disabled="true" placeholder="TotalCost" ng-model="totalCost">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 text-xs-center">
+                        <div class="input-group mb-1">
+                            <button  type="button" data-dismiss="modal" ng-click="userSaveService(typeService,quantity,totalCost)" required>
+                                Submit
+                            </button>
+                        </div> 
+                    </div>
+                </div>
+                <div class="alert alert-success"  ng-show="userSelectedService" role="alert">
+                <strong>Successfully</strong> Added the Service 
+                   </div>
+                    <div class="alert alert-warning"  ng-show="userselectedError" role="alert">
+                <strong>Sorry|</strong> Something went wrong 
+                   </div>
+            </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal" id="servicesTurnOff" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false"> 
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6 class="modal-title" id="modaltitle">Turn-OffServices</h6>
+                        <div class="modal-body" id="modalbody">
+                    <div class="row" >
+                       <div class="col-xs-6 text-xs-center">
+                        <div class="input-group mb-1">
+                            <span class="input-group-addon"><img src="assets/images/avatars/time interval.svg" class="img-fluid"></span>
+                            <select type="text"  id="" class="form-control" ng-options="result for result in timeIntervalArray" ng-model="timeIntervalSelcted" ng-change="TimeInterval(timeIntervalSelcted)" ng-blur="fillEnDate(fromdate,timeIntervalSelcted)"   required>
+                                <option value="">Select The TimeInterval</option>
+                            </select>
+                        </div>
+                    </div>
+                    </div>
+                     <div class="row" >
+                       <div class="col-xs-6">
+                        <div class="input-group mb-1">
+                            <span class="input-group-addon"><img src="assets/images/avatars/date.svg" class="img-fluid"></span>
+                            <datepicker date-format="dd MMM yyyy"  >
+                        <input type="text" placeholder="Selct Your From Date" class="form-control" ng-model="fromdate"   required mongoose-error>
+                    </datepicker>
+                        </div>
+                    </div>
+                      <div class="col-xs-6" ng-show="selctedInterval">
+                        <div class="input-group mb-1" >
+                            <span class="input-group-addon"><img src="assets/images/avatars/date.svg" class="img-fluid"></span>
+                            <datepicker date-format="dd MMM yyyy" >
+                        <input type="text" placeholder="Selct Your End Date" class="form-control" ng-model="enddate"  required mongoose-error>
+                    </datepicker>
+                        </div>
+                        </div>
+                        <div class="col-xs-6" ng-hide="selctedInterval">
+                        <div class="input-group mb-1">
+                            <span class="input-group-addon"><img src="assets/images/avatars/date.svg" class="img-fluid"></span>
+                        <input type="text" placeholder=" End Date"  class="form-control" ng-focus="fillEnDate(fromdate,timeIntervalSelcted)" ng-model="endautofilldate" required mongoose-error>
+                        </div>
+                    </div>
+                    </div>
+                     <div class="row">
+                       <div class="col-xs-12 text-xs-center">
+                        <div class="input-group mb-1">
+                    <button class="btn btn-primary" type="button"  ng-click="deleteServices(timeIntervalSelcted,fromdate,enddate,endautofilldate)"  required>Submit</button> 
+                    </div>
+                    </div>
+                    </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+  
+
+
+

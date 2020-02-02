@@ -1,0 +1,141 @@
+<!-- Main content -->
+<div class="main">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+        <li class="breadcrumb-item active">payment</li>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card card-medium">
+                        <div class="card-block">
+                            <div class="card-header pad-t-0">
+                                <div class="col-sm-12 pad-t-0">
+                                    <h5 class="card-title mb-10">PREVIOUS PAYMENTS & INVOICE</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card card-medium">
+                        <div class="card-block">
+                            <!--    <div class="card-header pad-t-0" style="overflow-y: scroll;"> -->
+                            <div class="card-header pad-t-0">
+                                <div class="col-sm-12 pad-t-0">
+                                    <h5 class="card-title mb-10">DUE PAYMENTS</h5>
+                                    <h6 class="small text-muted">({{$ctrl.fromDate|date:'dd/MM/yyyy'}} -  {{$ctrl.todate|date:'dd/MM/yyyy'}})</h6>
+                                </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-xs-2"></div>
+                                    <div class="col-xs-4">Date</div>
+                                    <div class="col-xs-3">Name</div>
+                                    <div class="col-xs-3">Amount</div>
+                                </div>
+                                <hr>
+                                <div ng-repeat="x in $ctrl.paymentsArray">
+                                    <div class="row">
+                                        <div class="col-xs-2">
+                                            <input id="check" type="checkbox" name="" ng-model="$ctrl.totalExpAmoArray()" ng-init="false" ng-checked="$ctrl.exist(x)" ng-click="$ctrl.paymentSelected(x)">
+                                            <label for="checkbox"><span></span></label>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            {{x.expenseDate|date:'dd/MM/yyyy'}}
+                                        </div>
+                                        <div class="col-xs-3">
+                                            {{x.expenseName}}
+                                        </div>
+                                        <div class="col-xs-3">
+                                            {{x.expenseAmount}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="#" ng-if="$ctrl.totalExpAmoArray.length != 0" data-dismiss="modal" data-toggle="modal" data-target="#myPaidpayments" ng-click="$ctrl.paypayments()" style="float: right;">PayNow</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card card-medium">
+                            <div class="card-block">
+                                <div class="card-header pad-t-0">
+                                    <div class="col-sm-12 pad-t-0">
+                                        <h5 class="card-title mb-10">Paid Payments</h5>
+                                        <h6 class="small text-muted">({{$ctrl.fromDate|date:'dd/MM/yyyy'}} -  {{$ctrl.todate|date:'dd/MM/yyyy'}})</h6>
+                                        <hr>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-3">Date</div>
+                                    <div class="col-xs-3">TransId</div>
+                                     <div class="col-xs-3">ExpenseName</div>
+                                    <div class="col-xs-3">Amount</div>
+                                </div>
+                                <hr>
+                                <div ng-repeat="x in $ctrl.getpaidpayments">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            {{x.expenseDate|date:'dd/MM/yyyy'}}
+                                        </div>
+                                        <div class="col-xs-3">
+                                            {{x.transId}}
+                                        </div>
+                                        <div class="col-xs-3">
+                                            {{x.expenseName}}
+                                        </div>
+                                        <div class="col-xs-3">
+                                            {{x.expenseAmount}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal" id="myPaidpayments" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6 class="modal-title" id="modaltitle">Selcted Payments</h6>
+                            <hr>
+                            <div class="modal-body" id="modalbody">
+                                <div class="col-md-9">PaymentName</div>
+                                <div class="col-md-3">Amount</div>
+                                <br>
+                                <br>
+                                <div ng-repeat="x in $ctrl.totalExpAmoArray">
+                                    <div class="col-md-9">{{x.expenseName}}</div>
+                                    <div class="col-md-3">{{x.expenseAmount}}</div>
+                                </div>
+                                <hr>
+                                <div class="col-md-9">TotalAmount</div>
+                                <div class="col-md-3">{{$ctrl.totalExpAmount}}</div>
+                                <br>
+                                <br>
+                                <!--    <a href="#" class="offset-xs-6" ng-click="$ctrl.goPayments()">PayNow</a> -->
+                                <form action="https://test.payu.in/_payment" method="post">
+                                    <div ng-hide="true">
+                                        <input type="text" ng-model="$ctrl.txnid" name="txnid">
+                                        <input type="text" ng-model="$ctrl.key" name="key">
+                                        <input type="text" ng-model="$ctrl.amount" name="amount">
+                                        <input type="text" ng-model="$ctrl.productinfo" name="productinfo">
+                                        <input type="text" ng-model="$ctrl.firstname" name="firstname">
+                                        <input type="text" ng-model="$ctrl.email" name="email">
+                                        <input type="text" ng-model="$ctrl.phone" name="phone">
+                                        <input type="text" ng-model="$ctrl.encrypttext" name="hash">
+                                        <input type="text" ng-model="$ctrl.surl" name="surl">
+                                        <input type="text" ng-model="$ctrl.furl" name="furl">
+                                        <input type="text" ng-model="$ctrl.service_provider" name="service_provider">
+                                    </div>
+                                    <button class="" type="submit" formtarget="_self">Pay</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>

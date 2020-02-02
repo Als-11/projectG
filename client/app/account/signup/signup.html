@@ -1,0 +1,149 @@
+<section class="top-section">
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <br>
+            <div class="d-100vh-va-middle">
+                <div class="loginbtn" style="float: right;">
+                    <a class="btn btn-success" href="/admin">Admin Registration</a>
+                    <a class="btn btn-success" href="/serviceprovidersignup">Service Registration</a>
+                </div>
+                <div class="container d-table">
+                    <div class="row mar-b-10">
+                        <div class="col-md-12 text-xs-center">
+                            <img src="../../../assets/images/logo.png" alt="Guwha" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <form class="form" name="form" novalidate>
+                            <div class="col-md-9  offset-md-2">
+                                <div class="card-group m-0">
+                                    <div class="card p-2">
+                                        <h1>User Register</h1>
+                                        <p class="text-muted">Create Your Account</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-9 offset-md-2">
+                                <div class="card-group">
+                                    <div class="card p-2 text-xs-center">
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/user.svg" class="img-fluid"></span>
+                                                    <input type="text" name="firstname" class="form-control" placeholder="First Name" ng-model="$ctrl.user.firstName" required>
+                                                </div>
+                                                <span style="color:red" class="error" ng-show="form.firstname.$touched && form.firstname.$invalid">
+                                                        <span class="error" ng-show="form.firstname.$error.required">
+                                                            Firstname is required
+                                                        </span>
+                                                </span>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/user.svg" class="img-fluid"></span>
+                                                    <input type="text" name="lastname" class="form-control" ng-model="$ctrl.user.lastName" placeholder="Last Name" required>
+                                                </div>
+                                                <span style="color:red" class="error" ng-show="form.lastname.$touched && form.lastname.$invalid">
+                                                  <span class="error" ng-show="form.lastname.$error.required">Lastname is required</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/mobile.svg" class="img-fluid"></span>
+                                                    <input type="text" class="form-control" name="phoneNumber" ng-model="$ctrl.user.phoneNumber" placeholder="Mobile Number" ng-pattern="/^\(?(\d{3})\)?[ .-]?(\d{3})[ .-]?(\d{4})$/" required>
+                                                </div>
+                                                <span style="color:red" ng-show="form.phoneNumber.$touched && form.phoneNumber.$invalid">
+                                    
+                                        <span style="color:red" class="error" ng-show="form.phoneNumber.$error.required">
+                                                        Phone Number is required!</span>
+                                                <span style="color:red" class="error" ng-show="form.phoneNumber.$error.pattern"> 
+                                                        Enter Valid Phone Number!</span>
+                                                </span>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/email.svg" class="img-fluid"></span>
+                                                    <input type="text" placeholder="Email Address" ng-blur="$ctrl.validEmail()" ng-focus="$ctrl.cleanWarning()" id="" class="form-control" ng-model="$ctrl.user.emailId" name="email" ng-pattern="/^[_a-zA-Z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" required>
+                                                </div>
+                                                <span style="color:red" ng-show="form.email.$touched && form.email.$invalid">
+                                        <span style="color:red" class="error" ng-show="form.email.$error.required">Email id is required!</span>
+                                                <span style="color:red" class="error" ng-show="form.email.$error.pattern"> Not Valid!</span>
+                                                </span>
+                                                <span style="color:red">{{$ctrl.emailExists}}</span>
+                                            </div>
+                                        </div>
+                                        {{$ctrl.search.result.length}}
+                                        <div class="row">
+                                            <div class="col-xs-6" align="left">
+                                                <div class="input-group mb-1" ng-init="$ctrl.user.gender='MALE'">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/persons.svg" class="img-fluid"></span>
+                                                    <input id="gender" type="radio" name="gender" value="MALE" ng-model="$ctrl.user.gender" required>
+                                                    <label for="radio1"><span><span></span></span>Male</label>
+                                                    <input id="gender" type="radio" name="gender" value="FEMALE" ng-model="$ctrl.user.gender" required>
+                                                    <label for="radio1"><span><span></span></span>Female</label>
+                                                </div>
+                                                <span style="color:red" class="error" ng-show="form.gender.$touched && form.gender.$invalid">
+                                                        <span class="error" ng-show="form.gender.$error.required">
+                                                            Gender is required
+                                                        </span>
+                                                </span>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/address city.svg" class="img-fluid"></span>
+                                                    <input type="text" name="communityname" ng-keyup="$ctrl.suggestion(searchText)" placeholder="Search Your Community " ng-model="$ctrl.user.AppartmentName" uib-typeahead="result for result in $ctrl.searchoptions" typeahead-on-select="$ctrl.selectedBlocks($ctrl.search.result,$event)" class="form-control" typeahead-min-length="3" required>
+                                                    <span ng-if="$ctrl.search.result.length < 3"></span>
+                                                </div>
+                                                <span style="color:red" ng-show="form.communityname.$touched && form.communityname.$invalid">
+                                    
+                                                    <span style="color:red" class="error" ng-show="form.communityname.$error.required">
+                                                       Enter First 3 Letters Of Your Community</span>
+                                                <span style="color:red" class="error" ng-show="form.communityname.$error.pristine"> 
+                                                       Select Your Community First</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/search.svg" class="img-fluid"></span>
+                                                    <input type="text" placeholder="Search Flat Number" name="flatNumber" ng-model="$ctrl.user.flatNumber" ng-keyup="$ctrl.flatNumbers()" uib-typeahead="result for result in $ctrl.resultFlatNumberArray" class="form-control" typeahead-min-length="1" required>
+                                                </div>
+                                                <span style="color:red" class="error" ng-show="form.flatNumber.$touched && form.flatNumber.$invalid">
+                                                  <span class="error" ng-show="form.flatNumber.$error.required">Flat number is required</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6 text-xs-left">
+                                                <div class="col-xs-9">
+                                                    <input type="checkbox" ng-model="$ctrl.user.checked" ng-init="$ctrl.user.checked=false">
+                                                    <!-- <input  id="check"  type="checkbox" name="checkbox"  ng-model="$ctrl.resultaraary($index)"  ng-checked="$ctrl.exist(x)" 
+                                ng-click="$ctrl.expenseSelected(x)"> -->
+                                                    <label for="checkbox"><span></span> </label>
+                                                    I agree to the&nbsp;<a href="#">terms</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-2">
+                                                <div class="input-group mb-1">
+                                                    <button type="submit" class="btn btn-primary btn-block btn-flat" ng-click="$ctrl.onRegister(form)" ng-disabled="$ctrl.user.firstName==null || $ctrl.user.firstName=='' || $ctrl.user.lastName==null || $ctrl.user.lastName=='' || $ctrl.user.emailId==null || $ctrl.user.phoneNumber==null ||  $ctrl.user.phoneNumber=='' || 
+                                                    $ctrl.user.gender==null || $ctrl.user.gender=='' ||
+                                                    $ctrl.user.AppartmentName==null || $ctrl.user.isEmailExist==false ||
+                                                    $ctrl.user.checked==null || $ctrl.user.checked=='' ">Register</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

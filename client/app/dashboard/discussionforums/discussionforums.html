@@ -1,0 +1,178 @@
+
+<div class="main">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+        <li class="breadcrumb-item active">Discussion Forums</li>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+              <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-medium">
+                        <div class="card-block">
+                            <div class="header">
+                                <div class="col-sm-5">
+                                    <h5 class="card-title mb-10">Discussion Forums</h5>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Title" ng-model="$ctrl.title" required mongoose-error>
+                              <textarea type="text" maxlength="250" class="form-control" placeholder="Description" ng-model="$ctrl.description" required mongoose-error></textarea> 
+                              </div>
+                              <div class="col-xs-5">
+                                <div class="input-group mb-1">
+                                <span class="input-group-addon">Polling</span> &nbsp;
+                                <input id="pooling" type="radio" name="pooling" value="YES" ng-change="$ctrl.status()" ng-model="$ctrl.pollingStatus"><label for="radio0"><span><span></span></span>Yes</label>
+                                <input id="pooling" type="radio" name="pooling" value="NO" ng-change="$ctrl.status()" ng-model="$ctrl.pollingStatus"><label for="radio1"><span><span></span></span>No</label>
+                              </div>
+                              </div>
+                            </div><br><br><br><br><br>
+                        <div class="card-footer text-muted">
+<!--  -->                              <img src="assets/images/avatars/attach_icon.svg" height="30px" width="30px">
+                             <span><a href ="#"  ng-click="$ctrl.attachment()">Attach File</a> </span>
+                         </i>
+                         <a  href ="#" style="padding-left: 620px" ng-click="$ctrl.cancel()">CANCEL</a>&nbsp&nbsp
+                          <a href="#" ng-if="$ctrl.title != null && $ctrl.description != null" style="float: right;" ng-click="$ctrl.sendNotifcation()">SEND NOTIFICATION</a>
+                         </div>
+                       </div>
+                    </div>
+                </div>
+                   
+
+
+
+
+
+
+
+
+
+
+          <!--   <div class="row">
+                <div class="col-md-12">
+                    <div class="card-deck-wrapper">
+                        <div class="card-deck">
+                            <div class="card" ng-repeat="row in $ctrl.result">
+                                <div class="media"> -->
+         <!--                            <div class="media-center">
+                                        <img class="card-img-top" width="220px" height="220px" src="assets/images/generaldiscussions1.jpg"></div>
+                                    <div class="media-body">
+                                        <div class="card-block">
+                                            <h5 class="card-title">{{row.title}}</h5>
+                                            <p>{{$ctrl.topicsList[0]}}</p>
+                                            <p class="card-text">{{row.Respectivethread.length}}</p>
+                                        </div>
+                                        <button ng-click="$ctrl.displayThreads(row)" class="btn btn-primary">More info</a>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <!-- Threads List -->
+          <!--   <div class="card" ng-show="$ctrl.ThreadsTableShow"> -->
+         <!--        <i class="fa fa-window-close fa-lg" ng-click="$ctrl.ThreadsTableShows()" aria-hidden="true" style="float: right; color: red"></i>
+                <div>
+                    <img class="card-img-top" src="assets/images/threads1.jpg"></div>
+                <button class="btn btn-primary pull-right" ng-click="$ctrl.ThreadFormShow()">
+                    <h6>Add Your Thread</h6></button>
+                <div class="card-block">
+                    <h5 class="card-header">List Of Threads</h5>
+                    <table ng-table="$ctrl.ThreadsTable" class="table table-bordered table-hover table-condensed editable-table demoTable" ng-form="demo.tableForm" disable-filter="demo.isAdding" demo-tracked-table="demo.tableTracker">
+                        <tr ng-repeat="row in $data" ng-form="rowForm" demo-tracked-table-row="row">
+                            <td title="'ThreadTitle'" ng-switch="row.isEditing">
+                                <span ng-switch-default class="editable-text">{{row.title}}</span>
+                                <div class="controls" ng-class="name.$invalid && name.$dirty ? 'has-error' : ''" ng-switch-when="true">
+                                    <input type="text" name="name" ng-model="row.firstName" class="editable-input form-control input-sm" required />
+                                </div>
+                            </td>
+                            <td title="'Description'" ng-switch="row.isEditing">
+                                <span ng-switch-default class="editable-text">{{row.description}}</span>
+                                <div class="controls" ng-class="name.$invalid && name.$dirty ? 'has-error' : ''" ng-switch-when="true">
+                                    <input type="number" name="name" ng-model="row.firstName" class="editable-input form-control input-sm" required />
+                                </div>
+                            </td>
+                            <td title="'Comments'">
+                                <a href="#" ng-click="$ctrl.comments(row)">Click Here</a>
+                            </td>
+                            <td title="'Delete'">
+                                <button class="btn btn-danger btn-sm" ng-click="$ctrl.deleteThread(row)" ng-if="!row.isEditing"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div> -->
+            <!-- Adding THread -->
+ <!--            <div ng-show="$ctrl.threadformShow"> -->
+                <!-- thread form show  -->
+                <!-- <div class="card">
+                    <i class="fa fa-window-close fa-lg" ng-click="$ctrl.threadClose()" aria-hidden="true" style="float: right; color: red;"></i>
+                    <h5 class="card-header">Enter Your Thread </h5>
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-xs-9 text-xs-center">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon">Title</span>
+                                    <input type="text" class="form-control" placeholder="Enter Your  title" ng-model="$ctrl.Threadstitle" required mongoose-error>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-9 text-xs-center">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon">Description</span>
+                                    <textarea class="form-control" placeholder="Enter Your topic Description" ng-model="$ctrl.Threadsdescription" required mongoose-error></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <button type="submit" class="btn btn-default">Cancel</button>
+                            </div>
+                            <div class="col-xs-2">
+                                <button class="btn btn-primary pull-right" ng-disabled="$ctrl.Threadstitle==null || $ctrl.Threadsdescription==null" type="submit" name="submit" ng-click="$ctrl.createThread($ctrl.Threadstitle,$ctrl.Threadsdescription)" required>Register</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Previous Comments -->
+          <!--   <div class="card" ng-show="$ctrl.htmlview">
+                <i class="fa fa-window-close fa-lg" ng-click="$ctrl.commentsShowForm()" aria-hidden="true" style="float: right; color: red"></i>
+                <img class="card-img-top" src="assets/images/comments1.jpg">
+                <div class="card-block">
+                    <h5 class="card-title">Thread</h5>
+                    <form class="form-horizontal" name="complaintsform" novalidate>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <h6>Title:{{$ctrl.threadtitle}}</h6>
+                            </div>
+                            <div class="form-group">
+                                <h6>Description:{{$ctrl.threaddescription}}</h6>
+                                <hr>
+                                <div class="col-sm-9">
+                                    <h4>Previous Comments</h4>
+                                    <div dir-paginate="result in $ctrl.previousThreadComments|itemsPerPage:10">
+                                        <h6> {{result.userName}}:{{result.description}}  </h6>
+                                    </div>
+                                    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+                                    </dir-pagination-controls> --> 
+                                    <!--  <button title="Old Comments" class="btn btn-link" style="margin-right:auto;position: relative;bottom:30px;font-size:16px" ng-click="$ctrl.previous()">   <b> << </b> </button>
+                                  <button title="New Comments" class="btn btn-link" style="margin-right:auto;position: relative;bottom:30px;font-size:16px" ng-click="$ctrl.skipped()"> <b> >> </b> </button> -->
+                                   <!--  <hr>
+                                    <div>
+                                        <h5>Your Comment</h5>
+                                        <textarea rows="2" cols="50" ng-model="$ctrl.comment" name="comment" required></textarea>
+                                        <button type="submit" ng-click="$ctrl.createComments()" ng-disabled="$ctrl.comment==null || $ctrl.comment==undefined" value="submit">submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> -->
+</div>
+</div>
+<div ng-include="'components/common/bottom.html'"> </div>

@@ -1,0 +1,49 @@
+
+<div class="main">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active">Assigned Complaints</li>
+    </ol>
+    <!-- table code starts here -->
+    <table class="table table-hover mb-0 hidden-sm-down">
+        <thead class="thead-default">
+            <tr>
+                 
+                <th class="text-xs-left">UserName</th>
+                <th class="text-xs-center">complaintId</th>
+                <th class="text-xs-left">Title</th>
+                <th class="text-xs-left">Description</th>
+                <th class="text-xs-center">CreatedAt</th>
+                <th class="text-xs-center">AssignedAt</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="user in $ctrl.assignedComplaintsList">
+                <td class="text-xs-left">
+                    <!-- <div class="avatar"> -->
+                        <img ng-src="assets/images/avatar.png" width="30px;" class="img-avatar"> <span class="pad-l-10">
+                        {{ user.firstName }}</span>
+                </td>
+                        <!-- <span class="avatar-status" ng-class="{ 'tag-success' : user.status == 'active',
+                                                                                'tag-warning' : user.status == 'away',
+                                                                                'tag-danger'  : user.status == 'busy',
+                                                                                'tag-default' : user.status == 'offline' }"></span> -->
+                    <!-- </div> -->
+                
+                <td class="text-xs-center">
+                    {{user.complaintId}}
+                </td>
+                <td class="text-xs-left">
+                    {{user.title}}
+                </td>
+                <td class="text-xs-left">
+                    {{user.complaintdescription}}
+                </td>
+                <td class="text-xs-center">
+                    {{user.createdAt|date:'dd/MM/yyyy @ h:mma'}}
+                </td>
+                <td class="text-xs-center">
+                    {{ user.updatedAt|date:'dd/MM/yyyy @ h:mma' }}
+                </td>
+            </tr>
+            <div ng-include="'components/common/bottom.html'"> </div>

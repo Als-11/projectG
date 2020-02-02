@@ -1,0 +1,136 @@
+<div class="main">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active">Dashboard</li>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-sm-6 col-lg-3" ng-repeat="Comunity in $ctrl.communityCountArray">
+                    <div class="card-small">
+                        <div class="card" ng-click="$ctrl.path(Comunity)">
+                            <div class="card-block text-xs-center">
+                                <div class="h1 p-y-1 text-high number-font" ng-disabled="true">{{Comunity.count | guwhafilter}}</div>
+                                <div class="small font-weight-bold" ng-disabled="true">{{Comunity.status}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card-small">
+                        <div class="card" ng-click="$ctrl.brandRedirect()">
+                            <div class="card-block text-xs-center">
+                                <div class="h1 p-y-1 text-high number-font" ng-disabled="true">{{$ctrl.getBrandsArray | guwhafilter}}</div>
+                                <div class="small font-weight-bold" ng-disabled="true">Brands Available</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card card-medium">
+                        <div class="card-block">
+                            <div class="card-header pad-t-0">
+                                <div class="col-sm-12 pad-t-0">
+                                    <h5 class="card-title mb-10">LAST MONTHLY SALES</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card card-medium">
+                        <div class="card-block">
+                            <div class="card-header pad-t-0">
+                                <div class="col-sm-12 pad-t-0">
+                                    <h5 class="card-title mb-10">OVERALL EXPENSES</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-big ">
+                            <div class="card-block">
+                                <div class="col-sm-5">
+                                    <h5 class="card-title mb-10">COMMUNITY DETAILS</h5>
+                                </div>
+                                <div class="card-block">
+                                    <a href="#" style="float: right;" data-toggle="modal" data-target="#addCommunity" ng-click="$ctrl.communityInfo() ">ADD COMMUNITY</a>
+                                    <div class="text-xs-center" ng-if='$ctrl.getReqCommunity.length == 0' style="padding: 70px; color: #22D1E4">
+                                        <b>  No Communities,Please Click on ADD COMMUNITY Button </b>
+                                    </div>
+                                    <div ng-if='$ctrl.getReqCommunity.length != 0'>
+                                        <table class="table table-hover mb-0 hidden-sm-down">
+                                            <thead>
+                                                <th class="text-xs-left">Name Of The Community</th>
+                                                <th class="text-xs-left">Address</th>
+                                                <th class="text-xs-center">#Phone</th>
+                                                <th class="text-xs-left">Status</th>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="communityInfo in $ctrl.getReqCommunity">
+                                                    <td class="text-xs-left">{{communityInfo.CommunityInfo[0].communityName}}</td>
+                                                    <td class="text-xs-left">{{communityInfo.CommunityInfo[0].address.address1}},{{communityInfo.CommunityInfo[0].address.locality}},{{communityInfo.CommunityInfo[0].address.city}}</td>
+                                                    <td class="text-xs-center">{{communityInfo.CommunityInfo[0].phoneNumber}}</td>
+                                                    </td>
+                                                    <td class="text-xs-left" ng-if='communityInfo.approvalStatus == "APPROVED"'>
+                                                        <button class="btn btn-primary">{{communityInfo.approvalStatus}}</button>
+                                                    </td>
+                                                    <td class="text-xs-left" ng-if='communityInfo.approvalStatus == "PENDING"'>
+                                                        <button class="btn btn-secondary">{{communityInfo.approvalStatus}}</button>
+                                                    </td>
+                                                    <td class="text-xs-left" ng-if='communityInfo.approvalStatus == "Rejected"'>
+                                                        <button class="btn btn-secondary">{{communityInfo.approvalStatus}}</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="addCommunity" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+        <div class="modal-dialog">
+            <div class="modalstyle">
+                <div class="modal-header">
+                    <div class="text-xs-center" ng-if='$ctrl.communityInfo.length == 0' style="padding: 70px; color: #22D1E4">
+                        <b>  No Communities,to send a request! </b>
+                    </div>
+                    <div ng-if='$ctrl.communityInfo.length != 0'>
+                        <h6 class="modal-title" id="modaltitle">List Of  Communities</h6>
+                        <div class="modal-body" id="modalbody">
+                            <table class="table table-hover mb-0 hidden-sm-down">
+                                <thead>
+                                    <tr>
+                                        <th class="text-xs-left">Name Of The Community</th>
+                                        <th class="text-xs-left">Address</th>
+                                        <th class="text-xs-center">#Phone</th>
+                                        <th class="text-xs-left">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="communityInfo in $ctrl.communityInfo">
+                                        <td class="text-xs-left">{{communityInfo.communityName}}</td>
+                                        <td class="text-xs-left">{{communityInfo.address.address1}},{{communityInfo.address.locality}},{{communityInfo.address.city}}</td>
+                                        <td class="text-xs-left">{{communityInfo.phoneNumber}}</td>
+                                        <td class="text-xs-left">
+                                            <button class="btn btn-primary" data-dismiss="modal" ng-click="$ctrl.raiseRequest(communityInfo)">Request</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

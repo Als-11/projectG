@@ -1,0 +1,389 @@
+
+<!-- Main content -->
+<div class="main">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+        <li class="breadcrumb-item active">Complaints</li>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-sm-6 col-lg-3" ng-repeat="complaint in $ctrl.complaintCategory">
+                    <div class="card cardpointer" ng-click="$ctrl.listComplaints(complaint.role)">
+                        <div class="card-block text-xs-center">
+                            <div class="h1 p-y-1 text-high" style="cursor: pointer;" ng-disabled="true">{{complaint.count}} </div>
+                            <div class="text-muted small text-uppercase font-weight-bold">
+                                <h6 ng-disabled="true" style="cursor: pointer;">{{complaint.role}}</h6></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            
+            <div class="row" ng-if="$ctrl.showallcomplaints">
+                <div class="col-md-12">
+                    <div class="card card-big mar-t-10">
+                        <div class="card-block">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="input-group mb-1">
+                                            <h5 class="card-title mb-10">YOUR COMPLAINTS</h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4" style="float: right;">
+                                        <div class="input-group mb-1">
+                                            <span class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></span>
+                                            <input type="text" placeholder="Search Employee" ng-model="$ctrl.searchEmployee" ng-keyup="$ctrl.searchEmployeeTable()" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <table class="table table-hover mb-0 hidden-sm-down">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-xs-left">Complaint Title </th>
+                                            <th class="text-xs-left">Complaint Description </th>
+                                            <th class="text-xs-left">Flat No</th>
+                                            <th class="text-xs-left">Status</th>
+                                            <th class="text-xs-left">Employee Name</th>
+                                            <th class="text-xs-center">Employee Id</th>
+                                            <th class="text-xs-center">Date </th>
+                                            <th class="text-xs-left">Comments </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr dir-paginate="complaint in $ctrl.complaintsList |itemsPerPage:10">
+                                            <td class="text-xs-left">
+                                                {{complaint.category}}
+                                            </td>
+                                            <td class="text-xs-left">
+                                                {{complaint.complaintdescription}}
+                                            </td>
+                                            <td class="text-xs-left"> {{complaint.userinfo[0].houseNumber}}</td>
+                                            <td ng-if='complaint.status=="Open"' class="text-xs-left">
+                                                <a style="color:#2196F3" href="#" data-toggle="modal" data-target="#myEmployessNames" ng-click="$ctrl.gettingEmployees(complaint)">{{complaint.status}}</a>
+                                            </td>
+                                            <td ng-if='complaint.status=="Assigned"' class="text-xs-left">
+                                                <a style="color:#2196F3" href="#" data-toggle="modal" data-target="#myAssignedNames" ng-click="$ctrl.gettingEmployees(complaint)">{{complaint.status}}</a>
+                                            </td>
+                                            <td ng-if="!complaint.assigned" class="text-xs-center" ">
+                                            -------
+                                        </td>
+                                        <td ng-if="complaint.assigned " class="text-xs-center " ">
+                                                {{complaint.assigned}}
+                                            </td>
+                                            <td ng-if="!complaint.employeeId" class="text-xs-center" ">
+                                            -------
+                                           
+                                        </td>
+                                        <td ng-if="complaint.employeeId "   class="text-xs-center " ">
+                                                {{complaint.employeeId}}
+                                            </td>
+                                            <td class="text-xs-center">
+                                                <!--  {{complaint.createdAt|date:'dd/MM/yyyy @ h:mma' }} -->
+                                                {{complaint.createdAt|date:'dd/MM/yyyy' }}
+                                            </td>
+                                            <td class="text-xs-left">
+                                                <a href="#">
+                                           {{complaint.description}}
+                                           </a>
+                            </div>
+                            </td>
+                            </tr>
+                            </tbody>
+                            </table>
+                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+                            </dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--                       showw respective complaints -->
+        <div class="row" ng-if="$ctrl.showRespectiveComplaints">
+            <div class="col-md-12">
+                <div class="card card-big">
+                    <div class="card-block">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="input-group mb-1">
+                                        <h5 class="card-title mb-10">YOUR {{$ctrl.selemployeeCategory}} COMPLAINTS</h5>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4" style="float: right;">
+                                    <div class="input-group mb-1">
+                                        <span class="input-group-addon"><img src="assets/images/avatars/search.svg" class="img-fluid"></span>
+                                        <input type="text" placeholder="Search Employee" ng-model="$ctrl.searchEmployee" ng-keyup="$ctrl.searchEmployeeTable()" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-block">
+                            <table class="table table-hover mb-0 hidden-sm-down">
+                                <thead>
+                                    <tr>
+                                        <th class="text-xs-left">Complaint Title </th>
+                                        <th class="text-xs-left">Complaint Description </th>
+                                        <th class="text-xs-left">Flat No</th>
+                                        <th class="text-xs-left">Status</th>
+                                        <th class="text-xs-left">Employee Name</th>
+                                        <th class="text-xs-center">Employee Id</th>
+                                        <th class="text-xs-left">Date </th>
+                                        <th class="text-xs-left">Comments </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="complaint in $ctrl.complaintsList |itemsPerPage:10">
+                                        <td class="text-xs-left">
+                                            {{complaint.category}}
+                                        </td>
+                                        <td class="text-xs-left">
+                                            {{complaint.complaintdescription}}
+                                        </td>
+                                        <td class="text-xs-left">
+                                            {{complaint.userinfo[0].houseNumber}}
+                                        </td>
+                                        <td class="text-xs-left">
+                                            <a ng-if='complaint.status=="Assigned" || complaint.status=="Closed"' style="color:#2196F3" href="#" data-toggle="modal" data-target="#myAssignedNames" ng-click="$ctrl.gettingEmployees(complaint)">{{complaint.status}}</a>
+                                            <a ng-if='complaint.status!="Assigned" && complaint.status!="Closed"' style="color:#2196F3" href="#" data-toggle="modal" data-target="#myEmployessNames" ng-click="$ctrl.gettingEmployees(complaint)">{{complaint.status}}</a>
+                                        </td>
+                                        <td ng-if="!complaint.assigned" class="text-xs-center" ">
+                                            -------
+                                        </td>
+                                        <td ng-if="complaint.assigned " class="text-xs-center " ">
+                                            {{complaint.assigned}}
+                                        </td>
+                                        <!-- <td ng-if="!complaint.employeeinfo[0].firstName" class="text-xs-center" >
+                                            -------
+                                        </td>
+                                        <td ng-if="complaint.employeeinfo[0].firstName" class="text-xs-center" >
+                                         {{complaint.employeeinfo[0].firstName}} {{complaint.employeeinfo[0].lastName}}
+                                        </td> -->
+                                        <td ng-if="!complaint.employeeId" class="text-xs-center">
+                                            -------
+                                        </td>
+                                        <td ng-if="complaint.employeeId" class="text-xs-center">
+                                            {{complaint.employeeId}}
+                                        </td>
+                                        <td class="text-xs-left">
+                                            <!--  {{complaint.createdAt|date:'dd/MM/yyyy @ h:mma' }} -->
+                                            {{complaint.createdAt|date:'dd/MM/yyyy' }}
+                                        </td>
+                                        <td class="text-xs-left">
+                                            <div ng-show="{{'complaint.commentInfo.length'}} == 0">
+                                                No Comments</div>
+                                            <div ng-show="{{'complaint.commentInfo.length'}} != 0">
+                                                {{complaint.commentInfo.length}}</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+                            </dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--  <div id="collapseExample" ng-show="$ctrl.assaignShow" class="row">
+                <div class="col-md-12">
+                    <div class="card card-big">
+                        <div class="card-block">
+                            <div class="card-header">
+                                <div class="col-sm-11">
+                                    <h5 class="card-title mb-10">Assiging the Complaint</h5>
+                                </div>
+                            </div>
+                            <br>
+                            <form class="form-horizontal" name="complaintsform" novalidate>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <div class="input-group mb-1">
+                                            <span class="input-group-addon">Title</span>
+                                            <input type="text" class="form-control" placeholder="Enter Your Complaint Title" ng-disabled="true" ng-model="$ctrl.title" required mongoose-error>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <div class="input-group mb-1">
+                                            <span class="input-group-addon">Description</span>
+                                            <textarea class="form-control" placeholder="Enter Your Description Here" ng-model="$ctrl.complaintdescription" ng-bind="$ctrl.complaintdescription" ng-disabled="true" required mongoose-error></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-5">
+                                        <div class="input-group mb-1">
+                                            <span class="input-group-addon">Category</span>
+                                            <select type="text" placeholder="Select the category" id="" class="form-control" ng-options="result for result in $ctrl.role" ng-change="$ctrl.selectCatgory()" ng-model="$ctrl.employeeRole" name="role" required>
+                                                <option value="">Select The Category</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-5 text-xs-right">
+                                        <div class="input-group mb-1">
+                                            <span class="input-group-addon">Assigne</span>
+                                            <select placeholder="Select your block" id="blocks" ng-options="option for option in $ctrl.assaigne" class="form-control" ng-model="$ctrl.assignPerson" ng-blur="$ctrl.securityId()" name="block" required>
+                                                <option value="">Select Assigne</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <div class="input-group mb-1">
+                                            <span class="input-group-addon">Comment</span>
+                                            <textarea class="form-control" placeholder="Enter Your Comments" ng-model="$ctrl.comment" required mongoose-error></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row"> -->
+            <!-- <span style="color: green">{{$ctrl.complaintAssigned}}</span>
+                                    <button type="submit" class="btn btn-info pull-right" ng-disabled="$ctrl.assignPerson==null ||  $ctrl.employeeRole==null" ng-click="$ctrl.compliantAssign($ctrl.assignPerson,$ctrl.description,$ctrl.category,$ctrl.title)">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <section id="collapseExample1" class="content" ng-show="$ctrl.show">
+                <!-- showing the complaintHistory -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-medium">
+                            <div class="card-block">
+                                <div class="card-header">
+                                    <div class="col-sm-11">
+                                        <h5 class="card-title mb-10">Your Complaint-History</h5>
+                                    </div>
+                                </div>
+                                <ul class="timeline">
+                                    <li ng-class-even="'timeline-inverted'" ng-repeat="complaintHistory in $ctrl.complaintHistoryresult">
+                                        <div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <h4 class="timeline-title">{{complaintHistory.userTotalInfo[0].firstName}}</h4>
+                                                <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{complaintHistory.createdAt | date:'dd-MM-yyyy @ h:mm a'}}</small></p>
+                                            </div>
+                                            <div class="timeline-body">
+                                                <p>{{complaintHistory.text}}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        </section>
+    </div>
+</div>
+<div class="modal" id="myEmployessNames" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="card">
+                <div class="card-block">
+                    <div class="modal-header">
+                        <h6 class="modal-title" id="modaltitle">{{$ctrl.selectedCategory}} EMPLOYEES</h6></div>
+                    <div class="modal-body" id="modalbody">
+                        <div class="col-md-12">
+                            <div class="col-md-6" ng-repeat="employeecards in $ctrl.employeeDetails">
+                                <div class="social-box box">
+                                    <img src="{{employeecards.userinfo[0].imageUrl}}" height="200px" width="180px">
+                                    <br>
+                                    <br>
+                                    <table style="margin-left:10px ">
+                                        <tr>
+                                            <td>Name</td>
+                                            <td> : {{employeecards.firstName}} {{employeecards.lastName}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>ph No </td>
+                                            <td> : {{employeecards.phoneNumber}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Status </td>
+                                            <td>: {{employeecards.status}}</td>
+                                        </tr>
+                                    </table>
+                                    <br>
+                                    <br>
+                                    <div style="padding-bottom: 10px">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a style="color:#2196F3">View</a>&nbsp;&nbsp;
+                                        <a style="color:#2196F3" data-dismiss="modal" ng-show="$ctrl.showAssignButton" ng-click="$ctrl.employeeCompliantAssign(employeecards)" data-dismiss='modal'>Assign</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="modal" id="myAssignedNames" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="modaltitle">{{$ctrl.selectedCategory}} EMPLOYEES</h6>
+                    <div class="modal-body" id="modalbody">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-xs-left">Name</th>
+                                    <th class="text-xs-center">Employee Id</th>
+                                    <th class="text-xs-center">Phone Number</th>
+                                    <th class="text-xs-center">Assigned Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-xs-left">{{$ctrl.employeeData.employeeinfo[0].firstName}}</td>
+                                    <td class="text-xs-center">{{$ctrl.employeeData.employeeinfo[0].employeeId}}</td>
+                                    <td class="text-xs-center"> {{$ctrl.employeeData.employeeinfo[0].phoneNumber}}</td>
+                                    <td class="text-xs-center"> {{$ctrl.employeeData.updatedAt | date:'dd MMM yyyy'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#myreassignNames" ng-click="$ctrl.getOtherEmployees($ctrl.employeeData)">RE-ASSIGN</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="myreassignNames" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="modaltitle">{{$ctrl.selectedCategory}} EMPLOYEES</h6>
+                    <div class="modal-body" id="modalbody">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-xs-left">Name</th>
+                                    <th class="text-xs-center">Employee Id</th>
+                                    <th class="text-xs-center">Phone Number</th>
+                                    <th class="text-xs-center">Assign</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in $ctrl.reassignEmployeeList">
+                                    <td class="text-xs-left">{{data.firstName}}</td>
+                                    <td class="text-xs-center">{{data.employeeId}}</td>
+                                    <td class="text-xs-center"> {{data.phoneNumber}}</td>
+                                    <td class="text-xs-center"><a href="#" data-dismiss="modal" ng-click="$ctrl.reAssignComplaint(data)"> Assign </a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-include="'components/common/bottom.html'"> </div>

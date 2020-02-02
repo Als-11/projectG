@@ -1,0 +1,578 @@
+<!-- Main content -->
+<div class="main">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+        <li class="breadcrumb-item active">Settings</li>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card card-medium">
+                        <div class="card-block">
+                            <div class="card-header">
+                                <h5 class="card-title mb-10">Maintenance Details</h5>
+                            </div>
+                            <div class="card-block">
+                                <form class="form-horizontal" name="myform" novalidate>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/maintenance.svg" class="img-fluid"></span>
+                                                <input type="number" name="Cost" placeholder="Maintenance Cost" ng-model="$ctrl.maintainenceCost" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/date.svg" class="img-fluid"></span>
+                                                <select type="text" class="form-control" ng-model="$ctrl.selectedDate" ng-options="result for result in $ctrl.dates" required>
+                                                    <option value="">--Select Date on EveryMonth--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-9">
+                                            <div class="input-group mb-1">
+                                                <button type="submit" class="btn btn-info pull-right" ng-click="$ctrl.maintenance()" ng-disabled="$ctrl.maintainenceCost == null || $ctrl.selectedDate == null">Save
+                                                </button>
+                                            </div>
+                                            <!-- <div class="alert alert-success"  ng-show="$ctrl.showAlert" role="alert">
+                                                <strong>Congrats</strong> {{$ctrl.maintainenceStatus}}
+                                        </div>
+                                        <div class="alert alert-danger"  ng-show="$ctrl.showError" role="alert">
+                                                <strong>Sorry</strong> {{$ctrl.maintainenceStatus}}
+                                        </div> -->
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="card card-medium">
+                        <div class="card-block">
+                            <div class="card-header pad-t-0">
+                                <div class="col-sm-12 pad-t-0">
+                                    <h5 class="card-title mb-5">Maintenance Details </h5>
+                                    <div class="small text-muted">{{$ctrl.monthName}}-{{$ctrl.date}} - {{$ctrl.monthName}}-{{$ctrl.endDate}}</div>
+                                </div>
+                            </div>
+                            <table class="table table-hover mb-0 hidden-sm-down">
+                                <thead>
+                                    <tr>
+                                        <th>Name Of The Expense</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Monthly maintanance</td>
+                                        <td>(Fixed) {{$ctrl.monthlyMaintanance}}</td>
+                                    </tr>
+                                    <tr ng-repeat="adminpay in $ctrl.adminpaymentsArray">
+                                        <td class="text-xs-left">{{adminpay.paymentName}} </span>
+                                        </td>
+                                        <td class="text-xs-left">{{adminpay.paymentAmount}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br>
+                            <br>
+                            <a style="color:#2196F3" href="#" data-toggle="modal" data-target="#myMaintenance">+ ADD EXPENSE</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--  MaintenanceTable code starts here -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-big">
+                        <div class="card-block">
+                            <div class="card-header">
+                                <div class="col-sm-5">
+                                    <h5 class="card-title mb-10">MaintenanceTable</h5>
+                                </div>
+                                <div class="text-xs-center" ng-if='$ctrl.maintenanceArray.length == 0' style="padding: 70px; color: #22D1E4">
+                                        <b> please add the floors,to show Maintenanace Details </b>
+                            </div>
+                                <div class="col-sm-7" ng-if='$ctrl.maintenanceArray.length != 0' style="padding-left: 350px;">
+                                    <input type="text" name="searchbox" ng-model="$ctrl.flatNumberSearch" ng-keyup="$ctrl.entered()">
+                                </div>
+                            </div>
+                            <table class="table table-hover" ng-if='$ctrl.maintenanceArray.length != 0' ng-show="$ctrl.showFirstTable">
+                                <thead>
+                                    <tr>
+                                        <th class="text-xs-left">FaltNumber</th>
+                                        <th class="text-xs-left">FlatType</th>
+                                        <th class="text-xs-center">MaintenanceCost</th>
+                                        <th class="text-xs-center">MaintenanceDate</th>
+                                        <th class="text-xs-center">Options</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="result in $ctrl.maintenanceArray">
+                                        <td class="text-xs-left">{{result.houseNumber}}</td>
+                                        <td class="text-xs-left">
+                                            <span data-ng-hide="editMode">{{result.flatType}}</span>
+                                            <select class="form-control" name="entry.level" ng-init="entry.maintenanceCost=result.flatType" data-ng-model="entry.selectedType" data-ng-show="editMode">
+                                                <option value="2 BHK">2 BHK</option>
+                                                <option value="3 BHK">3 BHK</option>
+                                                <option value="4 BHK">4 BHK</option>
+                                            </select>
+                                        </td>
+                                        <td class="text-xs-center">
+                                            <span data-ng-hide="editMode">{{result.maintenanceCost}}</span>
+                                            <input class="form-control" type="text" data-ng-show="editMode" ng-init="entry.maintenanceCost=result.maintenanceCost" data-ng-model="entry.maintenanceCost" data-ng-required />
+                                        </td>
+                                        <td class="text-xs-center">
+                                            {{result.maintenanceDate}}
+                                        </td>
+                                        <td>
+                                            <button type="submit" data-ng-hide="editMode" data-ng-click="editMode = true;" class="btn btn-primary">Edit</button>
+                                            <button type="submit" data-ng-show="editMode" data-ng-click="editMode = false;$ctrl.savemaintananceDetails(entry,result)" class="btn btn-secondary">Save</button>
+                                            <button type="submit" data-ng-show="editMode" data-ng-click="editMode = false" class="btn btn-secondary">Cancel</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-hover" ng-show="$ctrl.searchtable">
+                                <thead>
+                                    <tr>
+                                        <th class="text-xs-left">FaltNumber</th>
+                                        <th class="text-xs-left">FlatType</th>
+                                        <th class="text-xs-center">MaintenanceCost</th>
+                                        <th class="text-xs-center">MaintenanceDate</th>
+                                    </tr>
+                                </thead>
+                                <div ng-show="$ctrl.searchtable">
+                                        <button type="submit" ng-hide="$ctrl.editModes" ng-click="$ctrl.editModeActive()" class="btn btn-primary">Edit</button>
+                                        <button type="submit" ng-show="$ctrl.editModes" ng-click="$ctrl.BulkEditSave(result)" class="btn btn-secondary">Save</button>
+                                        <button type="submit" ng-show="$ctrl.editModes" ng-click="$ctrl.cancelMode()" class="btn btn-secondary">Cancel</button>
+                                    </div>
+                                <tr ng-repeat="result in $ctrl.maintenanceArraySelected">
+                                    <td class="text-xs-left">{{result.houseNumber}}</td>
+                                    <td class="text-xs-left">
+                                        <span data-ng-hide="$ctrl.editModes">{{result.flatType}}</span>
+                                        <select class="form-control" name="entry.level" ng-model="$ctrl.flatType" ng-show="$ctrl.editModes" ng-options="opt for opt in $ctrl.selcetedFaltType">
+                                            <option value="">Select FlatType</option>
+                                        </select>
+                                    </td>
+                                    <td class="text-xs-center">
+                                        <span data-ng-hide="$ctrl.editModes">{{result.maintenanceCost}}</span>
+                                        <input class="form-control" type="text" ng-show="$ctrl.editModes" ng-model="$ctrl.maintenanceCost">
+                                    </td>
+                                    <td class="text-xs-center">
+                                        {{result.maintenanceDate}}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--  CommunityMembercode starts  -->
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-block">
+                            <div class="card-header">
+                                <h5 class="card-title mb-10">Community Members Form</h5></div>
+                            <div class="card-block">
+                                <form class="form-horizontal" name="form" novalidate>
+                                    <div class="row">
+                                        <div class="col-xs-9">
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/user.svg" class="img-fluid"></span>
+                                                <input type="text" ng-keyup="$ctrl.memberSuggestion()" placeholder="Search the User " ng-model="$ctrl.communityMemberName" uib-typeahead="result for result in $ctrl.searchoptions" typeahead-on-select="$ctrl.selectedUserName()" class="form-control" typeahead-min-length="2" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                        <div class="input-group mb-1">
+                                            <span class="input-group-addon"><img src="assets/images/avatars/persons.svg" class="img-fluid"></span>
+                                            <select id="blocks" ng-model="$ctrl.designation" placeholder="Choose Designation" ng-options="option for option in $ctrl.communityMembersList" class="form-control">
+                                                <option value="">Choose Designation</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-9">
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/date.svg" class="img-fluid"></span>
+                                                <datepicker date-format="dd MMM yyyy">
+                                                    <input type="text" class="form-control" placeholder="From Date" ng-model="$ctrl.fromDate1" required>
+                                                </datepicker>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-9">
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/date.svg" class="img-fluid"></span>
+                                                <datepicker date-format="dd MMM yyyy">
+                                                    <input type="text" class="form-control" placeholder="To Date" ng-model="$ctrl.toDate1" required>
+                                                </datepicker>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 text-xs-left">
+                                            <div class="input-group mb-1">
+                                                <button class="btn btn-info pull-right" type="submit" name="submit" ng-disabled="$ctrl.communityMemberName == null || $ctrl.designation == null || $ctrl.fromDate==null" ng-click="$ctrl.addCommMember()" required>Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Adding Blocks and Floors -->
+            <div class="row">
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card cardpointer" data-toggle="collapse" data-target="#collapseBlock" aria-expanded="false" aria-controls="collapseExample">
+                        <div style="padding-top: 60px" class="card-block text-xs-center">
+                            <img src="assets/images/avatars/add-icon.png" height="55px" width="60px">
+                            <div style="padding-top: 30px" class="text-muted small text-uppercase font-weight-bold">
+                                <h6>Add Blocks</h6>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3" ng-repeat=" blockName in $ctrl.blockNames track by $index">
+                    <div class="card cardpointer" ng-click="$ctrl.populateResident(blockName)" data-toggle="collapse" data-target="#collapseBlock1" aria-expanded="false" aria-controls="collapseExample">
+                        <div style="padding-top: 60px" class="card-block text-xs-center">
+                            <img src="assets/images/avatars/address city.svg" height="60px" width="60px">
+                            <div style="padding-top: 50px" class="text-muted small text-uppercase font-weight-bold">
+                                <h6>{{blockName}}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="collapse" id="collapseBlock">
+                        <div class="card card-medium">
+                            <div class="card-block">
+                                <div class="card-header">
+                                    <div class="col-sm-6">
+                                        <h5 class="card-title mb-10">Block Details</h5>
+                                    </div>
+                                </div>
+                                <form class="form-horizontal" name="blockform" novalidate>
+                                    <div class="row">
+                                        <div class="col-xs-10">
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/home.svg" class="img-fluid"></span>
+                                                <input type="text" class="form-control" id="blockName" placeholder="Block Name" name="blockName" ng-model="$ctrl.user.blockName" ng-pattern="/^\s*\w*\s*$/" ng-maxlength="20" required mongoose-error>
+                                                <span style="color:red" ng-show="blockform.blockName.$touched && blockform.blockName.$invalid">
+                                                                <span style="color:red" class="error" ng-show="blockform.blockName.$error.required">
+                                                                    Block Name Is Required!</span>
+                                                <span style="color:red" class="error" ng-show="blockform.blockName.$error.pattern || blockform.blockName.$error.$invalid ">
+                                                                    Nope! Not A Valid Name</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-10">
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/Quantity.svg" class="img-fluid"></span>
+                                                <input type="Number" placeholder="Enter Number Of Floors" name="floornumber" class="form-control" ng-model="$ctrl.user.floorNumber" required mongoose-error/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-10">
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/Quantity.svg" class="img-fluid"></span>
+                                                <input type="number" placeholder="Enter Number Of Flats" name="flatnumbers" class="form-control" ng-model="
+                                                     $ctrl.user.flatNumbers" required mongoose-error/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-5">
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/address city.svg" class="img-fluid"></span>
+                                                <input type="number" placeholder=" Flat First Number" name="startflatnumbers" class="form-control" ng-model="
+                                                     $ctrl.user.startflatnumbers" required mongoose-error/>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-5">
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><img src="assets/images/avatars/address city.svg" class="img-fluid"></span>
+                                                <input type="number" placeholder="Flat last Number" name="lastflatnumbers" class="form-control" ng-model="
+                                                     $ctrl.user.lastflatnumbers" required mongoose-error/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 text-xs-left">
+                                            <div class="input-group mb-1">
+                                                <button type="submit" class="btn btn-info pull-right" ng-click="$ctrl.addBlock($ctrl.user.blockName)" ng-disabled="$ctrl.user.blockName==null || $ctrl.user.floorNumber==null ||
+                                                                $ctrl.user.flatNumbers==null ">Save Block</button>
+                                                <br>
+                                                <br>
+                                                <span style="color: red">{{$ctrl.warning}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="collapse" id="collapseBlock1">
+            <div class="row" ng-if="$ctrl.showResidents">
+                <div class="col-md-12">
+                    <div class="card card-big">
+                        <div class="card-block">
+                            <div class="card-header">
+                                <div class="col-sm-5">
+                                    <h5 class="card-title mb-10">{{$ctrl.block}}</h5>
+                                </div>
+                            </div>
+                              <div class="text-xs-center" ng-if='$ctrl.blockResidents.length == 0' style="padding: 70px; color: #22D1E4">
+                                        <b>  No Users In  {{$ctrl.block}} Block</b>
+                        </div>
+                            <table class="table table-hover" ng-if='$ctrl.blockResidents.length != 0'>
+                                <thead>
+                                    <tr>
+                                       <!--  <th class="text-xs-left">Floor No</th> -->
+
+                                        <th class="text-xs-left">Flat No</th>
+                                        <th class="text-xs-left">Name of the owner</th>
+                                        <th class="text-xs-left">Phone No</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="result in $ctrl.blockResidents">
+                                      <!--   <td class="text-xs-left">{{result.flatNumber}}</td> -->
+                                        <td class="text-xs-left">{{result.houseNumber}}</td>
+                                        <td class="text-xs-left">{{result.firstName}}</td>
+                                        <td class="text-xs-left">+91&nbsp;{{ result.phoneNumber}}</td>
+                                    </tr>
+                                    <div ng-if='$ctrl.blockResidents.length==0' style="color:#22D1E4; padding-top:170px; padding-left: 350px ">NO FLATS TO DISPLAY</div>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!-- Amenties Table and code -->
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card card-big">
+                        <div class="card-block">
+                            <div class="card-header">
+                                <h5 class="card-title mb-10">Add Your Amenities</h5>
+                            </div>
+                            <div class="card-block">
+                                <div class="col-sm-5">
+                                    <h5 class="card-title mb-10">Amenity</h5>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                        <div class="input-group mb-1">
+                                            <span class="input-group-addon"><img src="assets/images/avatars/amenity.svg" class="img-fluid"></span>
+                                            <input type="text" name="amenity" placeholder="Amenity Name" ng-model="$ctrl.amenityname" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                        <div class="input-group mb-1">
+                                            <span class="input-group-addon"><img src="assets/images/avatars/comments.svg" class="img-fluid"></span>
+                                            <textarea rows="2" cols="35" placeholder="Amenity Description" ng-model="$ctrl.amenitydescription" name="description" class="form-control" required></textarea>
+                                            <!-- <span style="color:red" ng-show="ammenityform.description.$touched && !ammenityform.description.$valid">Description is required</span> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="input-group mb-1">
+                                            <span class="input-group-addon"><img src="assets/images/avatars/time interval.svg" class="img-fluid"></span>
+                                            <select id="interval" ng-model="$ctrl.timeInterval" ng-options="option for option in $ctrl.timeIntervalArray" class="form-control" ng-change="$ctrl.selectTimeInterval()">
+                                                <option value="">Choose TimeInterval</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="input-group mb-1">
+                                            <span class="input-group-addon"><img src="assets/images/avatars/rupee.svg" class="img-fluid"></span>
+                                            <input type="number" name="charge" placeholder="Charge in rupees" {{$ctrl.timeInterval}} ng-model="$ctrl.chargeperhour" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" ng-show="$ctrl.showForms">
+                                    <div class="col-xs-6">
+                                        <div class="input-group mb-1">
+                                            <span class="input-group-addon"><img src="assets/images/avatars/time.svg" class="img-fluid"></span>
+                                            <input type="text" name="amenity" placeholder="BookingFrom" ng-model="$ctrl.bookingFrom" class="form-control" required>
+                                            <!-- <select class="input-group-addon" ng-options="als for als in $ctrl.bkngFrom"></select> -->
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="input-group mb-1">
+                                            <span class="input-group-addon"><img src="assets/images/avatars/time.svg" class="img-fluid"></span>
+                                            <input type="text" name="amenity" placeholder="BookingTo" ng-model="$ctrl.bookingTo" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="input-group mb-1">
+                                            <span class="input-group-addon"><img src="assets/images/avatars/user.svg" class="img-fluid"></span>
+                                            <input type="text" name="Name" placeholder="Contact Person" ng-model="$ctrl.name" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                            <div class="input-group mb-1">
+                                            <span class="input-group-addon"><img src="assets/images/avatars/mobile.svg" class="img-fluid"></span>
+                                            <input type="number" name="Contactnumber" placeholder=" Phone Number" ng-model="$ctrl.contactnumber" class="form-control" required="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 text-xs-left">
+                                        <div class="input-group mb-1">
+                                            <button class="btn btn-info pull-right" type="submit" style="float:left;" name="submit" ng-disabled="$ctrl.amenityname==null||$ctrl.amenitydescription==null||$ctrl.name==null||$ctrl.contactnumber==null||$ctrl.chargeperhour==null" ng-click="$ctrl.addAmenity($ctrl.amenityname,$ctrl.amenitydescription,$ctrl.name,$ctrl.contactnumber,$ctrl.chargeperhour,$ctrl.bookingFrom,$ctrl.bookingTo,$ctrl.timeInterval)" required>Save</button>
+                                        </div>
+                                        <!-- <div class="alert alert-success"  ng-show="$ctrl.showAmenity" role="alert">
+                                                <strong>Congrats</strong> You successfully Added Your Amenities
+                                            </div> -->
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  Amenitytable code here
+ -->
+                <div class="col-sm-6">
+                    <div class="card card-big">
+                        <div class="card-block">
+                            <div class="card-header">
+                                <h5 class="card-title mb-10">Amenities</h5>
+                            </div>
+                            <div class="card-block">
+                                <table class="table table-hover mb-0 hidden-sm-down">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-xs-left"> Amenity Name </th>
+                                            <th class="text-xs-left"> Contact Person </th>
+                                            <th class="text-xs-center"> Contact Number </th>
+                                            <th class="text-xs-center"> Delete </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="list in $ctrl.amenitylist">
+                                            <td class="text-xs-left"> {{list.amenityName}} </td>
+                                            <td class="text-xs-left"> {{list.contactPerson.name}} </td>
+                                            <td class="text-xs-center"> {{list.contactPerson.contactPhone}} </td>
+                                            <td class="text-xs-center">
+                                                <button class="btn btn-danger btn-sm" ng-click="$ctrl.deleteAmenity(list)">
+                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <!-- <table ng-table="$ctrl.amenityTable" class="table table-hover mb-0 hidden-sm-down" ng-form="demo.tableForm" disable-filter="demo.isAdding" demo-tracked-table="demo.tableTracker" ng-model="$ctrl.table">
+                                <tr ng-repeat="row in $data" ng-form="rowForm" demo-tracked-table-row="row">
+                                    <td title="'Amenity\n Name'" ng-switch="row.isEditing">
+                                        <span ng-switch-default class="editable-text">{{row.amenityName}}</span>
+                                        <div class="controls" ng-class="name.$invalid && name.$dirty ? 'has-error' : ''" ng-switch-when="true">
+                                        </div>
+                                    </td>
+                                    <td title="'Contact Person'" ng-switch="row.isEditing">
+                                        <span ng-switch-default class="editable-text">{{ row.contactPerson.name}}</span>
+                                        <div class="controls" ng-class="age.$invalid && age.$dirty ? 'has-error' : ''" ng-switch-when="true">
+                                            <input type="text" name="name" ng-model="row.contactPerson.name" class="editable-input form-control input-sm" required/>
+                                        </div>
+                                    </td>
+                                    <td title="'Contact Number'" ng-switch="row.isEditing">
+                                        <span ng-switch-default class="editable-text">{{row.contactPerson.contactPhone}}</span>
+                                        <div class="controls" ng-class="age.$invalid && age.$dirty ? 'has-error' : ''" ng-switch-when="true">
+                                            <input type="text" name="name" ng-model="row1.contactPerson.name" class="editable-input form-control input-sm" required/>
+                                        </div>
+                                    </td>
+                                    <td title="'Delete'">
+                                        <button class="btn btn-danger btn-sm" ng-click="$ctrl.deleteAmenity(row)" ng-if="!row.isEditing"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </td>
+                                </tr>
+                            </table> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-include="'components/common/bottom.html'"> </div>
+<div class="modal" id="myMaintenance" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modaltitle">Add Expense</h3>
+            </div>
+            <div class="modal-body" id="modalbody">
+                <div class="col-sm-12">
+                    <div class="card card-medium mar-t-10">
+                        <div class="card-block">
+                            <div class="card-block-header">
+                                <h5 class="card-title mb-10">Expense Form</h5>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <div class="input-group mb-1">
+                                        <span class="input-group-addon"><img src="assets/images/avatars/expense.svg" class="img-fluid"></span>
+                                        <input type="text" name="expenseName" placeholder="Expense Name" class="form-control" ng-model="$ctrl.expenseName" required mongoose-error>
+                                    </div>
+                                    <span style="color:red" ng-show="form.expenseName.$touched && form.expenseName.$invalid"></span>
+                                    <span class="error" ng-show="form.expenseName.$error.required">Expenses name is required</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <div class="input-group mb-1">
+                                        <span class="input-group-addon"><img src="assets/images/avatars/amount.svg" class="img-fluid"></span>
+                                        <input type="number" class="form-control" placeholder="Amount" ng-model="$ctrl.amount" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <div class="input-group mb-1">
+                                        <span class="input-group-addon"><img src="assets/images/avatars/date.svg" class="img-fluid"></span>
+                                        <datepicker date-format="dd MMM yyyy">
+                                            <input type="text" placeholder="Expenses Date" class="form-control" ng-model="$ctrl.maintananceDate" required mongoose-error>
+                                        </datepicker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-dismiss='modal' ng-click="$ctrl.maintenanceexpenseSave()">UPDATE</a>
+            </div>
+        </div>
+    </div>
+</div>

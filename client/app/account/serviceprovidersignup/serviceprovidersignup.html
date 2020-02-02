@@ -1,0 +1,168 @@
+<section class="top-section">
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="container d-table">
+                <div class="d-100vh-va-middle">
+                    <!-- <div class="row">
+                        <div class="col-xs-6 offset-md-9 loginbtn">
+                            <a class="btn btn-triumph" href="/">Home</a>
+                            <a class="btn btn-success" href="/login"> Go to LogIn</a></div>
+                    </div> -->
+                    <div class="row mar-b-10">
+                        <div class="col-md-6 offset-md-3">
+                            <img src="../../../assets/images/logo.png" alt="Guwha" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9  offset-md-2">
+                            <div class="card-group m-0">
+                                <div class="card p-2">
+                                    <h1> Service Registration</h1>
+                                    <p class="text-muted">Create Your Account</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-9 offset-md-2">
+                            <div class="card-group">
+                                <div class="card p-2 text-xs-center">
+                                    <form class="form" name="form" novalidate>
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/user.svg" class="img-fluid"></span>
+                                                    <input type="text" name="firstname" class="form-control" placeholder="First Name" ng-model="$ctrl.firstName" required>
+                                                </div>
+                                                <span style="color:red" class="error" ng-show="form.firstname.$touched && form.firstname.$invalid">
+                                                        <span class="error" ng-show="form.firstname.$error.required">
+                                                            Firstname is required
+                                                        </span>
+                                                </span>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/user.svg" class="img-fluid"></span>
+                                                    <input type="text" name="lastname" class="form-control" ng-model="$ctrl.lastName" placeholder="Last Name" required>
+                                                </div>
+                                                <span style="color:red" class="error" ng-show="form.lastname.$touched && form.lastname.$invalid">
+                                                        <span class="error" ng-show="form.lastname.$error.required">
+                                                            Lastname is required
+                                                        </span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/address city.svg" class="img-fluid"></span>
+                                                    <input type="text" name="companyname" class="form-control" ng-model="$ctrl.companyname" placeholder="Company Name" required>
+                                                </div>
+                                                <span style="color:red" class="error" ng-show="form.companyname.$touched && form.companyname.$invalid">
+                                                        <span class="error" ng-show="form.companyname.$error.required">
+                                                            Company Name is required
+                                                        </span>
+                                                </span>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/email.svg" class="img-fluid"></span>
+                                                    <input type="text" placeholder="Email Address" id="" class="form-control" ng-model="$ctrl.emailId" name="email" ng-pattern="/^[_a-zA-Z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" required>
+                                                </div>
+                                                <span style="color:red" ng-show="form.email.$touched && form.email.$invalid">
+                                        <span style="color:red" class="error" ng-show="form.email.$error.required">Email id is required!</span>
+                                                <span style="color:red" class="error" ng-show="form.email.$error.pattern"> Not valid!</span>
+                                                </span>
+                                                <span style="color:red">{{$ctrl.emailExist}}</span>
+                                            </div>
+                                            {{$ctrl.search.result.length}}
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6" align="left">
+                                                <div class="input-group mb-1" ng-init="$ctrl.gender='MALE'">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/persons.svg" class="img-fluid"></span>
+                                                    <input id="gender" type="radio" name="gender" value="MALE" ng-model="$ctrl.gender">
+                                                    <label for="radio1"><span><span></span></span>Male</label>
+                                                    <input id="gender" type="radio" name="gender" value="FEMALE" ng-model="$ctrl.gender">
+                                                    <label for="radio1"><span><span></span></span>Female</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/phone.svg" class="img-fluid"></span>
+                                                    <input type="number" name="landlineNo" class="form-control" ng-model="$ctrl.landlineNo" placeholder="Landline Number" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/mobile.svg" class="img-fluid"></span>
+                                                    <input type="text" class="form-control" name="phoneNumber" ng-model="$ctrl.phoneNumber" placeholder="Mobile Number" ng-pattern="/^\(?(\d{3})\)?[ .-]?(\d{3})[ .-]?(\d{4})$/" required>
+                                                </div>
+                                                <span style="color:red" ng-show="form.phoneNumber.$touched && form.phoneNumber.$invalid">
+                                    
+                                        <span style="color:red" class="error" ng-show="form.phoneNumber.$error.required">
+                                                        Mobile Number is required!</span>
+                                                <span style="color:red" class="error" ng-show="form.phoneNumber.$error.pattern"> 
+                                                        Enter valid phoneNumber!</span>
+                                                </span>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/address city.svg" class="img-fluid"></span>
+                                                    <textarea name="companyaddress" class="form-control" ng-model="$ctrl.companyAddress" placeholder="Company Address" required></textarea>
+                                                </div>
+                                                <span style="color:red" class="error" ng-show="form.companyaddress.$touched && form.companyaddress.$invalid">
+                                                        <span class="error" ng-show="form.companyaddress.$error.required">
+                                                            Company Address is required
+                                                        </span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-addon"><img src="assets/images/avatars/info.svg" class="img-fluid"></span>
+                                                    <textarea name="companyinfo" class="form-control" ng-model="$ctrl.companyInfo" placeholder="Company Information" required></textarea>
+                                                </div>
+                                                <span style="color:red" class="error" ng-show="form.companyinfo.$touched && form.companyinfo.$invalid">
+                                                        <span class="error" ng-show="form.companyinfo.$error.required">
+                                                            Company Information is required
+                                                        </span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6 text-xs-left">
+                                                <div class="col-xs-9">
+                                                    <input type="checkbox" ng-model="$ctrl.user.checked" ng-init="$ctrl.user.checked=false">
+                                                    <!-- <input  id="check"  type="checkbox" name="checkbox"  ng-model="$ctrl.resultaraary($index)"  ng-checked="$ctrl.exist(x)" 
+                                ng-click="$ctrl.expenseSelected(x)"> -->
+                                                    <label for="checkbox"><span></span> </label>
+                                                    I agree to the&nbsp;<a href="#">terms</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-2">
+                                                <div class="input-group mb-1">
+                                                    <button type="submit" class="btn btn-primary btn-block btn-flat" ng-click="$ctrl.onRegister(form)" ng-disabled="$ctrl.firstName==null || $ctrl.firstName=='' || $ctrl.lastName==null || $ctrl.lastName=='' || $ctrl.emailId==null || $ctrl.phoneNumber==null ||  $ctrl.phoneNumber=='' || $ctrl.isEmailExist==false || $ctrl.companyname==null || $ctrl.companyname==undefined || $ctrl.companyAddress==null || $ctrl.companyAddress==undefined || $ctrl.companyInfo==null ||$ctrl.checked==false || $ctrl.companyInfo==undefined">Register</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <div class="input-group mb-1 text-xs-left">
+                                                    <span style="color: red"><p>{{$ctrl.errorMessage}}</p></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

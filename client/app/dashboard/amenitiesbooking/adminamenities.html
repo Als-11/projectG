@@ -1,0 +1,128 @@
+
+<!-- Main content -->
+<div class="main">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+        <li class="breadcrumb-item active">Amenity Bookings</li>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-big">
+                        <div class="card-block">
+                            <div class="header">
+                                <div class="col-sm-5">
+                                    <h5 class="card-title mb-10">LIST OF BOOKINGS</h5>
+                                </div>
+                                <div class="col-md-2" style="float: right;">
+                                	<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#AmenityForm">BOOK AMENITY</button>
+                                </div>
+                            </div>
+                            <br>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="text-xs-left">Name of the User</th>
+                                        <th class="text-xs-center">Phone No</th>
+                                        <th class="text-xs-left">Flat No</th>
+                                        <th class="text-xs-left">Amenity Name</th>
+                                        <th class="text-xs-center">From</th>
+                                        <th class="text-xs-center">To</th>
+                                        <th class="text-xs-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="user in $ctrl.latestBookingsTable |itemsPerPage:10">
+                                        <td class="text-xs-left">  {{user._id.userInfo[0].firstName}}</td>
+                                        <td class="text-xs-center">{{user._id.userInfo[0].phoneNumber}}</td>
+                                        <td class="text-xs-left">{{user._id.userInfo[0].houseNumber}}</td>
+                                        <td class="text-xs-left">  {{user._id.AmenityInfo[0].amenityName}}</td>
+                                        <td class="text-xs-center">{{user._id.blockedFrom|date:'dd/MM/yyyy @ h:mma'}}</td>
+                                        <td class="text-xs-center">{{user._id.blockedTo|date:'dd/MM/yyyy @ h:mma'}}</td>
+                                        <td class="text-xs-center">
+                                            <i class="fa fa-check" aria-hidden="true" style="color:green;" ng-click="$ctrl.amenityApproved(user)"></i>&nbsp;&nbsp;
+                                            <i class="fa fa-times" aria-hidden="true" style="color:red;" ng-click="$ctrl.amenityDecline(user)"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+                            </dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ######################  AMENITY FORM ###################### -->
+
+    <div class="modal" id="AmenityForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="modaltitle">BOOK YOUR AMENITY</h6>
+                <div class="modal-body" id="modalbody">
+                	<div class="row">
+                            <div class="col-xs-7">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/amenity.svg" class="img-fluid"></span>
+                                    <select type="text" class="form-control" placeholder="Select Your Amenity" ng-options="option for option in $ctrl.amenitylist" ng-model="$ctrl.amenityName" ng-change="$ctrl.getAmenityDetails()" required mongoose-error>
+                                        <option value="">--Select Your Amenity--</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-7">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/date.svg" class="img-fluid"></span>
+                                    <datepicker date-format="dd MMM yyyy" date-min-limit="{{$ctrl.limit}}">
+                                        <input type="text" class="form-control" placeholder="Select Your desired Date" ng-model="$ctrl.startDate" required mongoose-error>
+                                    </datepicker>
+                                </div>
+                            </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-xs-12 text-xs-center">
+                                <div class="input-group mb-1">
+                                    <button class="btn btn-primary btn-sm" type="button" ng-click="$ctrl.getBookings()" ng-disabled="$ctrl.amenityName==null || $ctrl.startDate==null" required>SHOW AVAILABLE TIMINGS</button>
+                                </div>
+                            </div>
+                        </div>
+                </div><br><br>
+
+
+           <!--  ################### AVAILABLE TIMINGS ##################### -->
+
+                <div ng-show="$ctrl.buttonsShow">
+                            <div class="card-deck">
+                                <h6 class="modal-title">AVAILABLE TIMMING SLOTS </h6>
+                            </div>
+                            <div>
+                               <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                                    <div class="btn-group" role="group" aria-label="First group">
+                                      <button type="button" ng-show="$ctrl.hourbuttonsShow" ng-repeat="x in $ctrl.solution track by $index"  class="btn btn-secondary mar-20" ng-click="$ctrl.bookAmenity(x,$index)" style="background-color:{{x.colours}}; color: white" ng-disabled="x.status">{{x.time}}
+                                        </button>
+                                         <button type="button" ng-show="$ctrl.daybuttonsShow" ng-repeat="x in $ctrl.solution track by $index" style="background-color:{{x.colours}}; color: white; width: 200px; margin-left: 170px" ng-click="$ctrl.bookAmenity(x)" ng-disabled="x.status">
+                                    {{$ctrl.startDate}}</button>
+                                    </div>
+                                </div>
+
+                            <br>
+                            <button type="button" class="btn btn-success"  ng-click="$ctrl.makeBooking()" data-dismiss="modal" style="float: right;">Book</button>
+                            <button type="button" class="btn btn-info" ng-disabled="$ctrl.startTime==null||$ctrl.endTime==null" ng-click="$ctrl.cancelTimBook()" style="float: left;">Cancel</button>
+                        </div>
+                </div>
+
+            <!-- ################### AVAILABLE TIMMINGS closed##################### -->
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ######################  AMENITY FORM CLOSED ###################### -->
+
+<div ng-include="'components/common/bottom.html'"> </div>

@@ -1,0 +1,114 @@
+<div class="main">
+    <div ng-include="'components/sidebar/sidebar.html'"></div>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+        <li class="breadcrumb-item active">orders</li>
+    </ol>
+    <!-- Content Header (Page header) -->
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="col-md-12">
+                <div class="card card-medium mar-t-10">
+                    <div class="card-block">
+                        <h5 class="card-title mb-4"> <i class="fa fa-chevron-circle-left" ng-click="$ctrl.downArrow()" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;  ORDER DETAILS&nbsp;&nbsp;&nbsp;(Date:{{$ctrl.orderDate|date:'dd.MM.yyyy'}} |  
+                            {{$ctrl.weekName}}) &nbsp;&nbsp;&nbsp;     
+                              <i class="fa fa-chevron-circle-right" aria-hidden="true" ng-click="$ctrl.upArrow()"></i>
+                       <!--  <a href= "#" style="padding-left: 370Px">Previous Oders</a> -->
+                          <a href= "#"  data-toggle="modal" data-target="#OderList" style="padding-left: 400Px">Download All Order List</a>
+                        </h5>
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/date.svg" class="img-fluid"></span>
+                                    <datepicker date-format="dd MMM yyyy">
+                                        <input type="text" placeholder="Select Date" ng-change="$ctrl.goToDate()" class="form-control" ng-model="$ctrl.Date" required mongoose-error>
+                                    </datepicker>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-xs-center" ng-if='$ctrl.ordersArray.length == 0' style="padding: 70px; color: #22D1E4">
+                            <b>  No Orders </b>
+                        </div>
+                        <div ng-if='$ctrl.ordersArray.length != 0'>
+                            <!-- <div infinite-scroll='$ctrl.scroll()' > -->
+                            <table class="table table-hover mb-0 hidden-sm-down">
+                                <thead>
+                                    <tr>
+                                        <th class="text-xs-left">Name Of The Community</th>
+                                        <th class="text-xs-left">#phone</th>
+                                        <th class="text-xs-center">Orders</th>
+                                        <th class="text-xs-center">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="ordersTable in $ctrl.ordersArray">
+                                        <td class="text-xs-left"><a href="#" data-toggle="modal" data-target="#OderList" ng-click="$ctrl.getAllOrdersCommunity(ordersTable)">{{ordersTable._id.communityInfo[0].communityName}}</a></td>
+                                        <td class="text-xs-left">{{ordersTable._id.communityInfo[0].phoneNumber}}
+                                        </td>
+                                        <td class="text-xs-center">{{ordersTable._id.servicename}}({{ordersTable.count}})</td>
+                                        </td>
+                                        <td class="text-xs-center" ng-if='ordersTable._id.status == "PENDING"'>
+                                            <button class="btn btn-primary" ng-hide="$ctrl.hideAcceptButton" ng-click="$ctrl.inProcess(ordersTable,1)">Accept Order</button>
+                                            <!-- <button class="btn btn-primary" ng-hide="$ctrl.hideButton" >In Processing
+                                    </button>&nbsp;&nbsp;&nbsp;
+                                    <button class="btn btn-secondary"  ng-hide="$ctrl.hideDeliverButton" ng-click="$ctrl.inProcess(ordersTable,2)">Delivered</button>
+ -->
+                                        </td>
+                                        <td class="text-xs-center" ng-if='ordersTable._id.status == "ACCECPTED" || $ctrl.ordersTable=="ACCECPTED"'>
+                                            <button class="btn btn-primary" ng-hide="$ctrl.hideButton">In Processing</button>&nbsp;&nbsp;&nbsp;
+                                            <button class="btn btn-secondary" ng-hide="$ctrl.deliverButton" ng-click="$ctrl.inProcess(ordersTable,2)">Delivered</button>
+                                        </td>
+                                        <td class="text-xs-center" ng-if='ordersTable._id.status == "DELIVERED"'>
+                                            <button class="btn btn-primary">DELIVERED</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="OderList" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">	
+                <h2 class="card-title mb-4" style="text-align: center">{{$ctrl.getAllorderCommunityArray[0]._id.ServiceProviderDetail[0].firstName}} {{$ctrl.getAllorderCommunityArray[0]._id.ServiceProviderDetail[0].lastName}}</h2>
+                <h4 class="card-title mb-1" style="text-align: center">
+                             {{$ctrl.getAllorderCommunityArray[0]._id.ServiceProviderDetail[0].address}} </h4>
+                <h6 class="card-title mb-1" style="text-align: center">
+                               {{$ctrl.getAllorderCommunityArray[0]._id.ServiceProviderDetail[0].mobileNumber}}
+                               </h6>
+                <hr>
+                <div class="modal-body" id="modalbody">
+                    <h4 class="card-title mb-4" style="text-align: left">{{$ctrl.getAllorderCommunityArray[0]._id.communityDetails[0].communityName}}&nbsp;&nbsp;&nbsp;&nbsp;
+                           (Date:{{$ctrl.orderDate|date:'dd.MM.yyyy'}} |  
+                            {{$ctrl.weekName}})</h4>
+                    <h6 class="small text-muted">{{$ctrl.getAllorderCommunityArray[0]._id.communityDetails[0].address.address1}},{{$ctrl.getAllorderCommunityArray[0]._id.communityDetails[0].address.locality}},{{$ctrl.getAllorderCommunityArray[0]._id.communityDetails[0].address.city}}(Ph.No:+91 {{$ctrl.getAllorderCommunityArray[0]._id.communityDetails[0].phoneNumber}})</h6>
+                    <table class="table table-hover mb-0 hidden-sm-down">
+                        <thead>
+                            <tr>
+                                <th class="text-xs-center">Name Of The Person</th>
+                                <th class="text-xs-center">Block-FlatNumber</th>
+                                <!--   <th class="text-xs-center">Flat</th> -->
+                                <th class="text-xs-center">Orders</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="getOrderDetails in $ctrl.getAllorderCommunityArray">
+                                <td class="text-xs-left">{{getOrderDetails._id.userDetails[0].firstName}}
+                                </td>
+                                <td class="text-xs-center">{{getOrderDetails._id.userDetails[0].houseNumber}}
+                                </td>
+                                <td class="text-xs-left">{{getOrderDetails._id.servicename}}({{getOrderDetails.count}})</td>
+                                <td class="text-xs-center"><a href="#" data-toggle="modal" data-target="#myPendingExpenses" ng-click="$ctrl.pendingExpenses()" ng-show="'{{expensesShowTable.status}}' == 'Pending'">PayNow</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

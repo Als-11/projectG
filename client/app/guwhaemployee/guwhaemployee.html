@@ -1,0 +1,131 @@
+
+<div class="main">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+        <li class="breadcrumb-item active"></li>
+    </ol>
+    <!-- Content Header (Page header) -->
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row" >
+                <div class="col-md-12">
+                    <div class="card card-big mar-t-10">
+                        <div class="card-block">
+                            <div class="card-header">
+                                <div class="col-sm-8">
+                                    <h5 class="card-title mb-10" >LIST OF PAID PAYMENTS</h5>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <table class="table table-hover mb-0 hidden-sm-down">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-xs-left">Transaction Id</th>
+                                            <th class="text-xs-left">UserId</th>
+                                            <th class="text-xs-left">CommunityId</th>
+                                            <th class="text-xs-left">Expense Name</th>
+                                            <th class="text-xs-left">Expense Date</th>
+                                            <th class="text-xs-left">PayUId</th>
+                                            <th class="text-xs-center">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="complaint in $ctrl.getPayuIdPayment">
+                                            <td class="text-xs-left">{{complaint.transId}}</td>
+                                            <td class="text-xs-left">{{complaint.userId}}</td>
+                                            <td class="text-xs-left">{{complaint.communityId}}</td>
+                                            <td class="text-xs-left">{{complaint.expenseName}}</td>
+                                            <td class="text-xs-left">{{complaint.expenseDate|date:'dd/MM/yyyy'}}</td>
+                                            <td class="text-xs-left">{{complaint.payuId}}</td>
+                                            <td class="text-xs-center">
+                                        <a href="#" data-toggle="modal" data-target="#myModal" ng-click="$ctrl.processPayment(complaint)">Edit</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    
+        </div>
+    </div>
+</div>
+<div ng-include="'components/common/bottom.html'"> </div>
+
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="modaltitle">Payment Form</h3>
+                    </div>
+                    <div class="modal-body" id="modalbody">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/user.svg" class="img-fluid"></span>
+                                    <p class="form-control" ng-readonly="true">{{$ctrl.transId }}</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/mobile.svg" class="img-fluid"></span>
+                                    <p class="form-control" ng-readonly="true">{{$ctrl.userId }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/date.svg" class="img-fluid"></span>
+                                     <p class="form-control" ng-readonly="true">{{$ctrl.communityId }}</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="input-group mb-1"> <span class="input-group-addon"><img src="assets/images/avatars/amount.svg" class="img-fluid"></span>
+                                      <p class="form-control" ng-readonly="true">{{$ctrl.expenseName }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/date.svg" class="img-fluid"></span>
+                                   <p class="form-control" ng-readonly="true">{{$ctrl.payuId}}</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/date.svg" class="img-fluid"></span>
+                                    <select type="text" id="" class="form-control" ng-options="result for result in $ctrl.paymentSource" ng-model="$ctrl.paymentSourceSelcted" name="role">
+                                      <option value="">--Select Payment Source--</option>
+                                 </select>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/date.svg" class="img-fluid"></span>
+                                  <select type="text" id="" class="form-control" ng-options="result for result in $ctrl.status" ng-model="$ctrl.statusSelcted" name="role">
+                                      <option value="">--Select Payment Stataus--</option>
+                                 </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="input-group mb-1">
+                                    <span class="input-group-addon"><img src="assets/images/avatars/date.svg" class="img-fluid"></span>
+                                 <input type="text" class="form-control" name="firstname" placeholder="TransactionId" ng-model="$ctrl.antransId" required mongoose-error>
+                                </div>
+                            </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <buttton class="btn btn-primary" ng-click='$ctrl.payPayment()' data-dismiss="modal" > Update </button>
+                    </div>
+                </div>
+            </div>
+        </div>

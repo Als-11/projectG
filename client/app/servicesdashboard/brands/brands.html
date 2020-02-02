@@ -1,0 +1,104 @@
+<div class="main">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active">Brands</li>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+     <div class="row">
+        <div class="col-md-6">
+            <div class="card card-medium">
+                <div class="card-block">
+                   <div class="card-header pad-t-0">
+                        <div class="col-sm-12 pad-t-0">
+                            <h5 class="card-title mb-10">ADD BRANDS DETALIS</h5>
+                        </div>
+                        <div class="col-xs-10">                           
+                            <div class="input-group mb-1">
+                              <span class="input-group-addon"><img src="assets/images/avatars/brand-star.svg" class="img-fluid"></span>
+                                <input type="text" name="expensesName" placeholder="Brand Name" 
+                                class="form-control" ng-model="$ctrl.brandName" required mongoose-error>
+                                </div>
+                                <span style="color:red" ng-show="form.expensesName.$touched && form.expensesName.$invalid"></span>
+                                <span class="error" ng-show="form.expensesName.$error.required">Name is required</span>
+                            </div>
+                        </div><br>
+                        <div class = "row">
+                         <div class="col-sm-4 text-xs-center">Category</div>
+                          <div class="col-sm-4 text-xs-center">Quantity</div>
+                           <div class="col-sm-4 text-xs-center">Price</div>
+                           </div>
+                           <br>
+               <div class="row" >
+                    <div class="col-sm-4">
+                         <select type="text" class="form-control" ng-model="$ctrl.availableService1" ng-options="result for result in $ctrl.availableServices" required></select>              
+                    </div>
+                    <div class="col-sm-4 ">
+                           <input type="text" class="form-control" placeholder="Quantity" ng-model="$ctrl.quantity1" required mongoose-error>
+                    </div>
+                     <div class="col-sm-4">
+                          <input type="number" class="form-control" placeholder="UnitPrice" ng-model="$ctrl.unitPrice1" required mongoose-error>
+                     </div>
+                </div>
+             <div class="row" >
+                    <div class="col-sm-4">
+                         <select type="text" class="form-control" ng-model="$ctrl.availableService2" ng-options="result for result in $ctrl.availableServices" required></select>              
+                    </div>
+                    <div class="col-sm-4 ">
+                           <input type="text" class="form-control" placeholder="Quantity" 
+                           ng-model="$ctrl.quantity2" required mongoose-error>
+                    </div>
+                     <div class="col-sm-4">
+                          <input type="number" class="form-control" placeholder="UnitPrice" ng-model="$ctrl.unitPrice2" required mongoose-error>
+                     </div>
+                </div>
+                 <div class="row">
+                    <div class="col-sm-4">
+                         <select type="text" class="form-control" ng-model="$ctrl.availableService3" ng-options="result for result in $ctrl.availableServices" required></select>              
+                    </div>
+                    <div class="col-sm-4 ">
+                           <input type="text" class="form-control" placeholder="Quantity" 
+                           ng-model="$ctrl.quantity3" required mongoose-error>
+                    </div>
+                     <div class="col-sm-4">
+                          <input type="number" class="form-control" placeholder="UnitPrice"
+                           ng-model="$ctrl.unitPrice3" required mongoose-error>
+                     </div>
+                </div>
+                <br>
+                <div class="row">
+                  <a href="#" style="padding-left:400px" ng-click="$ctrl.reset()">RESET</a>&nbsp;&nbsp;
+                  <a href="#" style= "float: right;" ng-click="$ctrl.addBrand()">ADD BRAND</a>
+                 </div>
+                    </div>
+                </div>
+            </div>
+                      <!-- New Card stars here -->
+         <div class="col-md-6">
+            <div class="card card-medium">
+                <div class="card-block">
+                   <div class="card-header pad-t-0">
+                        <div class="col-sm-12 pad-t-0">
+                            <h5 class="card-title mb-10">LIST OF BRANDS AVAILABLE</h5>
+                        </div>
+                    </div>
+                     <table class="table table-hover mb-0 hidden-sm-down">
+                      <thead>
+                            <th class="text-xs-left">Name Of The Brand</th>
+                            <th class="text-xs-left">Available Categories</th>
+                            <th class="text-xs-center">Phone Number</th>
+                    </thead>
+                      <tr ng-repeat="getbrands in $ctrl.getBrandsArray">
+                            <td class="text-xs-left">{{getbrands._id.brandName}}</td>
+                            <td class="text-xs-left">{{getbrands._id.serviceName}}</td>
+                            <td class="text-xs-center">{{getbrands._id.serviceProviderdetails[0].mobileNumber}}
+                            </td>
+                    </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+    </div>
+</div>

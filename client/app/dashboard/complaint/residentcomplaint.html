@@ -1,0 +1,206 @@
+
+<div class="main">
+    <!-- Content Header (Page header) -->
+    <section class="content">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+            <li class="breadcrumb-item active">Complaints</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- <div class="card card-block">
+                            <h4>Enter Your Complaints</h4>
+                            <hr> -->
+                        <div class="card card-medium mar-t-10">
+                            <div class="card-block">
+                                <div class="card-header">
+                                    <div class="col-sm-11">
+                                        <h5 class="card-title mb-10">ADD COMPLAINT</h5>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-xs-7">
+                                        <div class="input-group mb-1">
+ 
+                                            <span class="input-group-addon"><img src="assets/images/avatars/complaints_icon.svg" class="img-fluid"></span> 
+                                            <select type="text" placeholder="Select the category" id="" class="form-control" ng-options="result for result in $ctrl.employeeCategory"  ng-model="$ctrl.category" name="role" required>
+                                                <option value="">Select The Category</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                        <div class="input-group mb-1">
+                                            <textarea rows="7" cols="65" placeholder="Enter Description (or) Enter Your Problem" ng-model="$ctrl.description" required mongoose-error></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-xs-6 offset-xs-8">
+                                        <a>Cancel</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="#" ng-disabled="$ctrl.category==null || $ctrl.description==null" ng-click="$ctrl.onRegister($ctrl.category,$ctrl.description)">Register</a>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+            </section>
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- <div class="card card-block">
+                            <h3>Your Complaints</h3> -->
+                        <div class="card card-big mar-t-10">
+                            <div class="card-block">
+                                <div class="card-header">
+                                    <div class="col-sm-11">
+                                        <h5 class="card-title mb-10">YOUR COMPLAINTS</h5>
+                                    </div>
+                                </div>
+ 
+                                <table class="table table-hover mb-0 hidden-sm-down">
+                                        <thead>
+                                            <tr>
+                                                <!-- <th class="text-xs-center"> Complaint Id </th> -->
+                                                <th class="text-xs-left">Complaint Title</th> 
+                                                <th class="text-xs-left">  Description </th>
+                                                <th class="text-xs-left">  Employee Id </th>
+                                                <th class="text-xs-left">  Date </th>                         
+                                                <th class="text-xs-left">  Comments </th>
+                                                <th class="text-xs-center">  Status </th> 
+                                                <!-- <th> History </th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr dir-paginate="complnt in $ctrl.complaintsList|itemsPerPage:7">
+
+                                                <td class="text-xs-left">{{complnt.title}}</td>
+                                                <td class="text-xs-left"> {{complnt.complaintdescription}} </td>
+                                                <td class="text-xs-left">  {{complnt.employeeId}} </td>
+                                                <td class="text-xs-left">  {{complnt.createdAt |date:'dd-MMMM-yyyy @ hh:mm a'}} </td> 
+                                                <td class="text-xs-left">-{{complnt.description}}-</td>
+
+                                                <td class="text-xs-center" ng-if='complnt.status=="Closed"' style="color:#0275d8"> {{complnt.status}} </td>
+                                                <td class="text-xs-center" data-toggle="modal" data-target="#assignedemployeeName" ng-click="$ctrl.assignedemployeName(complnt)" ng-if='complnt.status!="Closed"' style="color:red"> {{complnt.status}} </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <dir-pagination-controls
+                                        max-size="5"
+                                        direction-links="true"
+                                        boundary-links="false">
+                                    </dir-pagination-controls> 
+ 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <br>
+            <br>
+            <section id="collapseExample3" class="content" ng-show="$ctrl.show">
+                <!-- showing the complaintHistory -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- <div class="card card-block">
+                            <h4>Your Complaint-History</h4> -->
+                        <div class="card card-big mar-t-10">
+                            <div class="card-block">
+                                <div class="card-header">
+                                    <div class="col-sm-11">
+                                        <h5 class="card-title mb-10">Your Complaint-History</h5>
+                                    </div>
+                                </div>
+                                <ul class="timeline">
+                                    <li ng-class-even="'timeline-inverted'" ng-repeat="complaintHistory in $ctrl.complaintHistoryresult">
+                                        <div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <h4 class="timeline-title">{{complaintHistory.userTotalInfo[0].firstName}}</h4>
+                                                <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{complaintHistory.createdAt|date:'dd-MM-yyyy @ h:mm a'}}</small></p>
+                                            </div>
+                                            <div class="timeline-body">
+                                                <p>{{complaintHistory.text}}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-medium mar-t-10">
+                            <div class="card-block">
+                                <div class="card-header">
+                                    <div class="col-sm-11">
+                                        <h5 class="card-title mb-10">Add Your Comment</h5>
+                                    </div>
+                                </div>
+                                <br>
+                                <div>
+                                    <label for="inputEmail3" class="col-sm-3 control-label"><b>Enter Your Comment</b></label>
+                                    <textarea rows="2" cols="50" ng-model="$ctrl.commentsss" name="comment" required></textarea>
+                                </div>
+                                <div>
+                                    <button class="btn btn-info pull-right" type="submit" ng-disabled="$ctrl.commentsss==null || $ctrl.commentsss==undefined" ng-click="$ctrl.Createcomments(row)" value="submit">submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <br>
+            <br>
+            </div>
+        </div>
+    </div>
+    <div ng-include="'components/common/bottom.html'"> </div>
+    <div class="modal" id="assignedemployeeName" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6 class="modal-title" id="modaltitle">Employee Details</h6></div>
+                <div ng-if='$ctrl.status=="Assigned" || $ctrl.status=="Closed"' class="modal-body" id="modalbody">
+                    <div class="social-box box">
+                        <img src="{{$ctrl.imageUrl}}" width="230px" height="200px"></div>
+                        
+                        <table width="100%">
+                            <tr>
+                                <td>Name</td>
+                                <td> : {{$ctrl.employeename}}</td>
+                            </tr>
+                            <tr>
+                                <td>Employee Id </td>
+                                <td>: {{$ctrl.employeeId}}</td>
+                            </tr>
+                            <tr>
+                                <td>Category </td>
+                                <td>: {{$ctrl.designation}} </td>
+                            </tr>
+                            <tr>
+                                <td>Phone Number  </td>
+                                <td>  : {{$ctrl.employeePhoneNo}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                        <div ng-if='$ctrl.status!="Assigned" && $ctrl.status!="Closed"' style="height: 200px; width: 400px; padding: 80px;" class="modal-body" id="modalbody" >
+                        {{$ctrl.message}}
+                        </div>
+
+                        <div class="modal-footer">
+                        <button class="btn btn-primary" data-dismiss="modal">close</button>
+                        </div>
+                        </div>
+                    </div>

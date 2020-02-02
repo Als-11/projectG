@@ -1,0 +1,65 @@
+$fa-font-path: "../bower_components/fontawesome/fonts";
+@import '../bower_components/fontawesome/scss/font-awesome';
+@import '../bower_components/simple-line-icons/scss/simple-line-icons';
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans|Ubuntu:400,500,700');
+// @import '../assets/css/custom-styles.scss';
+@import '../assets/css/style.scss';
+// @import '../assets/css/frontend-styles.scss';
+@import '../app/custom/animate.scss';
+//@import '../app/custom/responsive_bootstrap_carousel_mega_min.scss';
+
+/**
+ * App-wide Styles
+ */
+
+.browserupgrade {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+.login-page, .register-page {
+    background : #2ec0d4 none repeat scroll 0 0;
+}
+// Component styles are injected through grunt
+/* inject:scss */
+@import 'admin/admin';
+@import 'billservice/billservice';
+@import 'custom/animate';
+@import 'dashboard/activeusers/activeusers';
+@import 'dashboard/amenitiesbooking/amenitiesbooking';
+@import 'dashboard/billpayments/billpayments';
+@import 'dashboard/communitymembers/communitymembers';
+@import 'dashboard/communityprofile/communityprofile';
+@import 'dashboard/complaint/complaint';
+@import 'dashboard/dashboard';
+@import 'dashboard/discussionforums/discussionforums';
+@import 'dashboard/employee/employee';
+@import 'dashboard/expenses/expenses';
+@import 'dashboard/financialaudits/financialaudits';
+@import 'dashboard/inactiveusers/inactiveusers';
+@import 'dashboard/notifications/notifications';
+@import 'dashboard/payment/payment';
+@import 'dashboard/services/services';
+@import 'dashboard/settings/settings';
+@import 'dashboard/userservices/userservices';
+@import 'employeedashboard/employeedashboard';
+@import 'employeedashboard/securitycomplaints/securitycomplaints';
+@import 'employeedashboard/visitors/visitors';
+@import 'guwhaemployee/guwhaemployee';
+@import 'main/main';
+@import 'profile/profile';
+@import 'servicesdashboard/approvedcommunities/approvedcommunities';
+@import 'servicesdashboard/brands/brands';
+@import 'servicesdashboard/declinecommunities/declinecommunities';
+@import 'servicesdashboard/orders/orders';
+@import 'servicesdashboard/payments/payments';
+@import 'servicesdashboard/servicesdashboard';
+@import 'superadmin/superadmin';
+@import '../components/calender/calender';
+@import '../components/fliper/fliper';
+@import '../components/footer/footer';
+@import '../components/oauth-buttons/oauth-buttons';
+@import '../components/sidenavbar/sidenavbar';
+/* endinject */

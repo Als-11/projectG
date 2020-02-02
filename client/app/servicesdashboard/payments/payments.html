@@ -1,0 +1,215 @@
+<div class="main">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active">Payments</li>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+         <button style="float:right;"><a href="#" data-toggle="modal" data-target="#paymentsRaise" ng-click="$ctrl.pendingExpenses()" >Add Payments</a></button>
+       <div class="row">
+            <div class="col-sm-6 col-lg-4" ng-repeat="payment in $ctrl.getPaymentsArray">
+                    <div class="card" ng-click="$ctrl.getPaymenDetails(payment)">
+                        <div class="card-block text-xs-center">
+                            <div class="h1 p-y-1 text-low">{{payment.total}} </div>
+                            <div class="text-muted small text-uppercase font-weight-bold">
+                                <h6>{{payment._id.communityInfo[0].communityName}}</h6></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<!--             Payments table  -->
+    <div class="row" ng-if="$ctrl.showPaymentsTable">
+                <div class="col-md-12">
+                        <div class="card card-big">
+                            <div class="card-block">
+                                <div class="card-header">
+                                    <div class="col-sm-8">
+                                        <h5 class="card-title mb-10">Payments</h5>
+                                    </div>
+                                </div>
+                        <div class="card-block">
+                            <table class="table left-hover mb-0 hidden-sm-down">
+                                <thead >
+                                    <tr>
+                                        <th class="text-xs-left">CommunityName </th>
+                                        <th class="text-xs-left">UserName</th>
+                                        <th class="text-xs-left">Flat No</th>
+                                        <th class="text-xs-left">ServiceName</th>
+                                        <th class="text-xs-center">Amount</th>
+                                       <!--  <th class="text-xs-center">Date </th>
+                                         <th class="text-xs-center">Comments </th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="paymentDetailsAll in $ctrl.payDetailsFrTbleArray |itemsPerPage:10">
+                                        <td class="text-xs-left">
+                                            {{paymentDetailsAll.communityName}}
+                                        </td>
+                                        <td class="text-xs-left">
+                                            {{paymentDetailsAll.userInfo[0].firstName}} {{paymentDetailsAll.userInfo[0].lastName}}
+                                        </td>
+                                        <td class="text-xs-left">
+                                            {{paymentDetailsAll.userInfo[0].houseNumber}}
+                                        </td>
+                                        <td class="text-xs-left" ">
+                                            {{paymentDetailsAll.raisedBy}}
+                                        </td>
+                                        <td class="text-xs-center">
+                                            {{paymentDetailsAll.paymentAmount }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                             <dir-pagination-controls max-size="10" direction-links="true" boundary-links="true">
+                            </dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+         </div> 
+   <!--            Respective  Payments table  -->       
+         <div class="row" ng-if="$ctrl.showResPayments">
+                <div class="col-md-12">
+                        <div class="card card-big">
+                            <div class="card-block">
+                                <div class="card-header">
+                                    <div class="col-sm-8">
+                                        <h5 class="card-title mb-10">Payments</h5>
+                                    </div>
+                                </div>
+                        <div class="card-block">
+                            <table class="table table-hover mb-0 hidden-sm-down">
+                                <thead >
+                                    <tr>
+                                        <th class="text-xs-left">CommunityName </th>
+                                        <th class="text-xs-left">UserName</th>
+                                        <th class="text-xs-left">Flat No</th>
+                                        <th class="text-xs-left">ServiceName</th>
+                                        <th class="text-xs-center">Amount</th>
+                                       <!--  <th class="text-xs-center">Date </th>
+                                         <th class="text-xs-center">Comments </th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="paymentDetailsAll in $ctrl.respayDetails |itemsPerPage:10">
+                                        <td class="text-xs-left">
+                                            {{paymentDetailsAll.communityName}}
+                                        </td>
+                                        <td class="text-xs-left">
+                                            {{paymentDetailsAll.userInfo[0].firstName}} {{paymentDetailsAll.userInfo[0].lastName}}
+                                        </td>
+                                        <td class="text-xs-left">
+                                            {{paymentDetailsAll.userInfo[0].houseNumber}}
+                                        </td>
+                                        <td class="text-xs-left" ">
+                                            {{paymentDetailsAll.raisedBy}}
+                                        </td>
+                                        <td class="text-xs-center">
+                                            {{paymentDetailsAll.paymentAmount }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                             <dir-pagination-controls max-size="10" direction-links="true" boundary-links="true">
+                            </dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+         </div>  
+
+
+   
+
+
+
+
+
+
+    </div>
+ </div>
+</div>
+
+
+ <div class="modal" id="paymentsRaise" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+ <div class="modal-dialog">
+    <div class="modal-content">
+         <div class="modal-header">
+            <h6 class="modal-title" id="modaltitle">Payment Request</h6>
+            <div class="modal-body" id="modalbody">
+            <div class="row" >
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="input-group mb-1">
+                                        <span class="input-group-addon">Community</span>
+                                        <select type="text" placeholder="Select Community" id="exampleSelect1" class="form-control" ng-model="$ctrl.searchedCommunity" name="community" ng-options="community for community in $ctrl.communityList" ng-change="$ctrl.getServices()" required>
+                                            <option value="">Select Community</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="input-group mb-1">
+                                        <span class="input-group-addon">Service</span>
+                                        <select type="text" placeholder="Select Serice" id="exampleSelect1" class="form-control" ng-model="$ctrl.selectedService" name="service" ng-options="service for service in $ctrl.servicesNames" ng-change="$ctrl.selectedSerCategory()" required>
+                                            <option value="">Select serviceCategory </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="input-group mb-1">
+                                        <span class="input-group-addon">Service</span>
+                                        <select type="text" placeholder="ServiceType" id="exampleSelect1" class="form-control" ng-model="$ctrl.selectedServiceType" name="service" ng-options="service for service in $ctrl.serviceTypArray" ng-change="$ctrl.getUsers()" required>
+                                            <option value="">Select serviceType </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="input-group mb-1">
+                                        <span class="input-group-addon">Select Customer</span>
+                                        <input type="text" ng-keyup="$ctrl.customersSuggestion()" placeholder="Search Your Customer " ng-model="$ctrl.selectedCustomerName" uib-typeahead="result for result in $ctrl.searchoptions" typeahead-on-select="$ctrl.selectedUserName()" class="form-control" typeahead-min-length="2" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="input-group mb-1">
+                                        <span class="input-group-addon">Payment Date</span>
+                                        <datepicker date-format="dd MMM yyyy"  >
+                                            <input type="text" name="paymentdate" placeholder="dd/mm/yyyy" ng-model="$ctrl.paymentDate" class="editable-input form-control input-sm" required />
+                                        </datepicker>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="input-group mb-1">
+                                        <span class="input-group-addon">Payment Type</span>
+                                        <select type="text" placeholder="Select Payment Type" class="form-control" ng-model="$ctrl.paymentType" name="paymenttype" ng-options="paymenttype for paymenttype in $ctrl.availablePaymentType" ng-change="" required>
+                                            <option value="">Select Your Payment Type</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="input-group mb-1">
+                                        <span class="input-group-addon">Amount</span>
+                                        <input type="text" class="form-control" placeholder="Amount" ng-model="$ctrl.amount" required mongoose-error>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 text-xs-center">
+                                    <div class="input-group mb-1">
+                                        <button class="btn btn-primary" type="button" ng-disabled="$ctrl.amount==null||$ctrl.paymentType==null||$ctrl.paymentDate==null" ng-click="$ctrl.savePaymentRequest()" required>Request</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- </div> -->
+        <!-- Cards Heading Ends Here -->
+    
+<div ng-include="'components/common/bottom.html'"> </div>
